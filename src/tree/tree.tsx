@@ -1,9 +1,9 @@
-import { colorOrder, sizeOrder } from './constants';
-import { drawLine } from './helpers';
-import { colorT, myLineT } from './types';
-export default function Tree(props: { root: myLineT }): JSX.Element {
+import { colorOrder, sizeOrder } from '../constants';
+import { drawLine } from '../helpers';
+import { colorT, myLineT } from '../types';
 
-    const { root } = props
+export default function Tree(props: { root: myLineT, depth: number }): JSX.Element {
+    const { root, depth } = props
 
     // Function to generate branches from a given line
     // Parameters:
@@ -34,18 +34,11 @@ export default function Tree(props: { root: myLineT }): JSX.Element {
         return [root, ...children]
     }
 
-    const x = [
-        ...makeTree(root, 0, colorOrder[6], sizeOrder[6]),
-        ...makeTree(root, 1, colorOrder[5], sizeOrder[0]),
-        ...makeTree(root, 2, colorOrder[4], sizeOrder[1]),
-        ...makeTree(root, 3, colorOrder[3], sizeOrder[2]),
-        ...makeTree(root, 5, colorOrder[2], sizeOrder[3]),
-        ...makeTree(root, 8, colorOrder[1], sizeOrder[4]),
-        ...makeTree(root, 13, colorOrder[0], sizeOrder[5]),
-    ].map((eachLine, index) => drawLine(eachLine, index))
+    // const fibs = [0, 1, 1, 2, 3, 5, 8, 13, 21]
 
-    // An example tree to test the functions
-
-    {/* Iterate over exampleTree, drawing each line if a matching line has not already been drawn */ }
-    return <>{x}</>
+    // Draw the tree
+    return <>{Array.from({ length: depth }, (_, i) => makeTree(root, i, colorOrder[i], sizeOrder[i]))
+        .flat()
+        // Iterate over exampleTree, drawing each line if a matching line has not already been drawn
+        .map((eachLine, index) => drawLine(eachLine, index))}</>
 }

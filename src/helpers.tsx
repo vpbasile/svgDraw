@@ -6,7 +6,6 @@ import { myLineT } from "./types";
 export function drawLine(zLine: myLineT, key?: number): JSX.Element {
     const { start, angle, length } = zLine
     let { color, width } = zLine
-    console.log('color:', color)
     const { x: x1, y: y1 } = start
     const x2 = x1 + length * Math.cos(angle)
     const y2 = y1 + length * Math.sin(angle)
