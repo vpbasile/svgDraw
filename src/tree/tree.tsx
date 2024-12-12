@@ -1,7 +1,7 @@
 import { sizeOrder } from '../constants';
 import { drawLine } from '../helpers';
 import { colorSelector, myLineT } from '../types';
-import './tree.css';
+import './rainbowPrime.css';
 
 export default function Tree(props: { root: myLineT, delta: number, depth: number }): JSX.Element {
     const { root, delta, depth } = props
