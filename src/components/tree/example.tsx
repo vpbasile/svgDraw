@@ -1,4 +1,4 @@
-import { Box, Button, Collapse, Flex, FormControl, FormLabel, Heading, Input, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Center, Collapse, Flex, FormControl, FormLabel, Heading, Input, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, Text, useDisclosure } from "@chakra-ui/react";
 import { SetStateAction, useRef, useState } from "react";
 import { coordinateT, myLineT } from "../../types";
 import ColorModeButton from "../colorModeButton";
@@ -77,7 +77,7 @@ export default function TreeExample() {
         <Flex height="100vh">
             {/* Canvas */}
             {/* Dynamic width when panel is open */}
-            <Box id="canvas-box" flex={1} border="2px solid white" maxWidth={isOpen ? "calc(100vw - 300px)" : "100vw"} >
+            <Center id="canvas-box" flex={1} border="2px solid white" maxWidth={isOpen ? "calc(100vw - 300px)" : "100vw"} >
                 <svg ref={svgRef} height='100vh' viewBox={`0 0 ${canvasSize} ${canvasSize}`}>
                     <Tree
                         root={root}
@@ -86,7 +86,7 @@ export default function TreeExample() {
                         palette={palettes[selectedPalette]}
                     />
                 </svg>
-            </Box>
+            </Center>
 
             {/* Control Panel */}
             <Box id="control-panel"
