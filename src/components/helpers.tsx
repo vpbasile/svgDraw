@@ -1,7 +1,7 @@
 // function with a single aprameter, wonce, which has a default value of "blumber"
 // function greet(name = "blumber") {
 
-import { myLineT } from "./types";
+import { myLineT } from "../types";
 
 export function drawLine(zLine: myLineT, key?: number): JSX.Element {
     const { start, angle, length } = zLine

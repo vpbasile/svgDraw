@@ -1,5 +1,5 @@
-import { drawLine } from '../../helpers';
 import { colorSelector, myLineT } from '../../types';
+import { drawLine } from '../helpers';
 
 interface TreeProps {
     root: myLineT;
