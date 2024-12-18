@@ -1,10 +1,11 @@
-import { colorSelector, myLineT } from '../../types';
+import { myLineT } from '../../types';
 
 export default function Tree(root: myLineT, delta: number, depth: number, palette: string[]): myLineT[] {
     const maxDepth = depth;
 
+    // Set root color to the (palette.length - maxDepth) color
     root.width = `${depth}px`;
-    root.color = palette[0];
+    root.color = palette[palette.length - maxDepth];
 
     // Cache for storing previously computed branches
     const branchCache = new Map<string, myLineT[]>();
@@ -35,9 +36,12 @@ export default function Tree(root: myLineT, delta: number, depth: number, palett
 
         // Dynamically calculate the width based on depth
         const width = `${depth}px`;
-        const color = depth <= 13 ? maxDepth - depth : 13 as colorSelector;
 
-        const branches = makeBranches(root, delta, palette[color], width);
+        // Select the color for the current depth level, starting from the root color
+        const colorIndex = palette.length - maxDepth + (maxDepth - depth);
+        const color = palette[colorIndex];
+
+        const branches = makeBranches(root, delta, color, width);
         const children = branches.flatMap(branch => makeTree(branch, depth - 1));
         const result = [root, ...children];
 
@@ -48,7 +52,6 @@ export default function Tree(root: myLineT, delta: number, depth: number, palett
     // Generate the tree structure
     const tree = makeTree(root, depth);
 
-
-    // Draw the tree
+    // Return the generated tree structure
     return tree;
 }
