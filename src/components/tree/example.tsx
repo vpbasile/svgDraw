@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { coordinateT, myLineT } from "../../types";
-import { palettes } from "./palettes"; // Import the palettes
+import { palettes } from "../palettes"; // Import the palettes
 import Tree from "./treeGPT";
 
 export default function TreeExample() {
