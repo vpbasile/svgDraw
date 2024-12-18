@@ -20,7 +20,7 @@ export function drawLine(zLine: myLineT, key?: number): JSX.Element {
 export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point:coordinateT): myLineT[] {
     const { x: cx, y: cy } = point;
     return lines.map(line => {
-        const { start, angle: lineAngle, length, color, width } = line;
+        const { start, angle: lineAngle, length, color, width, z } = line;
         const { x, y } = start;
 
         // Step 1: Translate the start point relative to the center of rotation
@@ -39,19 +39,19 @@ export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point:co
         const newAngle = lineAngle + angle;
 
         // Return a new line with updated position and angle
-        return { start: { x: newX, y: newY }, angle: newAngle, length, color, width};
+        return { start: { x: newX, y: newY }, angle: newAngle, length, color, width, z };
     });
 }
 
 
 // Find the perpendiculr bisector of a line and return a line half the length of the original
 export function findPerpendicularBisector(line: myLineT): myLineT {
-    const { start, angle, length } = line
+    const { start, angle, length, z } = line
     const { x: x1, y: y1 } = start
     const x2 = x1 + length * Math.cos(angle)
     const y2 = y1 + length * Math.sin(angle)
     const mx = (x1 + x2) / 2
     const my = (y1 + y2) / 2
     const mangle = angle + Math.PI / 2
-    return { start: { x: mx, y: my }, angle: mangle, length: length / 2 }
+    return { start: { x: mx, y: my }, angle: mangle, length: length / 2, z }
 }

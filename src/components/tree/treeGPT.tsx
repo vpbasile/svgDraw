@@ -14,15 +14,15 @@ export default function Tree(root: myLineT, delta: number, depth: number, palett
 
     // Function to generate branches
     function makeBranches(line: myLineT, delta: number, color: string, width: string): myLineT[] {
-        const { start, angle, length } = line;
+        const { start, angle, length, z } = line;
         const { x: x1, y: y1 } = start;
         const x2 = x1 + length * Math.cos(angle);
         const y2 = y1 + length * Math.sin(angle);
         const newLength = length * 0.75;
         const newAngle1 = angle + delta;
         const newAngle2 = angle - delta;
-        const newLine1 = { start: { x: x2, y: y2 }, angle: newAngle1, length: newLength, color, width };
-        const newLine2 = { start: { x: x2, y: y2 }, angle: newAngle2, length: newLength, color, width };
+        const newLine1 = { start: { x: x2, y: y2 }, angle: newAngle1, length: newLength, color, width, z: z - 1 };
+        const newLine2 = { start: { x: x2, y: y2 }, angle: newAngle2, length: newLength, color, width, z: z - 1 };
         return [newLine1, newLine2];
     }
 

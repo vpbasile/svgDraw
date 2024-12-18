@@ -18,7 +18,7 @@ export default function TreeExample() {
     const [numerator, SETnumerator] = useState<number>(1);
     const [fileName, setFileName] = useState<string>('tree');
     const [selectedPalette, setSelectedPalette] = useState<string>('default');
-    const root: myLineT = { start: seed, angle: -PI / 2, length: 200, width: '21px' };
+    const root: myLineT = { start: seed, angle: -PI / 2, length: 200, width: '21px', z: 0 };
     const highestColor: number = Object.keys(palettes[selectedPalette]).length - 1;
 
     // Reference to the SVG element
@@ -90,15 +90,20 @@ export default function TreeExample() {
 
     // Generate the trees
     const original = Tree(root, (numerator * PI) / 4, depth, palettes[selectedPalette]);
-    const allTrees = [original];
+    // Sort the trees by z-index so that lower trees are drawn first
+    const allTrees = original;
     // Generate siblings if necessary
     if (numberOfTrees > 1) {
 
         for (let i = 1; i < numberOfTrees; i++) {
             const sibling = rotateLinesAroundPoint(original, i * 2 * PI / numberOfTrees, seed);
-            allTrees.push(sibling);
+            // Add all menmbers of the sibling to the allTrees array
+            sibling.forEach((line) => allTrees.push(line));
         }
     }
+
+    // Now that all the lines are finally figured out, sort them by z-index
+    allTrees.sort((a, b) => a.z - b.z);
 
     // const sibling1 = rotateLinesAroundPoint(original, 2 * PI / numberOfTrees, seed);
     // const sibling2 = rotateLinesAroundPoint(original, -2 * PI / numberOfTrees, seed);
@@ -109,9 +114,12 @@ export default function TreeExample() {
             {/* Dynamic width when panel is open */}
             <Center id="canvas-box" flex={1} border="2px solid white" maxWidth={isOpen ? "calc(100vw - 300px)" : "100vw"} >
                 <svg ref={svgRef} height='100vh' viewBox={`0 0 ${canvasSize} ${canvasSize}`}>
-                    {allTrees.map(
-                        (tree, index) => tree.map((line, i) => drawLine(line, i + index * 100))
-                    )}                </svg>
+                    {allTrees.map((line, index) => (
+                        <g key={index}>
+                            {drawLine(line)}
+                        </g>
+                    ))}
+                </svg>
             </Center>
 
             {/* Control Panel */}
