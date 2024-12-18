@@ -1,15 +1,18 @@
 import { drawLine } from '../helpers';
 import { colorSelector, myLineT } from '../types';
-// import './treeColor.css';
-import './rainbow.css';
 
+interface TreeProps {
+    root: myLineT;
+    delta: number;
+    depth: number;
+    palette: string[]; // Receive the color palette
+}
 
-export default function Tree(props: { root: myLineT, delta: number, depth: number }): JSX.Element {
-    const { root, delta, depth } = props;
-    // Replace the root's width with the depth and the root's color with the colorSelector
+export default function Tree({ root, delta, depth, palette }: TreeProps): JSX.Element {
+    const maxDepth = depth;
+    
     root.width = `${depth}px`;
-    const maxDepth = 13;
-    root.color = maxDepth - depth as colorSelector;
+    root.color = palette[0];
 
     // Cache for storing previously computed branches
     const branchCache = new Map<string, myLineT[]>();
@@ -18,7 +21,7 @@ export default function Tree(props: { root: myLineT, delta: number, depth: numbe
     const getKey = (line: myLineT, depth: number) => `${line.start.x},${line.start.y},${line.angle},${depth}`;
 
     // Function to generate branches
-    function makeBranches(line: myLineT, delta: number, color: colorSelector, width: string): myLineT[] {
+    function makeBranches(line: myLineT, delta: number, color: string, width: string): myLineT[] {
         const { start, angle, length } = line;
         const { x: x1, y: y1 } = start;
         const x2 = x1 + length * Math.cos(angle);
@@ -40,11 +43,9 @@ export default function Tree(props: { root: myLineT, delta: number, depth: numbe
 
         // Dynamically calculate the width based on depth
         const width = `${depth}px`;
-
-        // This reverse logic is fixed here:
         const color = depth <= 13 ? maxDepth - depth : 13 as colorSelector;
 
-        const branches = makeBranches(root, delta, color, width);
+        const branches = makeBranches(root, delta, palette[color], width);
         const children = branches.flatMap(branch => makeTree(branch, depth - 1));
         const result = [root, ...children];
 

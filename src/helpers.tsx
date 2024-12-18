@@ -9,12 +9,12 @@ export function drawLine(zLine: myLineT, key?: number): JSX.Element {
     const { x: x1, y: y1 } = start
     const x2 = x1 + length * Math.cos(angle)
     const y2 = y1 + length * Math.sin(angle)
-    // If color is not provided, default to white
-    if (!color) color = 0
+    // If color is not provided, default to 50% grey
+    if (!color) color = '#808080'
     // If width is not provided, default to 1px
     if (!width) width = '1px'
     // <line x1={ x1 } y1 = { y1 } x2 = { x2 } y2 = { y2 } style = {{ stroke: color, strokeWidth: width }} key = {`line${key}`} />
-    return (<line x1={x1} y1={y1} x2={x2} y2={y2} style={{ strokeWidth: width }} key={`line${key}`} className={`color${color}`} />)
+    return (<line x1={x1} y1={y1} x2={x2} y2={y2} style={{ strokeWidth: width, stroke: color }} key={`line${key}`} />)
 }
 
 // Find the perpendiculr bisector of a line and return a line half the length of the original
