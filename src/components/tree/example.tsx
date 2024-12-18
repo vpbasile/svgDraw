@@ -2,6 +2,7 @@ import { Box, Button, Center, Collapse, Flex, FormControl, FormLabel, Heading, I
 import { SetStateAction, useRef, useState } from "react";
 import { coordinateT, myLineT } from "../../types";
 import ColorModeButton from "../colorModeButton";
+import { drawLine, rotateLinesAroundPoint } from "../helpers";
 import { palettes } from "../palettes"; // Import the palettes
 import Tree from "./treeGPT";
 
@@ -13,6 +14,7 @@ export default function TreeExample() {
 
     // States
     const [depth, setDepth] = useState<number>(8);
+    const [numberOfTrees, setNumberOfTrees] = useState<number>(3);
     const [numerator, SETnumerator] = useState<number>(1);
     const [fileName, setFileName] = useState<string>('tree');
     const [selectedPalette, setSelectedPalette] = useState<string>('default');
@@ -71,21 +73,45 @@ export default function TreeExample() {
         </Slider>
     );
     const fileNameField = <Input placeholder={fileName} onChange={(e: { target: { value: SetStateAction<string>; }; }) => setFileName(e.target.value)} />
+    const treeCountSelector = <>
+        <FormLabel>Number of Trees</FormLabel>
+        <Stack direction="row">
+            {[1, 2, 3, 4, 5].map((num) => (
+                <Button
+                    key={num}
+                    onClick={() => setNumberOfTrees(num)}
+                    colorScheme={numberOfTrees === num ? "teal" : "gray"}
+                >
+                    {num}
+                </Button>
+            ))}
+        </Stack>
+    </>
 
-    // Return the JSX
+    // Generate the trees
+    const original = Tree(root, (numerator * PI) / 4, depth, palettes[selectedPalette]);
+    const allTrees = [original];
+    // Generate siblings if necessary
+    if (numberOfTrees > 1) {
+
+        for (let i = 1; i < numberOfTrees; i++) {
+            const sibling = rotateLinesAroundPoint(original, i * 2 * PI / numberOfTrees, seed);
+            allTrees.push(sibling);
+        }
+    }
+
+    // const sibling1 = rotateLinesAroundPoint(original, 2 * PI / numberOfTrees, seed);
+    // const sibling2 = rotateLinesAroundPoint(original, -2 * PI / numberOfTrees, seed);
+    // // Return the JSX
     return (
         <Flex height="100vh">
             {/* Canvas */}
             {/* Dynamic width when panel is open */}
             <Center id="canvas-box" flex={1} border="2px solid white" maxWidth={isOpen ? "calc(100vw - 300px)" : "100vw"} >
                 <svg ref={svgRef} height='100vh' viewBox={`0 0 ${canvasSize} ${canvasSize}`}>
-                    <Tree
-                        root={root}
-                        delta={(numerator * PI) / 4}
-                        depth={depth}
-                        palette={palettes[selectedPalette]}
-                    />
-                </svg>
+                    {allTrees.map(
+                        (tree, index) => tree.map((line, i) => drawLine(line, i + index * 100))
+                    )}                </svg>
             </Center>
 
             {/* Control Panel */}
@@ -106,6 +132,7 @@ export default function TreeExample() {
                             <Heading as="h2" size="md" mb={2}>
                                 Depth: {depth}
                             </Heading>
+                            {treeCountSelector}
                             <Stack direction="row" spacing={2}>
                                 {decreaseDepthButton}
                                 {increaseDepthButton}

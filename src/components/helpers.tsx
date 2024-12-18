@@ -1,7 +1,7 @@
 // function with a single aprameter, wonce, which has a default value of "blumber"
 // function greet(name = "blumber") {
 
-import { myLineT } from "../types";
+import { coordinateT, myLineT } from "../types";
 
 export function drawLine(zLine: myLineT, key?: number): JSX.Element {
     const { start, angle, length } = zLine
@@ -16,6 +16,33 @@ export function drawLine(zLine: myLineT, key?: number): JSX.Element {
     // <line x1={ x1 } y1 = { y1 } x2 = { x2 } y2 = { y2 } style = {{ stroke: color, strokeWidth: width }} key = {`line${key}`} />
     return (<line x1={x1} y1={y1} x2={x2} y2={y2} style={{ strokeWidth: width, stroke: color }} key={`line${key}`} />)
 }
+
+export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point:coordinateT): myLineT[] {
+    const { x: cx, y: cy } = point;
+    return lines.map(line => {
+        const { start, angle: lineAngle, length, color, width } = line;
+        const { x, y } = start;
+
+        // Step 1: Translate the start point relative to the center of rotation
+        const translatedX = x - cx;
+        const translatedY = y - cy;
+
+        // Step 2: Rotate the point
+        const rotatedX = translatedX * Math.cos(angle) - translatedY * Math.sin(angle);
+        const rotatedY = translatedX * Math.sin(angle) + translatedY * Math.cos(angle);
+
+        // Step 3: Translate back to the original position
+        const newX = rotatedX + cx;
+        const newY = rotatedY + cy;
+
+        // Step 4: Rotate the line's angle
+        const newAngle = lineAngle + angle;
+
+        // Return a new line with updated position and angle
+        return { start: { x: newX, y: newY }, angle: newAngle, length, color, width};
+    });
+}
+
 
 // Find the perpendiculr bisector of a line and return a line half the length of the original
 export function findPerpendicularBisector(line: myLineT): myLineT {

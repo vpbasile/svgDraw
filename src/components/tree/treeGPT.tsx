@@ -1,16 +1,8 @@
 import { colorSelector, myLineT } from '../../types';
-import { drawLine } from '../helpers';
 
-interface TreeProps {
-    root: myLineT;
-    delta: number;
-    depth: number;
-    palette: string[]; // Receive the color palette
-}
-
-export default function Tree({ root, delta, depth, palette }: TreeProps): JSX.Element {
+export default function Tree(root: myLineT, delta: number, depth: number, palette: string[]): myLineT[] {
     const maxDepth = depth;
-    
+
     root.width = `${depth}px`;
     root.color = palette[0];
 
@@ -58,5 +50,5 @@ export default function Tree({ root, delta, depth, palette }: TreeProps): JSX.El
 
 
     // Draw the tree
-    return <>{tree.map((line, index) => drawLine(line, index))}</>;
+    return tree;
 }
