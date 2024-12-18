@@ -76,7 +76,7 @@ export default function TreeExample() {
     const treeCountSelector = <>
         <FormLabel>Number of Trees</FormLabel>
         <Stack direction="row">
-            {[1, 2, 3, 4, 5].map((num) => (
+            {[1, 2, 3, 4, 5, 6].map((num) => (
                 <Button
                     key={num}
                     onClick={() => setNumberOfTrees(num)}
