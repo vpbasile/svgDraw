@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Layout from "./components/layout";
 import TreeExample from "./components/tree/example";
 import Home from "./Homepage";
 
@@ -11,7 +10,7 @@ function App() {
     //         parent route elements. See the note about <Outlet> below. */}
 
     < Routes >
-      <Route path='/' element={<Layout />}>
+      <Route path='/'>
         <Route index element={<Home />} />
         <Route path="tree" element={<TreeExample />} />
       </Route>

@@ -1,13 +1,13 @@
+// Index
 import { Outlet } from 'react-router-dom'
+import Header from './header'
 
 export default function Layout() {
 
     return (<>
-        {/* <SandboxHeader /> */}
-        {/* <Box id='mainBody' p={9}> */}
-            {/* This is where the children will be rendered */}
-            <Outlet />
-        {/* </Box> */}
-        {/* <SandboxFooter /> */}
+        <Header />
+        {/* This is where the children will be rendered */}
+        <Outlet />
+        <MainFooter />
     </>)
 }
