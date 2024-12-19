@@ -41,14 +41,14 @@ export default function TreeExample() {
     const minAngle = 0.25;
     const maxAngle = 2;
     const stepAngle = 0.125;
-    const handleChange = (value: number) => SETnumerator(value)
+    const handleChange = (valueAsString: string, valueAsNumber: number) => SETnumerator(valueAsNumber)
     const controlAngle = <FormControl id="angle-control">
         <FormLabel>Angle Coefficient</FormLabel>
         {/* Number input */}
         <NumberInput
             maxW='100px' mr='2rem'
             min={minAngle} max={maxAngle} step={stepAngle}
-            value={numerator} onChange={handleChange}
+            value={numerator} onChange={(valueAsString, valueAsNumber) => handleChange(valueAsString, valueAsNumber)}
         >
             <NumberInputField />
             <NumberInputStepper>
@@ -60,7 +60,7 @@ export default function TreeExample() {
         <Slider
             focusThumbOnChange={false}
             min={minAngle} max={maxAngle} step={stepAngle}
-            value={numerator} onChange={handleChange}
+            value={numerator} onChange={(value) => handleChange(value.toString(), value)}
         >
             <SliderTrack>
                 <SliderFilledTrack />
@@ -73,7 +73,7 @@ export default function TreeExample() {
     const controlCount = <FormControl id="count-control">
         <FormLabel>Number of Trees</FormLabel>
         <RadioGroup
-            onChange={setNumberOfTrees} value={numberOfTrees}
+            onChange={(val) => setNumberOfTrees(parseInt(val))} value={numberOfTrees.toString()}
         >
             <Stack direction='row'>
                 {[1, 2, 3, 4, 5, 6].map((num) => <Radio key={num} value={`${num}`}>{num}</Radio>)}
