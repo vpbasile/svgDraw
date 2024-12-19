@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 import { coordinateT, myLineT } from "../../types";
 import { drawLine, rotateLinesAroundPoint } from "../helpers";
@@ -12,15 +12,34 @@ export default function TreeExample() {
     const seed: coordinateT = { x: canvasSize / 2, y: canvasSize / 2 }
     const PI = Math.PI;
 
+    // Settings
+    const defaultDepth = 2;
+    const defaultNumberOfTrees = 1;
+    const defaultNumerator = 1;
     // States
-    const [maxDepth, setMaxDepth] = useState<number>(8);
+    const [maxDepth, setMaxDepth] = useState<number>(defaultDepth);
     // TODO Add minDepth state
-    const [numberOfTrees, setNumberOfTrees] = useState<number>(3);
-    const [numerator, SETnumerator] = useState<number>(1);
+    const [numberOfTrees, setNumberOfTrees] = useState<number>(defaultNumberOfTrees);
+    const [numerator, SETnumerator] = useState<number>(defaultNumerator);
     const [selectedPalette, setSelectedPalette] = useState<string>('default');
-    const root: myLineT = { start: seed, angle: -PI / 2, length: 200, width: '21px', z: 0 };
+    const root: myLineT = { start: seed, angle: -PI / 2, length: 200, width: '21px', z: 0, key: '0' };
     const highestColor: number = Object.keys(palettes[selectedPalette]).length - 1;
 
+    // Generate the trees
+    const original = Tree(root, (numerator * PI) / 4, maxDepth, palettes[selectedPalette]);
+    // Sort the trees by z-index so that lower trees are drawn first
+    const allTrees = original;
+    // Generate siblings if necessary
+    if (numberOfTrees > 1) {
+        for (let i = 1; i < numberOfTrees; i++) {
+            const sibling = rotateLinesAroundPoint(original, i * 2 * PI / numberOfTrees, seed);
+            // Add all menmbers of the sibling to the allTrees array
+            sibling.forEach((line) => allTrees.push(line));
+        }
+    }
+
+    // Now that all the lines are finally figured out, sort them by z-index
+    allTrees.sort((a, b) => a.z - b.z);
 
     // Control Panel Components
 
@@ -94,41 +113,19 @@ export default function TreeExample() {
             ))}
         </Select>
     </FormControl>;
-    
+
     // Assemble the control panel
     const controlPanel = <Stack spacing={6}>
         <Heading as="h2" size="lg">Fractal Tree Controls</Heading>
+        <Box>Line count: {allTrees.length}</Box>
         {controlDepth}
         {controlCount}
         {controlAngle}
         {controlPalette}
     </Stack>
 
-    // Generate the trees
-    const original = Tree(root, (numerator * PI) / 4, maxDepth, palettes[selectedPalette]);
-    // Sort the trees by z-index so that lower trees are drawn first
-    const allTrees = original;
-    // Generate siblings if necessary
-    if (numberOfTrees > 1) {
-
-        for (let i = 1; i < numberOfTrees; i++) {
-            const sibling = rotateLinesAroundPoint(original, i * 2 * PI / numberOfTrees, seed);
-            // Add all menmbers of the sibling to the allTrees array
-            sibling.forEach((line) => allTrees.push(line));
-        }
-    }
-
-    // Now that all the lines are finally figured out, sort them by z-index
-    allTrees.sort((a, b) => a.z - b.z);
-
-    // const sibling1 = rotateLinesAroundPoint(original, 2 * PI / numberOfTrees, seed);
-    // const sibling2 = rotateLinesAroundPoint(original, -2 * PI / numberOfTrees, seed);
     // // Return the JSX
     return <SVGWrapper width={canvasSize} height={canvasSize} controlPanel={controlPanel}>
-        {allTrees.map((line, index) => (
-            <g key={index}>
-                {drawLine(line)}
-            </g>
-        ))}
+        {allTrees.map((line) => drawLine(line))}
     </SVGWrapper>
 }

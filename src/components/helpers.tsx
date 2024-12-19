@@ -3,8 +3,15 @@
 
 import { coordinateT, myLineT } from "../types";
 
-export function drawLine(zLine: myLineT, key?: number): JSX.Element {
-    const { start, angle, length } = zLine
+/**
+ * Draws a line based on the provided line properties.
+ *
+ * @param {myLineT} zLine - The line properties including start point, angle, length, color, and width.
+ * @param {number} [key] - An optional key to uniquely identify the line element.
+ * @returns {JSX.Element} A JSX element representing the line.
+ */
+export function drawLine(zLine: myLineT): JSX.Element {
+    const { start, angle, length, key } = zLine
     let { color, width } = zLine
     const { x: x1, y: y1 } = start
     const x2 = x1 + length * Math.cos(angle)
@@ -13,11 +20,14 @@ export function drawLine(zLine: myLineT, key?: number): JSX.Element {
     if (!color) color = '#808080'
     // If width is not provided, default to 1px
     if (!width) width = '1px'
-    // <line x1={ x1 } y1 = { y1 } x2 = { x2 } y2 = { y2 } style = {{ stroke: color, strokeWidth: width }} key = {`line${key}`} />
-    return (<line x1={x1} y1={y1} x2={x2} y2={y2} style={{ strokeWidth: width, stroke: color }} key={`line${key}`} />)
+    // If the key is undefined, log an error with the line properties
+    if (!key) console.error('drawLine: key is undefined', zLine)
+    console.log(zLine)
+    return <line id={`line-${key}`}
+        x1={x1} y1={y1} x2={x2} y2={y2} style={{ strokeWidth: width, stroke: color }} key={`line${key}`} />
 }
 
-export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point:coordinateT): myLineT[] {
+export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point: coordinateT): myLineT[] {
     const { x: cx, y: cy } = point;
     return lines.map(line => {
         const { start, angle: lineAngle, length, color, width, z } = line;
@@ -39,7 +49,7 @@ export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point:co
         const newAngle = lineAngle + angle;
 
         // Return a new line with updated position and angle
-        return { start: { x: newX, y: newY }, angle: newAngle, length, color, width, z };
+        return { start: { x: newX, y: newY }, angle: newAngle, length, color, width, z, key: `${line.key}-r${angle}` };
     });
 }
 
@@ -53,5 +63,5 @@ export function findPerpendicularBisector(line: myLineT): myLineT {
     const mx = (x1 + x2) / 2
     const my = (y1 + y2) / 2
     const mangle = angle + Math.PI / 2
-    return { start: { x: mx, y: my }, angle: mangle, length: length / 2, z }
+    return { start: { x: mx, y: my }, angle: mangle, length: length / 2, z, key: `${line.key}-bisector` }
 }

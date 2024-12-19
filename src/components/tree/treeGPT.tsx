@@ -15,15 +15,15 @@ export default function Tree(root: myLineT, delta: number, depth: number, palett
 
     // Function to generate branches
     function makeBranches(line: myLineT, delta: number, color: string, width: string): myLineT[] {
-        const { start, angle, length, z } = line;
+        const { start, angle, length, z, key } = line;
         const { x: x1, y: y1 } = start;
         const x2 = x1 + length * Math.cos(angle);
         const y2 = y1 + length * Math.sin(angle);
         const newLength = length * 0.75;
         const newAngle1 = angle + delta;
         const newAngle2 = angle - delta;
-        const newLine1 = { start: { x: x2, y: y2 }, angle: newAngle1, length: newLength, color, width, z: z - 1 };
-        const newLine2 = { start: { x: x2, y: y2 }, angle: newAngle2, length: newLength, color, width, z: z - 1 };
+        const newLine1 = { start: { x: x2, y: y2 }, angle: newAngle1, length: newLength, color, width, z: z - 1, key: `${key}1` };
+        const newLine2 = { start: { x: x2, y: y2 }, angle: newAngle2, length: newLength, color, width, z: z - 1, key: `${key}2` };
         return [newLine1, newLine2];
     }
 
@@ -32,7 +32,7 @@ export default function Tree(root: myLineT, delta: number, depth: number, palett
         if (depth === 0) return [];
 
         const key = getKey(root, depth);
-        if (branchCache.has(key)) return branchCache.get(key)!;
+        if (branchCache.has(key)) return [];
 
         // Dynamically calculate the width based on depth
         const width = `${depth}px`;
