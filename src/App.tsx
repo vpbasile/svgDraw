@@ -1,4 +1,8 @@
+// App.tsx 
+
 import { Route, Routes } from "react-router-dom";
+import HexBoardIndex from "./components/hexboard";
+import { boardList } from "./components/hexboard/boardList";
 import TreeExample from "./components/tree/example";
 import Home from "./Homepage";
 
@@ -9,11 +13,18 @@ function App() {
     //         parent route paths, and nested route elements render inside
     //         parent route elements. See the note about <Outlet> below. */}
 
-    < Routes >
+    <Routes >
       <Route path='/'>
         <Route index element={<Home />} />
         <Route path="tree" element={<TreeExample />} />
-      </Route>
+        <Route path="hex/*" >
+          <Route path="" element={<HexBoardIndex />} />
+          {boardList.map(({ uid, element }) => (
+            <Route key={`${uid}`} path={uid} element={element} />
+          ))}
+          <Route path="*" element={<div>Board not found!</div>} />
+        </Route>
+      </Route >
     </Routes >
   )
 }

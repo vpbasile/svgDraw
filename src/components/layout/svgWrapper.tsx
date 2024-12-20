@@ -1,7 +1,35 @@
 import { Box, Button, Center, Collapse, Flex, FormControl, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { SetStateAction, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import ColorModeButton from '../colorModeButton';
-export default function SVGWrapper(props: { width: number, height: number, children: JSX.Element[], controlPanel: JSX.Element }) {
+/**
+ * SVGWrapper component provides a container for rendering SVG elements
+ * along with a control panel for additional functionalities.
+ * 
+ *  Each implementation of SVGWwrapper will contain the following things (not necessarily in this order):
+ * * All states and logic required to render the SVG content.  This will allow control panel to interact with the SVG content
+ * * SVG Content - this will be passed as children to SVGWrapper
+ * * Control Panel - this will be passed as a prop to SVGWrapper
+*
+* @remarks
+* This component includes functionality to save the SVG content as a file.
+* The filename can be specified and will be appended with a .svg extension.
+* 
+ * @param {Object} props - The properties object.
+ * @param {number} props.width - The width of the SVG canvas.
+ * @param {number} props.height - The height of the SVG canvas.
+ * @param {JSX.Element | JSX.Element[]} props.children - The SVG elements to be rendered inside the canvas.
+ * @param {JSX.Element} props.controlPanel - The control panel element to be displayed alongside the SVG canvas.
+ *
+ * @returns {JSX.Element} The rendered SVGWrapper component.
+ *
+ * @example
+ * <SVGWrapper width={200} height={200} controlPanel={controlPanel} >
+ *  {content}
+ * </SVGWrapper>
+ *
+ */
+export default function SVGWrapper(props: { width: number, height: number, children: JSX.Element | JSX.Element[], controlPanel: JSX.Element }) {
     // Constants, Props, and States
     const { width, height, children, controlPanel } = props;
     const [fileName, setFileName] = useState<string>('tree');
@@ -69,11 +97,11 @@ export default function SVGWrapper(props: { width: number, height: number, child
         </Center>
         {/* Control Panel */}
         <Box id='control-panel-column' borderWidth={1} p={4} boxShadow="sm" border={'2px'}
-        overflowY="auto" // Enables vertical scrolling
-        maxHeight="100vh" // Restricts height to viewport
+            overflowY="auto" // Enables vertical scrolling
+            maxHeight="100vh" // Restricts height to viewport
         // width={isOpen ? "300px" : "auto"} 
         >
-            <Heading as="h1" size="lg" mb={4}>SVGDraw</Heading>
+            <Heading as="h1" size="lg" mb={4}><Link to={'/'}>SVGDraw</Link></Heading>
             {/* <FormControl id="show-hide">
                 <Button size="sm" onClick={onToggle} mb={4}>
                     {isOpen ? "Hide Controls" : "Show Controls"}
@@ -95,7 +123,7 @@ export default function SVGWrapper(props: { width: number, height: number, child
                         Download SVG
                     </Button>
                 </FormControl>
-                
+
                 <Center pt={5} mt={5} borderTop={'2px'}>{controlPanel}</Center>
             </Collapse >
         </Box>
