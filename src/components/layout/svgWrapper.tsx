@@ -29,7 +29,7 @@ import ColorModeButton from '../colorModeButton';
  * </SVGWrapper>
  *
  */
-export default function SVGWrapper(props: { width: number, height: number, children: JSX.Element | JSX.Element[], controlPanel: JSX.Element }) {
+export default function SVGWrapper(props: { width: number, height: number, children?: JSX.Element | JSX.Element[], controlPanel: JSX.Element }) {
     // Constants, Props, and States
     const { width, height, children, controlPanel } = props;
     const [fileName, setFileName] = useState<string>('tree');
@@ -54,35 +54,6 @@ export default function SVGWrapper(props: { width: number, height: number, child
             URL.revokeObjectURL(url); // Clean up the URL object
         }
     };
-    // Function to save SVG as a PNG file
-    // const saveSvgAsPng = () => {
-    //     if (svgRef.current) {
-    //         const svgElement = svgRef.current;
-    //         const serializer = new XMLSerializer();
-    //         const svgString = serializer.serializeToString(svgElement);
-    //         const canvas = document.createElement('canvas');
-    //         const ctx = canvas.getContext('2d');
-    //         const img = new Image();
-    //         img.onload = () => {
-    //             if (ctx) {
-    //                 canvas.width = img.width;
-    //                 canvas.height = img.height;
-    //                 ctx.drawImage(img, 0, 0);
-    //                 canvas.toBlob((blob) => {
-    //                     if (blob) {
-    //                         const url = URL.createObjectURL(blob);
-    //                         const a = document.createElement('a');
-    //                         a.href = url;
-    //                         a.download = `${fileName}.png`; // File name
-    //                         a.click();
-    //                         URL.revokeObjectURL(url); // Clean up the URL object
-    //                     }
-    //                 });
-    //             }
-    //         };
-    //         img.src = `data:image/svg+xml;base64,${btoa(svgString)}`;
-    //     }
-    // }
 
     const fileNameField = <Input placeholder={fileName} onChange={(e: { target: { value: SetStateAction<string>; }; }) => setFileName(e.target.value)} transition={'width 0.75s'} />
 
@@ -92,7 +63,8 @@ export default function SVGWrapper(props: { width: number, height: number, child
         // maxWidth={isOpen ? "calc(100vw - 300px)" : "100vw"} 
         >
             <svg ref={svgRef} height='100vh' viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg">
-                {children}
+                {/* If no children are passed, just show a polygon */}
+                {children || <polygon points="100,10 40,198 190,78 10,78 160,198" />}
             </svg>
         </Center>
         {/* Control Panel */}
