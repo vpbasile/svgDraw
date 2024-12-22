@@ -1,7 +1,7 @@
 import { Box, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useState } from 'react';
-import SVGWrapper from '../layout/svgWrapper';
-export default function DummyBoard() {
+import SVGWrapper from './svgWrapper';
+export default function PlaceHolderBoard() {
     // Each implementation of SVGWwrapper will contain the following things (not necessarily in this order):
     // * All states and logic required to render the SVG content.  This will allow control panel to interact with the SVG content
     // * SVG Content - this will be passed as children to SVGWrapper
@@ -37,7 +37,10 @@ export default function DummyBoard() {
     </>
 
 
-    return <SVGWrapper width={200} height={200} controlPanel={controlPanel} >
+    return <SVGWrapper 
+    width={200} height={200} 
+    displayTitle="Dummy Board"
+    controlPanel={controlPanel} >
         {content}
     </SVGWrapper>
 }

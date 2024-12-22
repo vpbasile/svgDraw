@@ -2,8 +2,8 @@ import { Box, FormControl, FormLabel, Heading, NumberDecrementStepper, NumberInc
 import { useState } from "react";
 import { coordinateT, myLineT } from "../../types";
 import { drawLine, rotateLinesAroundPoint } from "../helpers";
-import SVGWrapper from "../layout/svgWrapper";
 import { palettes } from "../palettes"; // Import the palettes
+import SVGWrapper from "../svgWrapper";
 import Tree from "./treeGPT";
 
 export default function TreeExample() {
@@ -125,7 +125,10 @@ export default function TreeExample() {
     </Stack>
 
     // // Return the JSX
-    return <SVGWrapper width={canvasSize} height={canvasSize} controlPanel={controlPanel}>
+    return <SVGWrapper 
+    width={canvasSize} height={canvasSize} 
+    displayTitle="Fractal Tree"
+    controlPanel={controlPanel}>
         {allTrees.map((line) => drawLine(line))}
     </SVGWrapper>
 }

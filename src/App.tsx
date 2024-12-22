@@ -2,9 +2,9 @@
 
 import { Route, Routes } from "react-router-dom";
 import HexBoardIndex from "./components/hexboard/HexBoardIndex";
-import { hexBoardList } from "./components/hexboard/HexhexBoardList";
+import { hexBoardList } from "./components/hexboard/HexBoardList";
+import PlaceHolderBoard from "./components/placeHolderSVG";
 import TreeExample from "./components/tree/example";
-import Home from "./Homepage";
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
 
     <Routes >
       <Route path='/'>
-        <Route index element={<Home />} />
+        <Route index element={<PlaceHolderBoard />} />
         <Route path="tree" element={<TreeExample />} />
         <Route path="hex/*" >
           <Route path="" element={<HexBoardIndex />} />

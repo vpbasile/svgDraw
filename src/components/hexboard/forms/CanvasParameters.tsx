@@ -10,6 +10,8 @@ type myProps = {
 	SETcanvasHeight: Dispatch<number>,
 }
 
+// TODO Move this file up a couple levels to the forms directory.  It is not specific to the hexboard.
+
 /**
  * A wrapper component that renders a form for displaying and setting canvas parameters.  It seems silly that I need to pass these to a wrapper component.  Maybe I should remover this layer of abstraction.
  * 

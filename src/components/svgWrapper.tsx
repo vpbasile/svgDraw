@@ -1,7 +1,7 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, Flex, FormControl, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { SetStateAction, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import ColorModeButton from '../colorModeButton';
+import ModuleIndex from '../ModuleIndex';
+import ColorModeButton from './colorModeButton';
 type SvgWrapperProps = {
     width: number;
     height: number;
@@ -10,7 +10,6 @@ type SvgWrapperProps = {
     titleUrl?: string;
     children?: JSX.Element[];
     controlPanel?: JSX.Element;
-    additionalContent?: JSX.Element;
 };
 
 /**
@@ -43,7 +42,7 @@ type SvgWrapperProps = {
 export default function SVGWrapper(props: SvgWrapperProps) {
 
     // Constants, Props, and States
-    const { width, height, children, displayTitle, controlPanel, additionalContent } = props;
+    const { width, height, children, displayTitle, controlPanel } = props;
     if (width <= 0 || height <= 0) {
         throw new Error("SVGWrapper: Width and height must be positive numbers.");
     }
@@ -82,28 +81,30 @@ export default function SVGWrapper(props: SvgWrapperProps) {
     // Assemble the control panel
     const controlPanelContent: { value: string, content: JSX.Element, level: 'h1' | 'h2' | 'h3', href?: string }[] =
         [
-            { value: `${displayTitle} Control Panel`, level: 'h2', content: controlPanel ? controlPanel : <Box>No controls specified for this module</Box> },
+            { value: `${displayTitle} Controls`, level: 'h2', content: controlPanel ? controlPanel : <Box>No controls specified for this module</Box> },
             // We always want the Color Mode Button
-            { value: 'Color Mode', content: <ColorModeButton />, level: 'h2' },
-            // Download Controls
             {
-                value: 'Download SVG', level: 'h2', content: <FormControl>
-                    <FormLabel>Filename</FormLabel>
-                    {fileNameField}
-                    <FormHelperText>Filename will be appended with .svg</FormHelperText>
-                    <Button mt={2} onClick={saveSvgAsFile}>
-                        Download SVG
-                    </Button>
-                </FormControl>
+                value: 'SVGDraw Controls', content: <>
+                    <ColorModeButton />
+                {/* // Download Controls */}
+                    <FormControl>
+                        <FormLabel>Filename</FormLabel>
+                        {fileNameField}
+                        <FormHelperText>Filename will be appended with .svg</FormHelperText>
+                        <Button mt={2} onClick={saveSvgAsFile}>
+                            Download SVG
+                        </Button>
+                    </FormControl>
+                </>, level: 'h2'
             },
+            { value: 'Module Index', level: 'h2', content: <ModuleIndex />, href: '/moduleIndex' }
+
         ]
 
     // Main return
     return <Flex height="100vh">
         {/* SVG Canvas - Dynamic width when panel is open */}
-        <Center id="canvas-box" flex={1}
-        // maxWidth={isOpen ? "calc(100vw - 300px)" : "100vw"} 
-        >
+        <Center id="canvas-box" flex={1} >
             <svg ref={svgRef} height='100vh' viewBox={calcViewBox} xmlns="http://www.w3.org/2000/svg" style={styleBuild}>
                 {/* TODO Add these properties */}
                 {/* < svg
@@ -116,14 +117,14 @@ export default function SVGWrapper(props: SvgWrapperProps) {
             </svg>
         </Center>
         {/* Control Panel */}
-        <Box id='control-panel-column' borderWidth={1} boxShadow="sm" border={'2px'}
+        <Box id='control-panel-column'
+            boxShadow="sm" border={'2px'}
+            width={300}
+            height="100vh" // Restricts height to viewport
             overflowY="auto" // Enables vertical scrolling
-            maxHeight="100vh" // Restricts height to viewport
-        // width={isOpen ? "300px" : "auto"} 
         >
-            <Heading as={'h1'} size="lg" textAlign="center"><Link to='/'>SVGDraw</Link></Heading>
-            {additionalContent}
-            <Accordion allowToggle allowMultiple defaultValue={'Component Control Panel'}>
+            <Heading as={'h2'} size="md" color={'gray'}>{displayTitle}</Heading>
+            <Accordion allowToggle allowMultiple>
                 {controlPanelContent.map((item, index) => (
                     <AccordionItem key={index}>
                         <AccordionItem >
