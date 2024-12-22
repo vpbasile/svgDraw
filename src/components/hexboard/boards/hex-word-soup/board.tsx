@@ -1,11 +1,11 @@
 import HexboardLayout from "../../hexboard/HexboardLayout"
 import Hexboard from "../../hexboard/HexBoardSVG"
-import { canvasGlobalsType, gameGlobalsType, hexProps } from "../../hexboard/hexDefinitions"
+import { canvasGlobalsType, gameGlobalsType, hexDef } from "../../hexboard/hexDefinitions"
 import { clickMessage } from "../../hexboard/hexFunctions"
 import { hexOrientations } from "../../hexboard/hexMath"
 import RosterDisplay from "../../hexboard/hexRosterDisplay"
 
-export default function WordSoupBoard(props: { hexRoster: hexProps[], children?: JSX.Element }) {
+export default function WordSoupBoard(props: { hexRoster: hexDef[], children?: JSX.Element }) {
 	const hexRoster = props.hexRoster
 	// <> States that control canvas parameters
 	const canvasWidth = 6000

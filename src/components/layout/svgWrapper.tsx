@@ -29,9 +29,18 @@ import ColorModeButton from '../colorModeButton';
  * </SVGWrapper>
  *
  */
-export default function SVGWrapper(props: { width: number, height: number, children?: JSX.Element | JSX.Element[], controlPanel: JSX.Element }) {
+export default function SVGWrapper(props: { width: number, height: number, centerOrigin?: boolean, children?: JSX.Element[], controlPanel: JSX.Element }) {
+
+
     // Constants, Props, and States
     const { width, height, children, controlPanel } = props;
+    if (width <= 0 || height <= 0) {
+        throw new Error("SVGWrapper: Width and height must be positive numbers.");
+    }
+    let calcViewBox = `0 0 ${width} ${height}`;
+    if (props.centerOrigin) {
+        calcViewBox = `-${width / 2} -${height / 2} ${width} ${height}`; // Center the origin
+    }
     const [fileName, setFileName] = useState<string>('tree');
     // Reference to the SVG element
     const svgRef = useRef<SVGSVGElement>(null);
@@ -57,12 +66,23 @@ export default function SVGWrapper(props: { width: number, height: number, child
 
     const fileNameField = <Input placeholder={fileName} onChange={(e: { target: { value: SetStateAction<string>; }; }) => setFileName(e.target.value)} transition={'width 0.75s'} />
 
+    // Calculate some style for the parent SVG element
+    let styleBuild = {};
+    styleBuild = { ...styleBuild, fill: "white" };
+
+    // Main return
     return <Flex height="100vh">
         {/* SVG Canvas - Dynamic width when panel is open */}
         <Center id="canvas-box" flex={1}
         // maxWidth={isOpen ? "calc(100vw - 300px)" : "100vw"} 
         >
-            <svg ref={svgRef} height='100vh' viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg">
+            <svg ref={svgRef} height='100vh' viewBox={calcViewBox} xmlns="http://www.w3.org/2000/svg" style={styleBuild}>
+                {/* TODO Add these properties */}
+                {/* < svg
+			className={cssClasses}
+			viewBox={`${-hexGridOrigin.x} ${-hexGridOrigin.y} ${canvasWidth} ${canvasHeight}`
+			}
+			style={{ fill: "white" }}>" ></svg> */}
                 {/* If no children are passed, just show a polygon */}
                 {children || <polygon points="100,10 40,198 190,78 10,78 160,198" />}
             </svg>
@@ -96,7 +116,7 @@ export default function SVGWrapper(props: { width: number, height: number, child
                     </Button>
                 </FormControl>
 
-                <Center pt={5} mt={5} borderTop={'2px'}>{controlPanel}</Center>
+                <Center maxW={'300px'} pt={5} mt={5} borderTop={'2px'}>{controlPanel}</Center>
             </Collapse >
         </Box>
     </Flex>

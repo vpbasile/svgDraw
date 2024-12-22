@@ -27,20 +27,19 @@ export type orientationName = 'flat-top' | 'pointy-top'
 // Eventually, this will want to be more specific
 export type hexID = number;
 
-export type hexProps = {
-	// <> FIXME: I should not be passing down the gameGlobals to every hexagon - why did I do this in the first place?
-	// gameGlobals: gameGlobalsType;
-	uid: hexID;
+export type hexDef = {
+	// This is the unique identifier for a hexagon on the board.  It has everything needed to render the hexagon when accompanied by the gameGlobals
+	id: hexID;
 	q: number;
 	r: number;
-	cssClasses?: string;
+	color?: string;
 	hexText?: string;
 	clickMessage: string;
 }
 export type vector = { q: number, r: number }
-export type direction = number; // ZZZ Should contrain to  0 | 1 | 2 | 3 | 4 | 5;
+export type direction = number; // TODO Should contrain to  0 | 1 | 2 | 3 | 4 | 5;
 export type coordinateHex = { q: number, r: number }
 export type coordinateXY = { x: number, y: number }
 
 
-export type hexClickFunction = (hex: hexProps, id: number, hexText?: string) => unknown
+export type hexClickFunction = (hex: hexDef, id: number, hexText?: string) => unknown

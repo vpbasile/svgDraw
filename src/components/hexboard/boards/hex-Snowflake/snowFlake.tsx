@@ -1,4 +1,4 @@
-import { hexProps } from "../../hexboard/hexDefinitions";
+import { hexDef } from "../../hexboard/hexDefinitions";
 import { coordinateHex, direction } from "../../hexDefinitions";
 import { reflectAcrossAxis } from '../../hexFunctions';
 import { directionVectors, rolloverDirection, sCoordinate } from "../../hexMath";
@@ -14,7 +14,7 @@ export class BranchObject {
 	direction: number;
 	parentDirection: null | number;
 	length: number;
-	roster: hexProps[];
+	roster: hexDef[];
 	constructor(data: snowflakeBranch, parentDirection: null | number, cssClasses?: string) {
 		this.seed = data.seed;
 		this.direction = rolloverDirection(data.direction);
@@ -27,9 +27,9 @@ export class BranchObject {
 		const seedHex = this.seed;
 		const length = this.length;
 		const vector = directionVectors[this.direction];
-		const lineRoster: hexProps[] = []
+		const lineRoster: hexDef[] = []
 		for (let i = 1; i <= length; i++) {
-			const tempHex: hexProps = { q: seedHex.q + i * vector.q, r: seedHex.r + i * vector.r };
+			const tempHex: hexDef = { q: seedHex.q + i * vector.q, r: seedHex.r + i * vector.r };
 			if (cssClasses) { tempHex.cssClasses = cssClasses; }
 			lineRoster.push(tempHex);
 		}
@@ -39,12 +39,12 @@ export class BranchObject {
 	}
 }
 
-export function hexplicate(roster: hexProps[]) {
-	let newRoster: hexProps[] = [...roster]
+export function hexplicate(roster: hexDef[]) {
+	let newRoster: hexDef[] = [...roster]
 
 	// HHH Reflect across the mainbranch, which coincides with the r-axis
-	newRoster.forEach(hexProps => {
-		newRoster = newRoster.concat(reflectAcrossAxis(hexProps,"r","bg-ice"))
+	newRoster.forEach(hexDef => {
+		newRoster = newRoster.concat(reflectAcrossAxis(hexDef,"r","bg-ice"))
 	});
 
 	// HHH Reflect across the origin

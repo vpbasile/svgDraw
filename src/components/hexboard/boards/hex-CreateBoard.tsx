@@ -7,7 +7,7 @@ import BoardParameters from "../hexboard/forms/BoardParameters";
 import CanvasParameters from "../hexboard/forms/CanvasParameters";
 import SaveRosterButton from "../hexboard/forms/saveRoster";
 import { formAttributes } from "../hexboard/forms/style";
-import { gameGlobalsType, hexProps } from "../hexboard/hexDefinitions";
+import { gameGlobalsType, hexDef } from "../hexboard/hexDefinitions";
 import { clickMessage } from "../hexboard/hexFunctions";
 import { cube_ring, hexOrientations } from "../hexboard/hexMath";
 import RosterDisplay from "../hexboard/hexRosterDisplay";
@@ -36,8 +36,8 @@ export default function CreateBoard() {
 	]
 	const [classTemp] = useState(cssClassChoices[0])
 	// const blankRoster: hexagon[] = []
-	const centerHex: hexProps = { q: 0, r: 0, cssClasses: cssClassChoices[0], uid: 0, clickMessage: "Center Hex" }
-	let tempRoster: hexProps[] = [centerHex]
+	const centerHex: hexDef = { q: 0, r: 0, cssClasses: cssClassChoices[0], uid: 0, clickMessage: "Center Hex" }
+	let tempRoster: hexDef[] = [centerHex]
 	const boardSize: number = 7
 	for (let i = 1; i < boardSize; i++) {
 		const thisRing = cube_ring(centerHex, i)
@@ -46,7 +46,7 @@ export default function CreateBoard() {
 		// console.log(JSON.stringify(tempRoster))
 	}
 	tempRoster = tempRoster.map((eachHex) => { eachHex.cssClasses = cssClassChoices[0] + " hover-space"; return eachHex; })
-	const [hexRoster, SEThexRoster] = useState<hexProps[]>(tempRoster)
+	const [hexRoster, SEThexRoster] = useState<hexDef[]>(tempRoster)
 
 	function addHex() {
 		const tempRoster = Array.from(hexRoster)

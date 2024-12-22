@@ -1,14 +1,14 @@
 
 // <> Import components
-import { hexClickFunction, hexagon } from '../../hexDefinitions';
+import { hexClickFunction, hexDef } from '../../hexDefinitions';
 import { centerHexagon, reflectAcrossAxis } from '../../hexFunctions';
 import { hexOrientations } from '../../hexMath';
 import { randomBounded } from '../../math';
 import { BranchObject, hexplicate } from './snowFlake';
 
-import Hexboard from '../../HexBoardSVG';
 import HexboardLayout from '../../HexboardLayout';
 import RosterDisplay from '../../hexRosterDisplay';
+import Hexboard from '../../new-HexBoardSVG';
 // import BoardParameters from '../../forms/BoardParameters';
 // import CanvasParameters from '../../forms/CanvasParameters';
 
@@ -18,8 +18,8 @@ export default function Snowflake() {
 	const branchLength = 45;
 
 	// Build the hex Roster
-	let hexRoster: hexagon[] = [centerHexagon]
-	function mergeRoster(newHexes: hexagon[]): void { hexRoster = hexRoster.concat(newHexes); }
+	let hexRoster: hexDef[] = [centerHexagon]
+	function mergeRoster(newHexes: hexDef[]): void { hexRoster = hexRoster.concat(newHexes); }
 
 	// Function for generating all of the randomized children of the mainBranch
 	function growChildren(parent: BranchObject): void {
@@ -46,7 +46,7 @@ export default function Snowflake() {
 	mergeRoster(fullSnowflake)
 	fullSnowflake.forEach((hexagon) => { mergeRoster([reflectAcrossAxis(hexagon, "q", "bg-ice")]) })
 
-	const gameGlobals: gameglobalsType = {
+	const gameGlobals: unknown = {
 		orientation: hexOrientations['flat-top'],
 		hexRadius: 8,
 		separationMultiplier: 1.02,

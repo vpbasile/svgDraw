@@ -14,7 +14,18 @@ type myProps = {
 	SEThexGridOrigin: Dispatch<coordinateXY>
 }
 
-export default function CanvasParameters(props: myProps) {
+/**
+ * A wrapper component that renders a form for displaying and setting canvas parameters.  It seems silly that I need to pass these to a wrapper component.  Maybe I should remover this layer of abstraction.
+ * 
+ * @param {myProps} props - The properties passed to the component.
+ * @param {number} props.canvasWidth - The current width of the canvas.
+ * @param {number} props.canvasHeight - The current height of the canvas.
+ * @param {Function} props.SETcanvasWidth - Function to update the canvas width.
+ * @param {Function} props.SETcanvasHeight - Function to update the canvas height.
+ * 
+ * @returns {JSX.Element} The rendered component.
+ */
+export default function CanvasParameters(props: myProps): JSX.Element {
 	const canvasWidth = props.canvasWidth; const canvasHeight = props.canvasHeight;
 	const SETcanvasWidth = props.SETcanvasWidth;
 	const SETcanvasHeight = props.SETcanvasHeight;

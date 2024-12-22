@@ -1,4 +1,4 @@
-import TriviaBoard from "./boards/hex-TriviaBoard";
+import TriviaBoard from "./boards/new-TriviaBoard";
 import DummyBoard from "./dummyBoard";
 
 export type boardDef = {

@@ -1,13 +1,11 @@
 import { useState } from "react";
-import Hexboard from "..";
 import BoardParameters from "../forms/BoardParameters";
 import CanvasParameters from "../forms/CanvasParameters";
-import HexboardLayout from "../HexboardLayout";
-import { gameGlobalsType, hexDef } from "../hexDefinitions";
-import blackHexes, { clickMessage, colorHexes } from "../hexFunctions";
+import { coordinateHex, gameGlobalsType, hexDef } from "../hexDefinitions";
+import { clickMessage, coord2hex } from "../hexFunctions";
 import { cube_ring, hexOrientations } from "../hexMath";
 import RosterDisplay from "../hexRosterDisplay";
-import aspectRatio from "../math";
+import HexboardSVG from "../new-HexBoardSVG";
 
 export default function TriviaBoard() {
   // Constants, States, and Functions unique to this board
@@ -15,7 +13,7 @@ export default function TriviaBoard() {
   let colorIndex = 0;
   function getNextcolor() {
     const color = colors[colorIndex];
-    colorIndex = (colorIndex++) % colors.length;
+    colorIndex = (colorIndex + 1) % colors.length;
     return color;
   }
 
@@ -25,30 +23,15 @@ export default function TriviaBoard() {
 
   // <><><> Step 1: Create the hex roster
   // Create a center hexagon
-  const centerHexagon: hexDef = { "uid": 0, "q": 0, "r": 0, "clickMessage": "Center Hexagon" }
+  const centerHexagon: hexDef = { "id": 0, "q": 0, "r": 0, "clickMessage": "Center Hexagon" }
   let hexRoster: hexDef[] = [centerHexagon]
 
-  // First ring
-  const ring1: hexDef[] = cube_ring({ "q": 0, "r": 0 }, 1);
-  blackHexes(ring1);
-
-  //Second ring
-  const ring2: hexDef[] = cube_ring({ "q": 0, "r": 0 }, 2)
-  colorHexes(ring2, getNextcolor);
-
-  // Third ring
-  const ring3: hexDef[] = cube_ring({ "q": 0, "r": 0 }, 3)
-  blackHexes(ring3);
-
-  // Fourth ring
-  const ring4: hexDef[] = cube_ring({ "q": 0, "r": 0 }, 4)
-  colorHexes(ring4, getNextcolor);
-
-  // Gather the different rings together
-  hexRoster = hexRoster.concat(ring1);
-  hexRoster = hexRoster.concat(ring2);
-  hexRoster = hexRoster.concat(ring3);
-  hexRoster = hexRoster.concat(ring4);
+  // Create rings and add them to the hex roster
+  for (let i = 1; i <= 4; i++) {
+    const ring: coordinateHex[] = cube_ring({ "q": 0, "r": 0 }, i);
+    const ringColor = getNextcolor();
+    hexRoster = hexRoster.concat(ring.map((hex: coordinateHex) => coord2hex(hex, ringColor, 0)));
+  }
 
   // <><><> The game globals needed for rendering
   const gameGlobals: gameGlobalsType = {
@@ -62,8 +45,8 @@ export default function TriviaBoard() {
   }
 
   // <><><> Calculate the size of the canvas based on the hex roster
-  const [canvasHeight, SETcanvasHeight] = useState(1000 * separationMultiplier)
-  const [canvasWidth, SETcanvasWidth] = useState(canvasHeight * aspectRatio())
+  const [canvasHeight, SETcanvasHeight] = useState(3600)
+  const [canvasWidth, SETcanvasWidth] = useState(3600)
   // Since this is a centered board, we can calculate the origin based on the height and width
   const [hexGridOrigin, SEThexGridOrigin] = useState({ x: canvasWidth / 2, y: canvasHeight / 2 })
   const canvasGlobals = {
@@ -71,13 +54,14 @@ export default function TriviaBoard() {
     canvasBackgroundColor: '#000',
   }
 
-  return <HexboardLayout id="triviaBoardContainer" displayTitle="Trivia Board"
-    forms={[<CanvasParameters
+  const buildControlPanel = <>
+    <CanvasParameters
+      // Canvas-specific parameters
       canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
       canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight}
-      hexGridOrigin={hexGridOrigin} SEThexGridOrigin={SEThexGridOrigin}
-    />,
+      hexGridOrigin={hexGridOrigin} SEThexGridOrigin={SEThexGridOrigin} />,
     <BoardParameters
+      // Hexagonally-specific parameters
       hexRadius={hexRadius}
       separationMultiplier={separationMultiplier}
       SEThexRadius={SEThexRadius}
@@ -85,11 +69,10 @@ export default function TriviaBoard() {
         x: 0,
         y: 0
       }} SEThexGridOrigin={SEThexGridOrigin} />
-    ]
-    } board={<Hexboard
-      gameGlobals={gameGlobals}
-      canvasGlobals={canvasGlobals}
-      hexRoster={hexRoster}
-    //   logo={logo}
-    />} roster={<RosterDisplay hexRoster={hexRoster} />} />
+    <RosterDisplay hexRoster={hexRoster} />
+  </>
+
+  return <HexboardSVG gameGlobals={gameGlobals} canvasGlobals={canvasGlobals} hexRoster={hexRoster}
+    controlPanel={buildControlPanel}
+  />
 }

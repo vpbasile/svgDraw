@@ -1,4 +1,4 @@
-import { canvasGlobalsType, coordinateHex, coordinateXY, direction, gameGlobalsType, hexProps, vector } from "./hexDefinitions"
+import { canvasGlobalsType, coordinateHex, coordinateXY, direction, gameGlobalsType, hexDef, vector } from "./hexDefinitions"
 import { rollover } from "./math"
 const sqrt3 = Math.sqrt(3)
 
@@ -29,7 +29,7 @@ function cube_add(hexA: coordinateHex, hexB: coordinateHex): coordinateHex { ret
 // <> FIX - This should be a class property, not a function
 export function sCoordinate(hex: coordinateHex) { return -hex.q - hex.r }
 
-export function cube_ring(center: coordinateHex, radius: number): hexProps[] {
+export function cube_ring(center: coordinateHex, radius: number): coordinateHex[] {
 	const results: coordinateHex[] = []
 	let hex: coordinateHex = cube_add(center, cube_scale(cube_direction(4), radius))
 	for (let i = 0; i < 6; i++) {
@@ -38,7 +38,7 @@ export function cube_ring(center: coordinateHex, radius: number): hexProps[] {
 			hex = cube_neighbor(hex, i)
 		}
 	}
-	return {...results}
+	return [...results]
 }
 
 
@@ -64,7 +64,7 @@ export function hex_to_pixel(q: number, r: number, gameGlobals: gameGlobalsType)
 type range = { min: number, max: number }
 function rangeDistance(range: range): number { return range.max - range.min }
 
-export function calcCenteredRectangle(hexRoster: hexProps[], gameGlobals: gameGlobalsType): canvasGlobalsType {
+export function calcCenteredRectangle(hexRoster: hexDef[], gameGlobals: gameGlobalsType): canvasGlobalsType {
 	// <> Find the min and max values for q and r.  Convert those to rectangular coordinates.  
 	let maxRadius = 0
 	hexRoster.forEach(hex => {

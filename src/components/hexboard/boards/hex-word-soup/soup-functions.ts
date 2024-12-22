@@ -1,4 +1,4 @@
-import { hexProps } from "../../hexboard/hexDefinitions";
+import { hexDef } from "../../hexboard/hexDefinitions";
 
 // Gameplay global variables
 export const initPlayers = [
@@ -14,12 +14,12 @@ export const letterScores = {
 export const generateHexCoordinates = () => {
 	const usefulClasses = "hex clickable";
 	let idGen = 0;
-	const hexRoster: hexProps[] = [];
+	const hexRoster: hexDef[] = [];
 	for (let q = -3; q <= 3; q++) {
 		for (let r = -3; r <= 3; r++) {
 			if (Math.abs(q + r) <= 3) {
 				const uid = idGen++;
-				const newHex: hexProps = {
+				const newHex: hexDef = {
 					uid: uid, q: q, r: r, cssClasses: usefulClasses, hexText: "*",
 					// Each hex needs a unique clickMessage
 					clickMessage: `clicked ${uid}`,

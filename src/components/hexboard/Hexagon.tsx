@@ -1,7 +1,17 @@
-import { hexProps } from './hexDefinitions';
+import { gameGlobalsType } from './hexDefinitions';
 import { calcTheta, hex_to_pixel } from './hexMath';
 
-export default function Hexagon(props: hexProps) {
+type hexagonProps = {
+	gameGlobals: gameGlobalsType,
+	q: number,
+	r: number,
+	hexText?: string,
+	color?: string,
+	id: string,
+	clickMessage: string
+}
+
+export default function Hexagon(props: hexagonProps) {
 	const gameGlobals = props.gameGlobals
 	// Cache global variables
 	const hexRadius = gameGlobals.hexRadius;
@@ -30,7 +40,7 @@ export default function Hexagon(props: hexProps) {
 	});
 
 	// CSS
-	const cssClasses = props.cssClasses;
+	const color = props.color;
 
 	function displayText() {
 		if (hexText !== undefined) {
@@ -52,10 +62,12 @@ export default function Hexagon(props: hexProps) {
 	// Make the SVG
 	return (
 		<g onClick={() => console.log(props.clickMessage)}>
+			{/* TODO Do I really need to put this in a g or can I just use the element's onClick? */}
 			<polygon
 				style={{}}
-				className={`hex ${cssClasses}`}
-				id={`${props.uid}`}
+				className={`hex`}
+				fill={color}
+				id={`${props.id}`}
 				points={polygonString}
 			/>
 			{textForHex}
