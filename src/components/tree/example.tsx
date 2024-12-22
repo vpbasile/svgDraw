@@ -21,7 +21,7 @@ export default function TreeExample() {
     // TODO Add minDepth state
     const [numberOfTrees, setNumberOfTrees] = useState<number>(defaultNumberOfTrees);
     const [numerator, SETnumerator] = useState<number>(defaultNumerator);
-    const [selectedPalette, setSelectedPalette] = useState<string>('default');
+    const [selectedPalette, setSelectedPalette] = useState<string>('tree');
     const root: myLineT = { start: seed, angle: -PI / 2, length: 200, width: '21px', z: 0, key: '0' };
     const highestColor: number = Object.keys(palettes[selectedPalette]).length - 1;
 

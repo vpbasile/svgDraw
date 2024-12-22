@@ -3,6 +3,8 @@ import { canvasGlobalsType, gameGlobalsType, hexDef } from "./hexDefinitions";
 import { clickMessage } from './hexFunctions';
 
 //style
+import { Box, Heading } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import SVGWrapper from '../layout/svgWrapper';
 import './hex.css';
 
@@ -31,10 +33,17 @@ export default function HexboardSVG(props: hexboardProps) {
 	// <> Do some last minute things to the roster, like assigning unique ids if they are missing
 	let hexKey = 0;
 
+	const buildControlPanel = <Box id='control-panel-hexboard'>
+		<Heading as={'h2'}><Link to='/hex/'>HexBoardSVG</Link></Heading>
+		<Box id='control-panel-hexboard-children' border={'2px'}>
+			<Heading as={'h3'}>{gameGlobals.displayTitle}</Heading>
+			{props.controlPanel}
+		</Box>
+	</Box>;
 	// TODO Add a flag that geets thrown the first time a child is out of bounds
 	return (<>
 		{/* <> Parent SVG */}
-		<SVGWrapper width={canvasWidth} height={canvasHeight} controlPanel={props.controlPanel}
+		<SVGWrapper width={canvasWidth} height={canvasHeight} controlPanel={buildControlPanel}
 			// The HeaxBoardSVG component assumes that the origin is in the center of the canvas
 			centerOrigin
 		// TODO Add these properties to SVGWrapper

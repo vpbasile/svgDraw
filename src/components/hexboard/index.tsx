@@ -4,7 +4,7 @@ import SVGWrapper from '../layout/svgWrapper';
 import { boardList } from './boardList';
 
 export default function HexBoardIndex() {
-    const zzzzz = <Box>
+    const buildControlPanel = <Box>
         <Heading as={'h2'}>Board Index</Heading>
         <List>
             {boardList.map(({ uid, displayName }) => (
@@ -14,7 +14,7 @@ export default function HexBoardIndex() {
             ))}
         </List>
     </Box>;
-    return <SVGWrapper width={100} height={100} controlPanel={zzzzz}>
+    return <SVGWrapper width={100} height={100} controlPanel={buildControlPanel}>
         {/* A big hexagon with stroke="grey" strokeWidth="3" fill="purple" */}
         <polygon points="50,1 95,25 95,75 50,99 5,75 5,25" stroke="grey" strokeWidth="3"/>
         <text x="50" y="50" textAnchor="middle" fill='grey' dy=".3em">Hexboard</text>

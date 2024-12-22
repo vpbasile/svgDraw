@@ -1,4 +1,4 @@
-import { Box, Button, Center, Collapse, Flex, FormControl, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, FormControl, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { SetStateAction, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ColorModeButton from '../colorModeButton';
@@ -88,7 +88,7 @@ export default function SVGWrapper(props: { width: number, height: number, cente
             </svg>
         </Center>
         {/* Control Panel */}
-        <Box id='control-panel-column' borderWidth={1} p={4} boxShadow="sm" border={'2px'}
+        <Box id='control-panel-column' borderWidth={1} boxShadow="sm" border={'2px'}
             overflowY="auto" // Enables vertical scrolling
             maxHeight="100vh" // Restricts height to viewport
         // width={isOpen ? "300px" : "auto"} 
@@ -96,16 +96,16 @@ export default function SVGWrapper(props: { width: number, height: number, cente
             <Heading as="h1" size="lg" mb={4}><Link to={'/'}>SVGDraw</Link></Heading>
             {/* <FormControl id="show-hide">
                 <Button size="sm" onClick={onToggle} mb={4}>
-                    {isOpen ? "Hide Controls" : "Show Controls"}
+                {isOpen ? "Hide Controls" : "Show Controls"}
                 </Button>
-            </FormControl> */}
-            <Collapse in={true} animateOpacity
-            >
-                {/* Color Mode Button */}
-                <FormControl>
-                    <FormLabel>Color Mode</FormLabel>
-                    <ColorModeButton />
-                </FormControl>
+                </FormControl> */}
+            {/* Color Mode Button */}
+            <FormControl>
+                <FormLabel>Color Mode</FormLabel>
+                <ColorModeButton />
+            </FormControl>
+            <Box id='control-panel-component' maxW={'300px'} pt={5} mt={5} border={'2px'}>{controlPanel}</Box>
+            <Box id="control-download">
                 {/* Download Controls */}
                 <FormControl>
                     <FormLabel>Filename</FormLabel>
@@ -115,9 +115,7 @@ export default function SVGWrapper(props: { width: number, height: number, cente
                         Download SVG
                     </Button>
                 </FormControl>
-
-                <Center maxW={'300px'} pt={5} mt={5} borderTop={'2px'}>{controlPanel}</Center>
-            </Collapse >
+            </Box>
         </Box>
     </Flex>
 }

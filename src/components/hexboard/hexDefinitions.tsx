@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 
 // Game stuff
 export type gameGlobalsType = {
+	// Display properties
+	displayTitle: string,
 	// Hexagon propeties
 	orientation: orientation,
 	hexRadius: number,

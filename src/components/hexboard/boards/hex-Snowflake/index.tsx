@@ -7,7 +7,7 @@ import { randomBounded } from '../../math';
 import { BranchObject, hexplicate } from './snowFlake';
 
 import HexboardLayout from '../../HexboardLayout';
-import RosterDisplay from '../../hexRosterDisplay';
+import RosterDisplay from '../../forms/hexRosterDisplay';
 import Hexboard from '../../new-HexBoardSVG';
 // import BoardParameters from '../../forms/BoardParameters';
 // import CanvasParameters from '../../forms/CanvasParameters';

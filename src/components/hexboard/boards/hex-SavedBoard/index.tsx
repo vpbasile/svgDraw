@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import Hexboard from "../../hexboard/HexBoardSVG";
-import HexboardLayout from '../../hexboard/HexboardLayout';
-import BoardParameters from '../../hexboard/forms/BoardParameters';
-import CanvasParameters from '../../hexboard/forms/CanvasParameters';
-import { clickMessage } from '../../hexboard/hexFunctions';
-import { hexOrientations } from '../../hexboard/hexMath';
-import RosterDisplay from '../../hexboard/hexRosterDisplay';
-import fileData from './data.json';
+import BoardParameters from '../../forms/BoardParameters';
+import CanvasParameters from '../../forms/CanvasParameters';
+import RosterDisplay from '../../forms/hexRosterDisplay';
+import { canvasGlobalsType, gameGlobalsType, hexDef } from '../../hexDefinitions';
+import { clickMessage } from '../../hexFunctions';
+import { hexOrientations } from '../../hexMath';
+import HexboardSVG from '../../new-HexBoardSVG';
 
 export default function SavedBoard() {
 	// <> States that control canvas parameters
@@ -22,10 +21,12 @@ export default function SavedBoard() {
 	// 	}
 	// }
 
-	const hexRoster = fileData.hexRoster;
+	// const hexRoster = fileData.hexRoster;
+	let idGen = 0;
+	const hexRoster: hexDef[] = [{ "q": 0, "r": 0, id: idGen++, clickMessage: "zzzz" }, { "q": 1, "r": 0, id: idGen++, clickMessage: "zzzz" }, { "q": 2, "r": 0, id: idGen++, clickMessage: "zzzz" }, { "q": -1, "r": 0, id: idGen++, clickMessage: "zzzz" }, { "q": 3, "r": 0, id: idGen++, clickMessage: "zzzz" }, { "q": 4, "r": 0, id: idGen++, clickMessage: "zzzz" }, { "q": 4, "r": 1, id: idGen++, clickMessage: "zzzz" }, { "q": 4, "r": -1, id: idGen++, clickMessage: "zzzz" }, { "q": 4, "r": -2, id: idGen++, clickMessage: "zzzz" }, { "q": 3, "r": -1, id: idGen++, clickMessage: "zzzz" }, { "q": 5, "r": -3, id: idGen++, clickMessage: "zzzz" }, { "q": 6, "r": -4, id: idGen++, clickMessage: "zzzz" }, { "q": 1, "r": 1, id: idGen++, clickMessage: "zzzz" }, { "q": 1, "r": 2, id: idGen++, clickMessage: "zzzz" }, { "q": 0, "r": 3, id: idGen++, clickMessage: "zzzz" }, { "q": -1, "r": 4, id: idGen++, clickMessage: "zzzz" }, { "q": -2, "r": 4, id: idGen++, clickMessage: "zzzz" }, { "q": -3, "r": 4, id: idGen++, clickMessage: "zzzz" }, { "q": 0, "r": 4, id: idGen++, clickMessage: "zzzz" }, { "q": 1, "r": 4, id: idGen++, clickMessage: "zzzz" }, { "q": -4, "r": 4, id: idGen++, clickMessage: "zzzz" }, { "q": -5, "r": 4, id: idGen++, clickMessage: "zzzz" }, { "q": -5, "r": 5, id: idGen++, clickMessage: "zzzz" }, { "q": -4, "r": 5, id: idGen++, clickMessage: "zzzz" }, { "q": -4, "r": 6, id: idGen++, clickMessage: "zzzz" }, { "q": -4, "r": 7, id: idGen++, clickMessage: "zzzz" }, { "q": -4, "r": 3, id: idGen++, clickMessage: "zzzz" }, { "q": -4, "r": 2, id: idGen++, clickMessage: "zzzz" }, { "q": -3, "r": 1, id: idGen++, clickMessage: "zzzz" }, { "q": -3, "r": 2, id: idGen++, clickMessage: "zzzz" }, { "q": -5, "r": 2, id: idGen++, clickMessage: "zzzz" }, { "q": -2, "r": 2, id: idGen++, clickMessage: "zzzz" }, { "q": -2, "r": 1, id: idGen++, clickMessage: "zzzz" }, { "q": -2, "r": 3, id: idGen++, clickMessage: "zzzz" }, { "q": -5, "r": 6, id: idGen++, clickMessage: "zzzz" }, { "q": -5, "r": 7, id: idGen++, clickMessage: "zzzz" }, { "q": -6, "r": 8, id: idGen++, clickMessage: "zzzz" }, { "q": -6, "r": 9, id: idGen++, clickMessage: "zzzz" }, { "q": -5, "r": 8, id: idGen++, clickMessage: "zzzz" }, { "q": -7, "r": 8, id: idGen++, clickMessage: "zzzz" }, { "q": -7, "r": 7, id: idGen++, clickMessage: "zzzz" }, { "q": -7, "r": 9, id: idGen++, clickMessage: "zzzz" }, { "q": -5, "r": 9, id: idGen++, clickMessage: "zzzz" }, { "q": -4, "r": 9, id: idGen++, clickMessage: "zzzz" }, { "q": -8, "r": 9, id: idGen++, clickMessage: "zzzz" }, { "q": -6, "r": 7, id: idGen++, clickMessage: "zzzz" }, { "q": -6, "r": 10, id: idGen++, clickMessage: "zzzz" }, { "q": -7, "r": 10, id: idGen++, clickMessage: "zzzz" }, { "q": -7, "r": 11, id: idGen++, clickMessage: "zzzz" }, { "q": -4, "r": 8, id: idGen++, clickMessage: "zzzz" }, { "q": -3, "r": 7, id: idGen, clickMessage: "zzzz" }]
 	// const canvasGlobals = fileData.canvasGlobals;
 
-	const gameGlobals: gameglobalsType = {
+	const gameGlobals: gameGlobalsType = {
 		// Hexagons
 		orientation: orientation,
 		hexRadius: hexRadius,
@@ -42,17 +43,23 @@ export default function SavedBoard() {
 		canvasBackgroundColor: '#000',
 	}
 
-	return <HexboardLayout id="savedBoard" displayTitle="Saved Board" forms={[<BoardParameters
-		hexRadius={hexRadius}
-		separationMultiplier={separationMultiplier}
-		SEThexRadius={SEThexRadius}
-		SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={hexGridOrigin} SEThexGridOrigin={SEThexGridOrigin} />,
-	<CanvasParameters
-		canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-		canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight}
-		hexGridOrigin={hexGridOrigin} SEThexGridOrigin={SEThexGridOrigin}
-	/>]} board={<Hexboard
-		hexRoster={hexRoster}
-		gameGlobals={gameGlobals}
-		canvasGlobals={canvasGlobals} />} roster={<RosterDisplay hexRoster={hexRoster} />} />
+	const buildControlPanel = <>
+		<CanvasParameters
+			// Canvas-specific parameters
+			canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
+			canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight}
+			hexGridOrigin={hexGridOrigin} SEThexGridOrigin={SEThexGridOrigin} />,
+		<BoardParameters
+			// Hexagonally-specific parameters
+			hexRadius={hexRadius}
+			separationMultiplier={separationMultiplier}
+			SEThexRadius={SEThexRadius}
+			SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
+				x: 0,
+				y: 0
+			}} SEThexGridOrigin={SEThexGridOrigin} />
+		<RosterDisplay hexRoster={hexRoster} />
+	</>
+
+	return <HexboardSVG gameGlobals={gameGlobals} canvasGlobals={canvasGlobals} hexRoster={hexRoster} controlPanel={buildControlPanel} />
 }
