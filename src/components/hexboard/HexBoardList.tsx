@@ -1,6 +1,5 @@
 import SavedBoard from "./boards/hex-SavedBoard";
 import TriviaBoard from "./boards/new-TriviaBoard";
-import DummyBoard from "./dummyBoard";
 
 export type boardDef = {
     uid: string;
@@ -10,8 +9,7 @@ export type boardDef = {
 
 // Each element in the list should be an implementation of SVGWrapper
 
-export const boardList: boardDef[] = [
-    { uid: 'dummy', displayName: 'Dummy Board', element: <DummyBoard /> },
+export const hexBoardList: boardDef[] = [
     { uid: 'trivia', displayName: 'Trivia Board', element: <TriviaBoard /> },
     { uid: 'saved', displayName: 'Saved Board', element: <SavedBoard /> },
     // Other boards can be added here...

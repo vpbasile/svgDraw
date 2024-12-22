@@ -1,8 +1,8 @@
 // App.tsx 
 
 import { Route, Routes } from "react-router-dom";
-import HexBoardIndex from "./components/hexboard";
-import { boardList } from "./components/hexboard/boardList";
+import HexBoardIndex from "./components/hexboard/HexBoardIndex";
+import { hexBoardList } from "./components/hexboard/HexhexBoardList";
 import TreeExample from "./components/tree/example";
 import Home from "./Homepage";
 
@@ -19,7 +19,7 @@ function App() {
         <Route path="tree" element={<TreeExample />} />
         <Route path="hex/*" >
           <Route path="" element={<HexBoardIndex />} />
-          {boardList.map(({ uid, element }) => (
+          {hexBoardList.map(({ uid, element }) => (
             <Route key={`${uid}`} path={uid} element={element} />
           ))}
           <Route path="*" element={<div>Board not found!</div>} />

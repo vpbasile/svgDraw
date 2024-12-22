@@ -12,7 +12,8 @@ export interface hexboardProps {
 	gameGlobals: gameGlobalsType;
 	canvasGlobals: canvasGlobalsType;
 	hexRoster: hexDef[];
-	controlPanel: JSX.Element;
+	controlPanel?: JSX.Element;
+	additionalContent?: JSX.Element;
 	textSize?: number;
 	color?: string;
 }
@@ -40,14 +41,17 @@ export default function HexboardSVG(props: hexboardProps) {
 			{props.controlPanel}
 		</Box>
 	</Box>;
-	// TODO Add a flag that geets thrown the first time a child is out of bounds
+	const buildAdditionalContent = <>
+		{/* <HexBoardIndex /> */}
+		{props.additionalContent}</>;
+	// TODO Add a flag that gets thrown the first time a child is out of bounds
 	return (<>
 		{/* <> Parent SVG */}
-		<SVGWrapper width={canvasWidth} height={canvasHeight} controlPanel={buildControlPanel}
+		<SVGWrapper width={canvasWidth} height={canvasHeight} displayTitle={'HexBoardSVG'}  controlPanel={buildControlPanel} additionalContent={buildAdditionalContent}
 			// The HeaxBoardSVG component assumes that the origin is in the center of the canvas
 			centerOrigin
 		// TODO Add these properties to SVGWrapper
-		// id="triviaBoardContainer" displayTitle="Trivia Board" color={color}
+		// id="triviaBoardContainer"
 		>
 			{/* All of the hexes */}
 			{hexRoster.map((hex: hexDef) => {

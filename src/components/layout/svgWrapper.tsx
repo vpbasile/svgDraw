@@ -1,7 +1,18 @@
-import { Box, Button, Center, Flex, FormControl, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, Flex, FormControl, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { SetStateAction, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ColorModeButton from '../colorModeButton';
+type SvgWrapperProps = {
+    width: number;
+    height: number;
+    centerOrigin?: boolean;
+    displayTitle: string;
+    titleUrl?: string;
+    children?: JSX.Element[];
+    controlPanel?: JSX.Element;
+    additionalContent?: JSX.Element;
+};
+
 /**
  * SVGWrapper component provides a container for rendering SVG elements
  * along with a control panel for additional functionalities.
@@ -22,21 +33,23 @@ import ColorModeButton from '../colorModeButton';
  * @param {JSX.Element} props.controlPanel - The control panel element to be displayed alongside the SVG canvas.
  *
  * @returns {JSX.Element} The rendered SVGWrapper component.
- *
- * @example
- * <SVGWrapper width={200} height={200} controlPanel={controlPanel} >
- *  {content}
+*
+* @example
+* <SVGWrapper width={200} height={200} controlPanel={controlPanel} >
+*  {content}
  * </SVGWrapper>
- *
- */
-export default function SVGWrapper(props: { width: number, height: number, centerOrigin?: boolean, children?: JSX.Element[], controlPanel: JSX.Element }) {
-
+*
+*/
+export default function SVGWrapper(props: SvgWrapperProps) {
 
     // Constants, Props, and States
-    const { width, height, children, controlPanel } = props;
+    const { width, height, children, displayTitle, controlPanel, additionalContent } = props;
     if (width <= 0 || height <= 0) {
         throw new Error("SVGWrapper: Width and height must be positive numbers.");
     }
+    // Calculate some style for the parent SVG element
+    let styleBuild = {};
+    styleBuild = { ...styleBuild, fill: "white" };
     let calcViewBox = `0 0 ${width} ${height}`;
     if (props.centerOrigin) {
         calcViewBox = `-${width / 2} -${height / 2} ${width} ${height}`; // Center the origin
@@ -66,9 +79,24 @@ export default function SVGWrapper(props: { width: number, height: number, cente
 
     const fileNameField = <Input placeholder={fileName} onChange={(e: { target: { value: SetStateAction<string>; }; }) => setFileName(e.target.value)} transition={'width 0.75s'} />
 
-    // Calculate some style for the parent SVG element
-    let styleBuild = {};
-    styleBuild = { ...styleBuild, fill: "white" };
+    // Assemble the control panel
+    const controlPanelContent: { value: string, content: JSX.Element, level: 'h1' | 'h2' | 'h3', href?: string }[] =
+        [
+            { value: `${displayTitle} Control Panel`, level: 'h2', content: controlPanel ? controlPanel : <Box>No controls specified for this module</Box> },
+            // We always want the Color Mode Button
+            { value: 'Color Mode', content: <ColorModeButton />, level: 'h2' },
+            // Download Controls
+            {
+                value: 'Download SVG', level: 'h2', content: <FormControl>
+                    <FormLabel>Filename</FormLabel>
+                    {fileNameField}
+                    <FormHelperText>Filename will be appended with .svg</FormHelperText>
+                    <Button mt={2} onClick={saveSvgAsFile}>
+                        Download SVG
+                    </Button>
+                </FormControl>
+            },
+        ]
 
     // Main return
     return <Flex height="100vh">
@@ -93,29 +121,22 @@ export default function SVGWrapper(props: { width: number, height: number, cente
             maxHeight="100vh" // Restricts height to viewport
         // width={isOpen ? "300px" : "auto"} 
         >
-            <Heading as="h1" size="lg" mb={4}><Link to={'/'}>SVGDraw</Link></Heading>
-            {/* <FormControl id="show-hide">
-                <Button size="sm" onClick={onToggle} mb={4}>
-                {isOpen ? "Hide Controls" : "Show Controls"}
-                </Button>
-                </FormControl> */}
-            {/* Color Mode Button */}
-            <FormControl>
-                <FormLabel>Color Mode</FormLabel>
-                <ColorModeButton />
-            </FormControl>
-            <Box id='control-panel-component' maxW={'300px'} pt={5} mt={5} border={'2px'}>{controlPanel}</Box>
-            <Box id="control-download">
-                {/* Download Controls */}
-                <FormControl>
-                    <FormLabel>Filename</FormLabel>
-                    {fileNameField}
-                    <FormHelperText>Filename will be appended with .svg</FormHelperText>
-                    <Button mt={2} onClick={saveSvgAsFile}>
-                        Download SVG
-                    </Button>
-                </FormControl>
-            </Box>
+            <Heading as={'h1'} size="lg" textAlign="center"><Link to='/'>SVGDraw</Link></Heading>
+            {additionalContent}
+            <Accordion allowToggle allowMultiple defaultValue={'Component Control Panel'}>
+                {controlPanelContent.map((item, index) => (
+                    <AccordionItem key={index}>
+                        <AccordionItem >
+                            <AccordionButton><AccordionIcon />
+                                <Heading as={item.level} size="md">{item.value}</Heading>
+                            </AccordionButton>
+                            <AccordionPanel>
+                                {item.content}
+                            </AccordionPanel>
+                        </AccordionItem>
+                    </AccordionItem>
+                ))}
+            </Accordion>
         </Box>
     </Flex>
 }
