@@ -86,7 +86,7 @@ export default function SVGWrapper(props: SvgWrapperProps) {
             {
                 value: 'SVGDraw Controls', content: <>
                     <ColorModeButton />
-                {/* // Download Controls */}
+                    {/* // Download Controls */}
                     <FormControl>
                         <FormLabel>Filename</FormLabel>
                         {fileNameField}
@@ -106,12 +106,6 @@ export default function SVGWrapper(props: SvgWrapperProps) {
         {/* SVG Canvas - Dynamic width when panel is open */}
         <Center id="canvas-box" flex={1} >
             <svg ref={svgRef} height='100vh' viewBox={calcViewBox} xmlns="http://www.w3.org/2000/svg" style={styleBuild}>
-                {/* TODO Add these properties */}
-                {/* < svg
-			className={cssClasses}
-			viewBox={`${-hexGridOrigin.x} ${-hexGridOrigin.y} ${canvasWidth} ${canvasHeight}`
-			}
-			style={{ fill: "white" }}>" ></svg> */}
                 {/* If no children are passed, just show a polygon */}
                 {children || <polygon points="100,10 40,198 190,78 10,78 160,198" />}
             </svg>
@@ -124,7 +118,7 @@ export default function SVGWrapper(props: SvgWrapperProps) {
             overflowY="auto" // Enables vertical scrolling
         >
             <Heading as={'h2'} size="md" color={'gray'}>{displayTitle}</Heading>
-            <Accordion allowToggle allowMultiple>
+            <Accordion allowToggle>
                 {controlPanelContent.map((item, index) => (
                     <AccordionItem key={index}>
                         <AccordionItem >

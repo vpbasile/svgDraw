@@ -62,7 +62,7 @@ export default function Hexagon(props: hexagonProps) {
 	// Make the SVG
 	return (
 		<g onClick={() => console.log(props.clickMessage)}>
-			{/* TODO Do I really need to put this in a g or can I just use the element's onClick? */}
+			{/* The group is needed to make the text and hexagon work together */}
 			<polygon
 				style={{}}
 				className={`hex`}

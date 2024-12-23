@@ -1,4 +1,4 @@
-import { Box, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
+import { Box, Heading, Link, List, ListItem, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useState } from 'react';
 import SVGWrapper from './svgWrapper';
 export default function PlaceHolderBoard() {
@@ -19,28 +19,37 @@ export default function PlaceHolderBoard() {
 
     // Control Panel
     const controlPanel = <>
-        <Slider aria-label="slider-ex-1"
-            value={x} // Controlled component
-            onChange={(value: number) => setX(value)
-            } // Update state on change
-            step={1}
-            min={0}
-            max={100}
-        >
-            <SliderTrack>
-                <SliderFilledTrack />
-            </SliderTrack>
-            <SliderThumb />
-        </Slider >
-        {/* Display Current Value */}
-        < Box mt={4} > Value: {x}</Box >
+        < Box mt={4} >
+            <Slider aria-label="slider-ex-1"
+                value={x} // Controlled component
+                onChange={(value: number) => setX(value)
+                } // Update state on change
+                step={1}
+                min={0}
+                max={100}
+            >
+                <SliderTrack>
+                    <SliderFilledTrack />
+                </SliderTrack>
+                <SliderThumb />
+            </Slider >
+            {/* Display Current Value */}
+            Value: {x}</Box >
+        <Box id="to-do-list">
+            <Heading as={'h2'}>To Do:</Heading>
+            <List>
+                <ListItem>Migrate HexBoard (begun but not completed)</ListItem>
+                <ListItem>Move the save menu to an <Link href="https://www.chakra-ui.com/docs/components/action-bar" >Action Bar</Link></ListItem>
+                <ListItem>Handle classes for svg components</ListItem>
+            </List>
+        </Box>
     </>
 
 
-    return <SVGWrapper 
-    width={200} height={200} 
-    displayTitle="Dummy Board"
-    controlPanel={controlPanel} >
+    return <SVGWrapper
+        width={200} height={200}
+        displayTitle="Dummy Board"
+        controlPanel={controlPanel} >
         {content}
     </SVGWrapper>
 }

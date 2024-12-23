@@ -39,7 +39,7 @@ export type hexDef = {
 	clickMessage: string;
 }
 export type vector = { q: number, r: number }
-export type direction = number; // TODO Should contrain to  0 | 1 | 2 | 3 | 4 | 5;
+export type direction = 0 | 1 | 2 | 3 | 4 | 5;
 export type coordinateHex = { q: number, r: number }
 export type coordinateXY = { x: number, y: number }
 

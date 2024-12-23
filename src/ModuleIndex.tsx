@@ -4,7 +4,6 @@ export default function ModuleIndex() {
     return <Box>
         <Heading as={'h2'}>Modules</Heading>
         <List>
-            {/* TODO This list needs bullets */}
             <ListItem><LinkIcon /> <Link href={'/tree'}>Tree</Link></ListItem>
             <ListItem><LinkIcon /> <Link href='/hex'>HexBoard</Link>
                 <List>

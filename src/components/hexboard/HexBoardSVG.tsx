@@ -45,8 +45,6 @@ export default function HexboardSVG(props: hexboardProps) {
 		<SVGWrapper width={canvasWidth} height={canvasHeight} displayTitle={'HexBoardSVG'}  controlPanel={buildControlPanel}
 			// The HeaxBoardSVG component assumes that the origin is in the center of the canvas
 			centerOrigin
-		// TODO Add these properties to SVGWrapper
-		// id="triviaBoardContainer"
 		>
 			{/* All of the hexes */}
 			{hexRoster.map((hex: hexDef) => {
