@@ -6,10 +6,13 @@ type hexagonProps = {
 	q: number,
 	r: number,
 	hexText?: string,
+	textSize?: number,
 	color?: string,
 	id: string,
 	clickMessage: string
 }
+
+// If textsize is blank, default to 75pt
 
 export default function Hexagon(props: hexagonProps) {
 	const gameGlobals = props.gameGlobals
@@ -23,7 +26,8 @@ export default function Hexagon(props: hexagonProps) {
 	// const s = -q - r;
 	// Math
 	const hexText = props.hexText
-	const hexTextSize = gameGlobals.textSize;
+	// If the text size is not defined, default to 75pt
+	const hexTextSize = props.textSize || 75
 
 	const center = hex_to_pixel(q, r, gameGlobals)
 

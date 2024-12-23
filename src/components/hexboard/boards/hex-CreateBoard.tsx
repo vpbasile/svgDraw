@@ -1,81 +1,139 @@
-
-import { Box, Button, Container, Input } from "@chakra-ui/react";
-import { useState } from "react";
-import Hexboard from "../hexboard/HexBoardSVG";
-import HexboardLayout from "../hexboard/HexboardLayout";
-import BoardParameters from "../hexboard/forms/BoardParameters";
-import CanvasParameters from "../hexboard/forms/CanvasParameters";
-import SaveRosterButton from "../hexboard/forms/saveRoster";
-import { formAttributes } from "../hexboard/forms/style";
-import { gameGlobalsType, hexDef } from "../hexboard/hexDefinitions";
-import { clickMessage } from "../hexboard/hexFunctions";
-import { cube_ring, hexOrientations } from "../hexboard/hexMath";
-import RosterDisplay from "../hexboard/hexRosterDisplay";
+import { Box, Button, Container, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { palettes } from "../../palettes";
+import BoardParameters from "../forms/BoardParameters";
+import CanvasParameters from "../forms/CanvasParameters";
+import RosterDisplay from "../forms/hexRosterDisplay";
+import HexboardSVG from "../HexBoardSVG";
+import { canvasGlobalsType, gameGlobalsType, hexDef } from "../hexDefinitions";
+import { clickMessage } from "../hexFunctions";
+import { cube_ring, hexOrientations } from "../hexMath";
 
 export default function CreateBoard() {
 	// <> States that control canvas parameters
 	const [hexRadius, SEThexRadius] = useState(200);
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [canvasHeight, SETcanvasHeight] = useState(3600)
+	const [canvasWidth, SETcanvasWidth] = useState(3600)
 	const [defaultOrientation, SETdefaultOrientation] = useState(hexOrientations["flat-top"])
+	// Constants, States, and Functions unique to this board
+	// <> This color stuff is reusable across all boards
+	const [selectedPalette, setSelectedPalette] = useState<string>('trivia');
+	const [colors, setColors] = useState(palettes[selectedPalette]);
 
-	console.log(SETdefaultOrientation)
+	useEffect(() => {
+		setColors(palettes[selectedPalette]);
+	}, [selectedPalette]);
+
+	let colorIndex = 0;
+	function getNextcolor() {
+		const color = colors[colorIndex];
+		colorIndex = (colorIndex + 1) % colors.length;
+		return color;
+	}
 
 	// States unique to this board
 	const [qTemp, SETqTemp] = useState(0);
 	const [rTemp, SETrTemp] = useState(0);
-	const cssClassChoices = [
-		`just-grid`,
-		`bg-white`,
-		'bg-red',
-		'bg-orange',
-		'bg-yellow',
-		'bg-green',
-		'bg-blue',
-		'bg-purple',
-	]
-	const [classTemp] = useState(cssClassChoices[0])
-	// const blankRoster: hexagon[] = []
-	const centerHex: hexDef = { q: 0, r: 0, cssClasses: cssClassChoices[0], uid: 0, clickMessage: "Center Hex" }
+	const [colorTemp, SETcolorTemp] = useState(getNextcolor());
+
+	// <><><> Step 1: Create the hex roster
+	// Define a color for the genreated hexes - 50% gray with 50% opacity
+	const blankColor = "rgba(128, 128, 128, 0.5)"
+	const centerHex: hexDef = { q: 0, r: 0, color: getNextcolor(), id: 0, clickMessage: "Center Hex" }
 	let tempRoster: hexDef[] = [centerHex]
 	const boardSize: number = 7
 	for (let i = 1; i < boardSize; i++) {
 		const thisRing = cube_ring(centerHex, i)
-		// console.log(`Ring ${i} is ${JSON.stringify(thisRing)}`)
+			.map((eachHex) => {
+				const uid = tempRoster.length
+				return {
+					q: eachHex.q, r: eachHex.r,
+					color: blankColor,
+					id: uid,
+					clickMessage: `Hex ${uid}`,
+					hexText: `q:${eachHex.q},r:${eachHex.r}`
+					
+				}
+			})
 		tempRoster = tempRoster.concat(thisRing);
-		// console.log(JSON.stringify(tempRoster))
 	}
-	tempRoster = tempRoster.map((eachHex) => { eachHex.cssClasses = cssClassChoices[0] + " hover-space"; return eachHex; })
 	const [hexRoster, SEThexRoster] = useState<hexDef[]>(tempRoster)
 
+	// Handle adding a hex to the roster
 	function addHex() {
 		const tempRoster = Array.from(hexRoster)
-		tempRoster.push({ q: qTemp, r: rTemp, cssClasses: classTemp, uid: hexRoster.length, clickMessage: `Hex ${hexRoster.length}` })
+		tempRoster.push({ q: qTemp, r: rTemp, color: colorTemp, id: hexRoster.length, clickMessage: `Hex ${hexRoster.length}` })
 		SEThexRoster(tempRoster);
 	}
 
-	const form = <Container sx={formAttributes} color={'orange.500'}>
-		<h3>Add Hex</h3>
-		<Box id="setQBox">
-			<label className="" htmlFor="qField">q:</label>
-			<Input className="form-control" name="qField" defaultValue={qTemp} onChange={(e) => SETqTemp(+e.target.value)} />
+	// <><><> Step 2: Create the control panel
+
+	const controlPalette = <FormControl id="palette-control">
+		<FormLabel>Color Palette</FormLabel>
+		{Object.keys(palettes).map((paletteKey) => (
+			<FormControl key={paletteKey} display="flex" alignItems="center">
+				<FormLabel htmlFor={paletteKey} mb="0">
+					{paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
+				</FormLabel>
+				<input
+					type="radio"
+					id={paletteKey}
+					name="palette"
+					value={paletteKey}
+					checked={selectedPalette === paletteKey}
+					onChange={(e) => setSelectedPalette(e.target.value)}
+				/>
+			</FormControl>
+		))}
+	</FormControl>;
+
+	let keyGen = 0;
+	const buildControlPanel = <Box id="control-panel-trivia">
+		{/* Select Palette */}
+		{controlPalette}
+		{/* Canvas Parameters */}
+		<Box id="control-panel-trivia">
+			{controlPalette}
+			<CanvasParameters
+				// Canvas-specific parameters
+				canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
+				canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
+			<BoardParameters
+				// Hexagonally-specific parameters
+				hexRadius={hexRadius}
+				separationMultiplier={separationMultiplier}
+				SEThexRadius={SEThexRadius}
+				SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
+					x: 0,
+					y: 0
+				}} />
+			<RosterDisplay hexRoster={hexRoster} />
 		</Box>
-		<Box className="setRBox">
-			<label className="" htmlFor="rField">r:</label>
-			<Input className="form-control" name="rField" defaultValue={rTemp} onChange={(e) => SETrTemp(+e.target.value)} />
-		</Box>
-		<Box id="chooseClass">
-			{/* <ArraySelect
-				choicesArray={cssClassChoices}
-				onChange={SETclassTemp}
-			/> */}
-		</Box>
-		<Box id="buttons">
-			<Button onClick={() => addHex()}>Add</Button>
-		</Box>
-	</Container>
+		<Container color={'orange.500'}>
+			<h3>Add Hex</h3>
+			<Box id="setQBox">
+				<label className="" htmlFor="qField">q:</label>
+				<Input className="form-control" name="qField" defaultValue={qTemp} onChange={(e) => SETqTemp(+e.target.value)} />
+			</Box>
+			<Box className="setRBox">
+				<label className="" htmlFor="rField">r:</label>
+				<Input className="form-control" name="rField" defaultValue={rTemp} onChange={(e) => SETrTemp(+e.target.value)} />
+			</Box>
+			<Box id="chooseColor">
+				<Select id="colorSelect" defaultValue={colorTemp} onChange={(e) => SETcolorTemp(e.target.value)}>
+					{colors.map((color) => <option key={`colorChoice-${keyGen++}`} value={color}>{color}</option>)}
+				</Select>
+			</Box>
+			<Box id="buttons">
+				<Button onClick={() => addHex()}>Add</Button>
+			</Box>
+		</Container>
+		<RosterDisplay hexRoster={hexRoster} />
+	</Box>
 
 	const gameGlobals: gameGlobalsType = {
+		displayTitle: "Create Board",
 		orientation: defaultOrientation,
 		hexRadius: hexRadius,
 		separationMultiplier: separationMultiplier,
@@ -84,40 +142,12 @@ export default function CreateBoard() {
 		onClick: clickMessage
 	}
 
-	// <><><> Calculate the size of the canvas based on the hex roster
-	const [canvasHeight, SETcanvasHeight] = useState(5600)
-	const [canvasWidth, SETcanvasWidth] = useState(9000)
-	// Since this is a centered board, we can calculate the origin based on the height and width
-	const [hexGridOrigin, SEThexGridOrigin] = useState({ x: 3000, y: 2500 });
-
-	const canvasGlobals = {
-		canvasWidth, canvasHeight, hexGridOrigin,
-		canvasBackgroundColor: '#000'
+	const canvasGlobals: canvasGlobalsType = {
+		canvasWidth: canvasWidth,
+		canvasHeight: canvasHeight,
 	}
 
-	return <HexboardLayout id="createBoard" displayTitle="Create Board"
-		forms={[
-			<CanvasParameters
-				canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-				canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight}
-				hexGridOrigin={hexGridOrigin} SEThexGridOrigin={SEThexGridOrigin}
-			/>,
-			<BoardParameters
-				hexRadius={hexRadius}
-				separationMultiplier={separationMultiplier}
-				SEThexRadius={SEThexRadius}
-				SETseparationMultiplier={SETseparationMultiplier}
-				hexgridOrigin={hexGridOrigin} SEThexGridOrigin={SEThexGridOrigin}
-			/>,
-			form,
-			<SaveRosterButton
-				hexRoster={hexRoster}
-				gameGlobals={gameGlobals}
-			/>,]}
-		board={<Hexboard
-			hexRoster={hexRoster}
-			gameGlobals={gameGlobals}
-			canvasGlobals={canvasGlobals} />}
-		roster={<RosterDisplay hexRoster={hexRoster} />}
+	return <HexboardSVG gameGlobals={gameGlobals} canvasGlobals={canvasGlobals} hexRoster={hexRoster}
+		controlPanel={buildControlPanel}
 	/>
 }

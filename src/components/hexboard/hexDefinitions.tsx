@@ -9,6 +9,7 @@ export type gameGlobalsType = {
 	hexRadius: number,
 	separationMultiplier: number,
 	textSize: number,
+	hexText?: string,
 	drawBackBoard: boolean,
 	onClick: hexClickFunction,
 	// Children
@@ -16,9 +17,7 @@ export type gameGlobalsType = {
 }
 
 export type canvasGlobalsType = {
-	canvasWidth: number, canvasHeight: number,
-	hexGridOrigin: coordinateXY,
-	canvasBackgroundColor: string,
+	canvasWidth: number, canvasHeight: number
 };
 
 export type orientation = { name: string; cornerAngles: number[]; }

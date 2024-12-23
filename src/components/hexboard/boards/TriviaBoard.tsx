@@ -11,6 +11,7 @@ import { cube_ring, hexOrientations } from "../hexMath";
 
 export default function TriviaBoard() {
   // Constants, States, and Functions unique to this board
+  // <> This color stuff is reusable across all boards
   let colorIndex = 0;
   function getNextcolor() {
     const color = colors[colorIndex];
@@ -19,6 +20,7 @@ export default function TriviaBoard() {
   }
   const [selectedPalette, setSelectedPalette] = useState<string>('trivia');
   const colors = palettes[selectedPalette]
+  // End of color stuff
 
   // <> States that control canvas parameters
   const [hexRadius, SEThexRadius] = useState(200);
@@ -41,7 +43,7 @@ export default function TriviaBoard() {
   const [canvasHeight, SETcanvasHeight] = useState(3600)
   const [canvasWidth, SETcanvasWidth] = useState(3600)
   // Since this is a centered board, we can calculate the origin based on the height and width
-  const [hexGridOrigin, SEThexGridOrigin] = useState({ x: canvasWidth / 2, y: canvasHeight / 2 })
+  const hexGridOrigin = { x: canvasWidth / 2, y: canvasHeight / 2 }
   const canvasGlobals = {
     canvasWidth: canvasWidth, canvasHeight: canvasHeight, hexGridOrigin: hexGridOrigin,
     canvasBackgroundColor: '#000',
@@ -94,7 +96,7 @@ export default function TriviaBoard() {
       SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
         x: 0,
         y: 0
-      }} SEThexGridOrigin={SEThexGridOrigin} />
+      }} />
     <RosterDisplay hexRoster={hexRoster} />
   </Box>
 

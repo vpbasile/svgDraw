@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 type propsType = {
 	hexRadius: number, separationMultiplier: number
 	SEThexRadius: Dispatch<SetStateAction<number>>, SETseparationMultiplier: Dispatch<number>,
-	hexgridOrigin: { x: number, y: number }, SEThexGridOrigin: Dispatch<{ x: number, y: number }>
+	hexgridOrigin: { x: number, y: number }, 
 }
 
 export default function BoardParameters(props: propsType) {

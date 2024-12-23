@@ -15,6 +15,10 @@ export function coord2hex(props: coordinateHex, color: string = "gray", id: hexI
 	return { q: props.q, r: props.r, hexText: "", clickMessage: "", id: id, color: color }
 }
 
+export function hex2coord(hex: hexDef): coordinateHex {
+	return { q: hex.q, r: hex.r }
+}
+
 // <><> Color Funcions
 export function blackHexes(hexes: hexDef[]): void {
 	hexes.forEach(hex => hex.color = "hover-space bg-black")

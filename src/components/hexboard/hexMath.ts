@@ -9,12 +9,12 @@ export const hexOrientations = {
 
 // Store all of the q,r directiom vector pairs in an array
 export const directionVectors: vector[] = [
-	{ "q": +1, "r": 0 },
-	{ "q": +1, "r": -1 },
-	{ "q": 0, "r": -1 },
-	{ "q": -1, "r": 0 },
-	{ "q": -1, "r": +1 },
-	{ "q": 0, "r": +1 }
+	{ "q": +1, "r": 0 }, // Direction 0
+	{ "q": +1, "r": -1 }, // Direction 1
+	{ "q": 0, "r": -1 }, // Direction 2
+	{ "q": -1, "r": 0 }, // Direction 3
+	{ "q": -1, "r": +1 }, // Direction 4
+	{ "q": 0, "r": +1 } // Direction 5
 ]
 
 export function calcTheta(angle: number) { return angle * Math.PI / 180 }
@@ -94,11 +94,9 @@ export function calcCenteredRectangle(hexRoster: hexDef[], gameGlobals: gameGlob
 	const height = rangeDistance(yRange)
 	return {
 		canvasWidth: width,
-		canvasHeight: height,
-		hexGridOrigin: { x: width / 2, y: height / 2 }
-		, canvasBackgroundColor: ""
+		canvasHeight: height
 	}
 }
 
-export function rolloverDirection(value: number): direction { return (rollover(value, 5)) }
+export function rolloverDirection(value: number): direction { return (rollover(value, 5)) as direction }
 
