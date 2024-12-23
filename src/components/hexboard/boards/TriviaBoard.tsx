@@ -17,7 +17,7 @@ export default function TriviaBoard() {
     colorIndex = (colorIndex + 1) % colors.length;
     return color;
   }
-  const [selectedPalette, setSelectedPalette] = useState<string>('coolToWarm');
+  const [selectedPalette, setSelectedPalette] = useState<string>('trivia');
   const colors = palettes[selectedPalette]
 
   // <> States that control canvas parameters
@@ -52,12 +52,14 @@ export default function TriviaBoard() {
   const centerHexagon: hexDef = { "id": 0, "q": 0, "r": 0, "clickMessage": "Center Hexagon" }
   let hexRoster: hexDef[] = [centerHexagon]
 
-  // Create rings and add them to the hex roster
+  // Create a rign and add it to the hex roster
+  const mainRing = cube_ring({ "q": 0, "r": 0 }, 4);
+  hexRoster = hexRoster.concat(mainRing.map((hex: coordinateHex) => coord2hex(hex, getNextcolor(), 0)));
+
   for (let i = 3; i <= 4; i++) {
-    const ring: coordinateHex[] = cube_ring({ "q": 0, "r": 0 }, i);
+    const ring: coordinateHex[] = cube_ring({ "q": 0, "r": 0 }, 4);
     hexRoster = hexRoster.concat(ring.map((hex: coordinateHex) => coord2hex(hex, getNextcolor(), 0)));
   }
-
 
   const controlPalette = <FormControl id="palette-control">
     <FormLabel>Color Palette</FormLabel>

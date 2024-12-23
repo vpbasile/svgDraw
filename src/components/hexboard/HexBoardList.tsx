@@ -1,5 +1,5 @@
 import SavedBoard from "./boards/hex-SavedBoard";
-import TriviaBoard from "./boards/new-TriviaBoard";
+import TriviaBoard from "./boards/TriviaBoard";
 
 export type boardDef = {
     uid: string;
