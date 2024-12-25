@@ -1,4 +1,4 @@
-import { Box, Button, Container, Input, Select } from "@chakra-ui/react";
+import { Box, Button, Container, FormControl, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, Select } from "@chakra-ui/react";
 import { useState } from "react";
 import BoardParameters from "../forms/BoardParameters";
 import CanvasParameters from "../forms/CanvasParameters";
@@ -15,22 +15,25 @@ export default function CandyLand() {
 	// I'm thinking of making the board a spiral instead of the wavy line that it is in the board game
 
 	const colors = {
-		red: "red",
-		purple: "purple",
-		yellow: "yellow",
-		blue: "blue",
-		orange: "orange",
-		green: "green"
+		cherry: "#a02c2cff",
+		// grape: "#8a2be2ff",
+		grape: "#5500d4ff",
+		lemon: "#d4aa00ff",
+		berry: "#0000d4ff",
+		orange: "#d45500ff",
+		lime: "#008000ff",
+		special: "#d265c0ff"
 	}
 
-	const numberOfSpaces = 20
+	// const numberOfSpaces = 20
 
 	// <> States that control canvas parameters
 	const [hexRadius, SEThexRadius] = useState(200);
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
 	const [canvasHeight, SETcanvasHeight] = useState(3600)
-	const [canvasWidth, SETcanvasWidth] = useState(3600)
+	const [canvasWidth, SETcanvasWidth] = useState(4800)
 	// Constants, States, and Functions unique to this board
+	const [howManyHexes, SEThowManyHexes] = useState(9)
 
 	let colorIndex = -1;
 	function getNextcolor() {
@@ -47,7 +50,7 @@ export default function CandyLand() {
 
 	// Define a color for the genreated hexes - 50% gray with 50% opacity
 	// const blankColor = "rgba(128, 128, 128, 0.5)"
-	
+
 	// <><><> Step 1: Create the hex roster
 	const centerHex: hexDef = { q: 0, r: 0, color: getNextcolor(), id: 0, hexText: "Start", clickMessage: "Start" }
 	const tempRoster: hexDef[] = [centerHex]
@@ -74,8 +77,14 @@ export default function CandyLand() {
 	function growLine(seed: coordinateHex, direction: direction, spaces: number): coordinateHex {
 		let currentHex = seed
 		for (let i = 0; i < spaces; i++) {
+			spacesSinceSpecial++
 			currentHex = cube_neighbor(currentHex, direction)
-			tempRoster.push({ q: currentHex.q, r: currentHex.r, color: getNextcolor(), id: tempRoster.length, clickMessage: `Hex ${tempRoster.length}` })
+			if (spacesSinceSpecial > 0 && spacesSinceSpecial % howManyHexes === 0) {
+				spacesSinceSpecial = 0
+				tempRoster.push({ q: currentHex.q, r: currentHex.r, color: colors.special, id: tempRoster.length, clickMessage: `Special Hex ${tempRoster.length}` })
+			} else {
+				tempRoster.push({ q: currentHex.q, r: currentHex.r, color: getNextcolor(), id: tempRoster.length, clickMessage: `Hex ${tempRoster.length}` })
+			}
 		}
 		return currentHex
 	}
@@ -83,6 +92,7 @@ export default function CandyLand() {
 	// Define the number of steps and the initial length of the line
 	let length = 1;
 
+	let spacesSinceSpecial = 0
 	for (let i = 0; i < 15; i++) {
 		currentHex = growLine(currentHex, currentDirection, length);
 		currentDirection = (currentDirection + 1) % 6 as direction;
@@ -90,8 +100,7 @@ export default function CandyLand() {
 			length++;
 		}
 	}
-	console.log('Ended with seed', currentHex)
-	console.log('Hex Count:', tempRoster.length)
+	// console.log('Hex Count:', tempRoster.length)
 
 	const [hexRoster, SEThexRoster] = useState<hexDef[]>(tempRoster)
 
@@ -112,44 +121,53 @@ export default function CandyLand() {
 
 	// <><><> Step 2: Create the control panel
 	let keyGen = 0;
-	const buildControlPanel = <Box id="control-panel-trivia">
+	const buildControlPanel = <Box id="control-panel-candyLand">
 		{/* Canvas Parameters */}
-		<Box id="control-panel-trivia">
-			<CanvasParameters
-				// Canvas-specific parameters
-				canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-				canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
-			<BoardParameters
-				// Hexagonally-specific parameters
-				hexRadius={hexRadius}
-				separationMultiplier={separationMultiplier}
-				SEThexRadius={SEThexRadius}
-				SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
-					x: 0,
-					y: 0
-				}} />
+		<CanvasParameters
+			// Canvas-specific parameters
+			canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
+			canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
+		<BoardParameters
+			// Hexagonally-specific parameters
+			hexRadius={hexRadius}
+			separationMultiplier={separationMultiplier}
+			SEThexRadius={SEThexRadius}
+			SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
+				x: 0,
+				y: 0
+			}} />
+		{/* A control for setting howManyHexes */}
+		<Box id="howManyHexes-control">
+			<FormControl id="howManyHexes-form">
+				<FormLabel >Space between special spaces</FormLabel>
+				<NumberInput>
+					<NumberInputField value={howManyHexes} onChange={(e) => SEThowManyHexes(+e.target.value)} />
+						<NumberIncrementStepper />
+						<NumberDecrementStepper />
+				
+				</NumberInput>
+			</FormControl>
 			<RosterDisplay hexRoster={hexRoster} />
+			<Container color={'orange.500'}>
+				<h3>Add Hex</h3>
+				<Box id="setQBox">
+					<label className="" htmlFor="qField">q:</label>
+					<Input className="form-control" name="qField" defaultValue={qTemp} onChange={(e) => SETqTemp(+e.target.value)} />
+				</Box>
+				<Box className="setRBox">
+					<label className="" htmlFor="rField">r:</label>
+					<Input className="form-control" name="rField" defaultValue={rTemp} onChange={(e) => SETrTemp(+e.target.value)} />
+				</Box>
+				<Box id="chooseColor">
+					<Select id="colorSelect" defaultValue={colorTemp} onChange={(e) => SETcolorTemp(e.target.value)}>
+						{Object.keys(colors).map((color) => <option key={keyGen++} value={colors[color as keyof typeof colors]}>{color}</option>)}
+					</Select>
+				</Box>
+				<Box id="buttons">
+					<Button onClick={() => addHex()}>Add</Button>
+				</Box>
+			</Container>
 		</Box>
-		<Container color={'orange.500'}>
-			<h3>Add Hex</h3>
-			<Box id="setQBox">
-				<label className="" htmlFor="qField">q:</label>
-				<Input className="form-control" name="qField" defaultValue={qTemp} onChange={(e) => SETqTemp(+e.target.value)} />
-			</Box>
-			<Box className="setRBox">
-				<label className="" htmlFor="rField">r:</label>
-				<Input className="form-control" name="rField" defaultValue={rTemp} onChange={(e) => SETrTemp(+e.target.value)} />
-			</Box>
-			<Box id="chooseColor">
-				<Select id="colorSelect" defaultValue={colorTemp} onChange={(e) => SETcolorTemp(e.target.value)}>
-					{Object.keys(colors).map((color) => <option key={keyGen++} value={colors[color as keyof typeof colors]}>{color}</option>)}
-				</Select>
-			</Box>
-			<Box id="buttons">
-				<Button onClick={() => addHex()}>Add</Button>
-			</Box>
-		</Container>
-		<RosterDisplay hexRoster={hexRoster} />
 	</Box>
 
 	const gameGlobals: gameGlobalsType = {
