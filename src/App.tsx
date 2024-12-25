@@ -1,5 +1,8 @@
 // App.tsx 
 
+// TODO: Allow for svgs to be added and included on a hex, like the special spaces in Candy Land.
+// TODO: Come up with a color scheme for Candy Land.  The current one hurts my eyes.
+
 import { Route, Routes } from "react-router-dom";
 import HexBoardIndex from "./components/hexboard/HexBoardIndex";
 import { hexBoardList } from "./components/hexboard/HexBoardList";
