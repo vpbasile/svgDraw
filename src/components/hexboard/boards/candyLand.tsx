@@ -24,6 +24,7 @@ export default function CandyLand() {
 		lime: "#008000ff",
 		special: "#d265c0ff"
 	}
+	// FIXME The exported SVG is not rendering the colors correctly.
 
 	// const numberOfSpaces = 20
 
@@ -35,7 +36,7 @@ export default function CandyLand() {
 	// Constants, States, and Functions unique to this board
 	const [howManyHexes, SEThowManyHexes] = useState(9)
 
-	let colorIndex = -1;
+	let colorIndex = 0;
 	function getNextcolor() {
 		const colorArray = Object.values(colors)
 		const color = colorArray[colorIndex]
@@ -52,7 +53,7 @@ export default function CandyLand() {
 	// const blankColor = "rgba(128, 128, 128, 0.5)"
 
 	// <><><> Step 1: Create the hex roster
-	const centerHex: hexDef = { q: 0, r: 0, color: getNextcolor(), id: 0, hexText: "Start", clickMessage: "Start" }
+	const centerHex: hexDef = { q: 0, r: 0, color: colors.cherry, id: 0, hexText: "Start", clickMessage: "Start" }
 	const tempRoster: hexDef[] = [centerHex]
 
 	// Generative roster
