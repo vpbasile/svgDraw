@@ -1,5 +1,6 @@
 import CandyLand from "./boards/candyLand";
-import CreateBoard from "./boards/hex-CreateBoard";
+import Cataan from "./boards/cataan";
+import CreateBoard from "./boards/createBoard";
 import SavedBoard from "./boards/hex-SavedBoard";
 import TriviaBoard from "./boards/TriviaBoard";
 
@@ -16,5 +17,6 @@ export const hexBoardList: boardDef[] = [
     { uid: 'saved', displayName: 'Saved Board', element: <SavedBoard /> },
     { uid: 'create', displayName: 'Create Board', element: <CreateBoard /> },
     { uid: 'candy' , displayName: 'Candy Land', element: <CandyLand /> },
+    { uid: 'cataan', displayName: 'Cataan', element: <Cataan /> },
     // Other boards can be added here...
 ];

@@ -13,6 +13,7 @@ export default function ModuleIndex() {
                     <ListItem><LinkIcon /> <Link href='/hex/saved'>Board from Save File</Link></ListItem>
                     <ListItem><LinkIcon /> <Link href='/hex/create'>Create Board</Link></ListItem>
                     <ListItem><LinkIcon /> <Link href='/hex/candy'>Candy Land</Link></ListItem>
+                    <ListItem><LinkIcon /> <Link href='/hex/cataan'>Cataan</Link></ListItem>
                 </List>
             </ListItem>
 

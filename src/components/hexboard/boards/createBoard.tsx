@@ -15,7 +15,7 @@ export default function CreateBoard() {
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
 	const [canvasHeight, SETcanvasHeight] = useState(3600)
 	const [canvasWidth, SETcanvasWidth] = useState(3600)
-	const [defaultOrientation, SETdefaultOrientation] = useState(hexOrientations["flat-top"])
+	const [defaultOrientation, SETdefaultOrientation] = useState(hexOrientations["pointy-top"])	
 	// Constants, States, and Functions unique to this board
 	// <> This color stuff is reusable across all boards
 	const [selectedPalette, setSelectedPalette] = useState<string>('trivia');
@@ -58,6 +58,8 @@ export default function CreateBoard() {
 			})
 		tempRoster = tempRoster.concat(thisRing);
 	}
+	
+	console.log('Hex Count:', tempRoster.length)
 	const [hexRoster, SEThexRoster] = useState<hexDef[]>(tempRoster)
 
 	// Handle adding a hex to the roster
@@ -88,12 +90,20 @@ export default function CreateBoard() {
 		))}
 	</FormControl>;
 
+	const orientationControl = <FormControl id="orientation-control">
+		<FormLabel>Orientation</FormLabel>
+		<Select  onChange={(e) => SETdefaultOrientation(hexOrientations[e.target.value as keyof typeof hexOrientations])}>
+			{Object.keys(hexOrientations).map((orientation) => <option key={orientation} value={orientation}>{orientation}</option>)}
+		</Select>
+	</FormControl>;
+
 	let keyGen = 0;
 	const buildControlPanel = <Box id="control-panel-trivia">
 		{/* Select Palette */}
 		{controlPalette}
 		{/* Canvas Parameters */}
 		<Box id="control-panel-trivia">
+			{orientationControl}
 			{controlPalette}
 			<CanvasParameters
 				// Canvas-specific parameters
