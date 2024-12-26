@@ -108,7 +108,6 @@ export default function CreateBoard() {
 					x: 0,
 					y: 0
 				}} />
-			<RosterDisplay hexRoster={hexRoster} />
 		</Box>
 		<Container color={'orange.500'}>
 			<h3>Add Hex</h3>
