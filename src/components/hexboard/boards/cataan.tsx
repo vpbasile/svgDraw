@@ -18,7 +18,7 @@ export default function Cataan() {
 	// <> This color stuff is reusable across all boards
 
 	const colors = {
-		"desert": "tan",
+		"mountaintop": "white",
 		"forest": "green",
 		"pasture": "lightgreen",
 		"mountain": "grey",
@@ -26,29 +26,85 @@ export default function Cataan() {
 		"hill": "brown"
 	}
 
-	// <><><> Step 1: Create the hex roster
-	const tempRoster: hexDef[] = [
-		{ q: 0, r: -2, color: colors.mountain, id: 1, clickMessage: "Stone Hex" },
-		{ q: 1, r: -2, color: colors.pasture, id: 2, clickMessage: "Sheep Hex" },
-		{ q: 2, r: -2, color: colors.forest, id: 3, clickMessage: "Wood Hex" },
-		{ q: -1, r: -1, color: colors.field, id: 4, clickMessage: "Wheat Hex" },
-		{ q: 0, r: -1, color: colors.hill, id: 5, clickMessage: "Brick Hex" },
-		{ q: 1, r: -1, color: colors.pasture, id: 6, clickMessage: "Sheep Hex" },
-		{ q: 2, r: -1, color: colors.hill, id: 7, clickMessage: "Brick Hex" },
-		{ q: -2, r: 0, color: colors.field, id: 8, clickMessage: "Wheat Hex" },
-		{ q: -1, r: 0, color: colors.forest, id: 9, clickMessage: "Wood Hex" },
-		{ q: 0, r: 0, color: colors.desert, id: 10, clickMessage: "Center Hex" },
-		{ q: 1, r: 0, color: colors.forest, id: 11, clickMessage: "Wood Hex" },
-		{ q: 2, r: 0, color: colors.mountain, id: 12, clickMessage: "Stone Hex" },
-		{ q: -2, r: 1, color: colors.forest, id: 13, clickMessage: "Wood Hex" },
-		{ q: -1, r: 1, color: colors.mountain, id: 14, clickMessage: "Stone Hex" },
-		{ q: 0, r: 1, color: colors.field, id: 15, clickMessage: "Wheat Hex" },
-		{ q: 1, r: 1, color: colors.pasture, id: 16, clickMessage: "Sheep Hex" },
-		{ q: -2, r: 2, color: colors.hill, id: 17, clickMessage: "Brick Hex" },
-		{ q: -1, r: 2, color: colors.field, id: 18, clickMessage: "Wheat Hex" },
-		{ q: 0, r: 2, color: colors.pasture, id: 19, clickMessage: "Sheep Hex" }
+	const spaces = [
+		{ q: 0, r: -2, id: 1 },
+		{ q: 1, r: -2, id: 2 },
+		{ q: 2, r: -2, id: 3 },
+		{ q: -1, r: -1, id: 4 },
+		{ q: 0, r: -1, id: 5 },
+		{ q: 1, r: -1, id: 6 },
+		{ q: 2, r: -1, id: 7 },
+		{ q: -2, r: 0, id: 8 },
+		{ q: -1, r: 0, id: 9 },
+		{ q: 0, r: 0, id: 10 },
+		{ q: 1, r: 0, id: 11 },
+		{ q: 2, r: 0, id: 12 },
+		{ q: -2, r: 1, id: 13 },
+		{ q: -1, r: 1, id: 14 },
+		{ q: 0, r: 1, id: 15 },
+		{ q: 1, r: 1, id: 16 },
+		{ q: -2, r: 2, id: 17 },
+		{ q: -1, r: 2, id: 18 },
+		{ q: 0, r: 2, id: 19 }
 	]
 
+	const recommendedRoster = [
+		{ color: colors.mountain },
+		{ color: colors.pasture },
+		{ color: colors.forest },
+		{ color: colors.field },
+		{ color: colors.hill },
+		{ color: colors.pasture },
+		{ color: colors.hill },
+		{ color: colors.field },
+		{ color: colors.forest },
+		{ color: colors.mountaintop },
+		{ color: colors.forest },
+		{ color: colors.mountain },
+		{ color: colors.forest },
+		{ color: colors.mountain },
+		{ color: colors.field },
+		{ color: colors.pasture },
+		{ color: colors.hill },
+		{ color: colors.field },
+		{ color: colors.pasture }
+	];
+
+	const customRoster = [
+		{ color: colors.forest },
+		{ color: colors.pasture },
+		{ color: colors.pasture},
+		{ color: colors.field },
+		{ color: colors.mountain },
+		{ color: colors.hill },
+		{ color: colors.forest },
+		{ color: colors.field },
+		{ color: colors.hill },
+		{ color: colors.mountaintop },
+		{ color: colors.mountain },
+		{ color: colors.field },
+		{ color: colors.forest },
+		{ color: colors.mountain },
+		{ color: colors.hill },
+		{ color: colors.pasture },
+		{ color: colors.forest },
+		{ color: colors.pasture },
+		{ color: colors.field },
+	]
+
+	// <><><> Step 1: Create the hex roster
+	// Combine the spaces and the chosen roster
+	const tempRoster: hexDef[] = []
+	spaces.forEach((space, index) => {
+		const thisTerrain = customRoster[index].color;
+		tempRoster.push({
+			q: space.q,
+			r: space.r,
+			id: space.id,
+			color: thisTerrain,
+			clickMessage: `Space ${space.id} - ${thisTerrain}`
+		})
+	})
 	console.log('Hex Count:', tempRoster.length)
 	const hexRoster = tempRoster
 
