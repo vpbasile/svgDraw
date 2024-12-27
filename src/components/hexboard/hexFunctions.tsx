@@ -39,7 +39,7 @@ export function reflectAcrossAxis(hex: hexDef, axis: string, color?: string): he
 
 // <><> Click Handlers
 
-export function clickMessage(hex: hexDef, id: number, hexText?: string): string {
+export function defaultClickMessage(hex: hexDef, id: number, hexText?: string): string {
 	if (hexText) { return (`Hex ${id} clicked. ${hexText}`) }
 	else { return (`Hex ${id} clicked. Coordinates q:${hex.q} r:${hex.r}`) }
 }

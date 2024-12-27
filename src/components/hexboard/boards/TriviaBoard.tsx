@@ -6,7 +6,7 @@ import CanvasParameters from "../forms/CanvasParameters";
 import RosterDisplay from "../forms/hexRosterDisplay";
 import HexboardSVG from "../HexBoardSVG";
 import { coordinateHex, gameGlobalsType, hexDef } from "../hexDefinitions";
-import { clickMessage, coord2hex } from "../hexFunctions";
+import { coord2hex } from "../hexFunctions";
 import { cube_ring, hexOrientations } from "../hexMath";
 
 export default function TriviaBoard() {
@@ -36,7 +36,6 @@ export default function TriviaBoard() {
     separationMultiplier: separationMultiplier,
     textSize: 12,
     drawBackBoard: true,
-    onClick: clickMessage,
 
 
   }

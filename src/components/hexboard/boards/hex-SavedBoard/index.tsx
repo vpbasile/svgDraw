@@ -6,7 +6,6 @@ import CanvasParameters from '../../forms/CanvasParameters';
 import RosterDisplay from '../../forms/hexRosterDisplay';
 import HexboardSVG from '../../HexBoardSVG';
 import { canvasGlobalsType, gameGlobalsType, hexDef } from '../../hexDefinitions';
-import { clickMessage } from '../../hexFunctions';
 import { hexOrientations } from '../../hexMath';
 
 export default function SavedBoard() {
@@ -15,7 +14,6 @@ export default function SavedBoard() {
 	const [canvasHeight, SETcanvasHeight] = useState(6000)
 	const [hexRadius, SEThexRadius] = useState(200);
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
-	const [hexGridOrigin, SEThexGridOrigin] = useState({ x: 3000, y: 700 });
 	const [orientation] = useState(hexOrientations["flat-top"])
 
 	// Constants, States, and Functions unique to this board
@@ -111,15 +109,12 @@ export default function SavedBoard() {
 		separationMultiplier: separationMultiplier,
 		textSize: 12,
 		drawBackBoard: true,
-		onClick: clickMessage,
 		displayTitle: "Board from Save File",
 	}
 
 	const canvasGlobals: canvasGlobalsType = {
 		canvasWidth: canvasWidth,
 		canvasHeight: canvasHeight,
-		hexGridOrigin: hexGridOrigin,
-		canvasBackgroundColor: '#000',
 	}
 
 	const buildControlPanel = <>
@@ -136,7 +131,7 @@ export default function SavedBoard() {
 			SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
 				x: 0,
 				y: 0
-			}} SEThexGridOrigin={SEThexGridOrigin} />
+			}} />
 		<RosterDisplay hexRoster={hexRoster} />
 	</>
 

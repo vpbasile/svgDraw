@@ -11,7 +11,6 @@ export type gameGlobalsType = {
 	textSize: number,
 	hexText?: string,
 	drawBackBoard: boolean,
-	onClick: hexClickFunction,
 	// Children
 	children?: ReactNode
 }

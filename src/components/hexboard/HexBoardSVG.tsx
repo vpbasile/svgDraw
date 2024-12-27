@@ -1,6 +1,6 @@
 import Hexagon from './Hexagon';
 import { canvasGlobalsType, gameGlobalsType, hexDef } from "./hexDefinitions";
-import { clickMessage } from './hexFunctions';
+import { defaultClickMessage } from './hexFunctions';
 
 //style
 import { Box, Heading } from '@chakra-ui/react';
@@ -59,7 +59,7 @@ export default function HexboardSVG(props: hexboardProps) {
 					textSize={props.textSize}
 					gameGlobals={gameGlobals}
 					// TODO I should only pass down the parts of gameGlobals that are needed, or maybe Redux would be better
-					clickMessage={clickMessage(hex, thisHexKey, hex.hexText)} />;
+					clickMessage={defaultClickMessage(hex, thisHexKey, hex.hexText)} />;
 			})}
 		</SVGWrapper>
 	</>)

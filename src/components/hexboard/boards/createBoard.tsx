@@ -6,7 +6,6 @@ import CanvasParameters from "../forms/CanvasParameters";
 import RosterDisplay from "../forms/hexRosterDisplay";
 import HexboardSVG from "../HexBoardSVG";
 import { canvasGlobalsType, gameGlobalsType, hexDef } from "../hexDefinitions";
-import { clickMessage } from "../hexFunctions";
 import { cube_ring, hexOrientations } from "../hexMath";
 
 export default function CreateBoard() {
@@ -148,7 +147,6 @@ export default function CreateBoard() {
 		separationMultiplier: separationMultiplier,
 		textSize: 12,
 		drawBackBoard: false,
-		onClick: clickMessage
 	}
 
 	const canvasGlobals: canvasGlobalsType = {

@@ -5,7 +5,6 @@ import CanvasParameters from "../forms/CanvasParameters";
 import RosterDisplay from "../forms/hexRosterDisplay";
 import HexboardSVG from "../HexBoardSVG";
 import { canvasGlobalsType, coordinateHex, direction, gameGlobalsType, hexDef } from "../hexDefinitions";
-import { clickMessage } from "../hexFunctions";
 import { cube_neighbor, hexOrientations } from "../hexMath";
 
 export default function CandyLand() {
@@ -172,13 +171,12 @@ export default function CandyLand() {
 	</Box>
 
 	const gameGlobals: gameGlobalsType = {
-		displayTitle: "Create Board",
+		displayTitle: "CanyLand",
 		orientation: hexOrientations["flat-top"],
 		hexRadius: hexRadius,
 		separationMultiplier: separationMultiplier,
 		textSize: 12,
 		drawBackBoard: false,
-		onClick: clickMessage
 	}
 
 	const canvasGlobals: canvasGlobalsType = {

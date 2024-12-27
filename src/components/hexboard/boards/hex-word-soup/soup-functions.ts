@@ -1,4 +1,4 @@
-import { hexDef } from "../../hexboard/hexDefinitions";
+import { hexDef } from "../../hexDefinitions";
 
 // Gameplay global variables
 export const initPlayers = [
@@ -12,7 +12,7 @@ export const letterScores = {
 // export function placeholderText() { return `It is ${players[currentPlayer].color}'s turn. Touch a letter to begin.` }
 
 export const generateHexCoordinates = () => {
-	const usefulClasses = "hex clickable";
+	const defaultColor = "red";
 	let idGen = 0;
 	const hexRoster: hexDef[] = [];
 	for (let q = -3; q <= 3; q++) {
@@ -20,7 +20,7 @@ export const generateHexCoordinates = () => {
 			if (Math.abs(q + r) <= 3) {
 				const uid = idGen++;
 				const newHex: hexDef = {
-					uid: uid, q: q, r: r, cssClasses: usefulClasses, hexText: "*",
+					id: uid, q: q, r: r, color: defaultColor, hexText: "*",
 					// Each hex needs a unique clickMessage
 					clickMessage: `clicked ${uid}`,
 					// fixme: Need to find a way to pass game-specific values and functions to the hexes

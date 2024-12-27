@@ -5,7 +5,6 @@ import CanvasParameters from "../forms/CanvasParameters";
 import RosterDisplay from "../forms/hexRosterDisplay";
 import HexboardSVG from "../HexBoardSVG";
 import { canvasGlobalsType, gameGlobalsType, hexDef } from "../hexDefinitions";
-import { clickMessage } from "../hexFunctions";
 import { hexOrientations } from "../hexMath";
 
 export default function Cataan() {
@@ -137,7 +136,6 @@ export default function Cataan() {
 		separationMultiplier: separationMultiplier,
 		textSize: 12,
 		drawBackBoard: false,
-		onClick: clickMessage
 	}
 
 	const canvasGlobals: canvasGlobalsType = {
