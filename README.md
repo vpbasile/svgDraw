@@ -1,2 +1,2 @@
 #SVGDraw
-An experiment with generative art
+An engine for producing cuttable SVGs and experimenting with generative art
