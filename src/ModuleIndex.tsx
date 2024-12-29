@@ -14,6 +14,7 @@ export default function ModuleIndex() {
                     <ListItem><LinkIcon /> <Link href='/hex/create'>Create Board</Link></ListItem>
                     <ListItem><LinkIcon /> <Link href='/hex/candy'>Candy Land</Link></ListItem>
                     <ListItem><LinkIcon /> <Link href='/hex/cataan'>Cataan</Link></ListItem>
+                    <ListItem><LinkIcon /> <Link href='/hex/grid'>Grid</Link></ListItem>
                 </List>
             </ListItem>
 
