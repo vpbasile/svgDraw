@@ -17,7 +17,7 @@ function App() {
     //         parent route elements. See the note about <Outlet> below. */}
 
     <Routes >
-      <Route path='/'>
+      <Route path='/svgdraw/'>
         <Route index element={<PlaceHolderBoard />} />
         <Route path="tree" element={<TreeExample />} />
         <Route path="hex/*" >
