@@ -60,7 +60,7 @@ export default function TreeExample() {
     const minAngle = 0.25;
     const maxAngle = 2;
     const stepAngle = 0.125;
-    const handleChange = (valueAsString: string, valueAsNumber: number) => SETnumerator(valueAsNumber)
+    const handleChange = (_valueAsString: string, valueAsNumber: number) => SETnumerator(valueAsNumber)
     const controlAngle = <FormControl id="angle-control">
         <FormLabel>Angle Coefficient</FormLabel>
         {/* Number input */}
