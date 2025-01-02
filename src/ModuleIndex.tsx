@@ -16,6 +16,12 @@ export default function ModuleIndex() {
                     ))}
                 </List>
             </ListItem>
+            <ListItem>GitHub:
+                <List>
+                    <ListItem><LinkIcon /><Link href='https://github.com/vpbasile/svgDraw'>Repo on Github</Link></ListItem>
+                    <ListItem><LinkIcon /><Link href='https://vpbasile.github.io/svgDraw/'>Live version on Github Pages</Link></ListItem>
+                </List>
+            </ListItem>
 
         </List>
     </Box>

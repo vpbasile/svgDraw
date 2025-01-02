@@ -1,7 +1,5 @@
 // App.tsx 
 
-// TODO: Allow for svgs to be added and included on a hex, like the special spaces in Candy Land.
-
 import { Route, Routes } from "react-router-dom";
 import HexBoardIndex from "./components/hexboard/HexBoardIndex";
 import { hexBoardList } from "./components/hexboard/HexBoardList";

@@ -24,10 +24,6 @@ export function blackHexes(hexes: hexDef[]): void {
 	hexes.forEach(hex => hex.color = "hover-space bg-black")
 }
 
-export function colorHexes(hexes: hexDef[], getNextCssClass: { (): string; }) {
-	hexes.forEach(hex => { hex.color = `hover-space ${getNextCssClass()}` })
-}
-
 export function reflectAcrossAxis(hex: hexDef, axis: string, color?: string): hexDef {
 	switch (axis) {
 		// Yes I know this looks silly, but I haven;t fixed the method for calculating s

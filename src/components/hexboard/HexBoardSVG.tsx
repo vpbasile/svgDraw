@@ -1,3 +1,5 @@
+// TODO: Allow for svgs to be added and included on a hex, like the special spaces in Candy Land.
+
 import Hexagon from './Hexagon';
 import { canvasGlobalsType, gameGlobalsType, hexDef } from "./hexDefinitions";
 import { defaultClickMessage } from './hexFunctions';
@@ -5,7 +7,6 @@ import { defaultClickMessage } from './hexFunctions';
 //style
 import { Box, Heading } from '@chakra-ui/react';
 import SVGWrapper from '../svgWrapper';
-import './hex.css';
 
 export interface hexboardProps {
 	gameGlobals: gameGlobalsType;

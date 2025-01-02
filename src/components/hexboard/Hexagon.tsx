@@ -43,7 +43,6 @@ export default function Hexagon(props: hexagonProps) {
 		return polygonString += `${x},${y}`
 	});
 
-	// CSS
 	const color = props.color;
 
 	function displayText() {
