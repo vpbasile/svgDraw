@@ -1,7 +1,6 @@
 // App.tsx 
 
 // TODO: Allow for svgs to be added and included on a hex, like the special spaces in Candy Land.
-// TODO: Come up with a color scheme for Candy Land.  The current one hurts my eyes.
 
 import { Route, Routes } from "react-router-dom";
 import HexBoardIndex from "./components/hexboard/HexBoardIndex";
@@ -19,8 +18,8 @@ function App() {
     <Routes >
       <Route path='/svgdraw/'>
         <Route index element={<PlaceHolderBoard />} />
-        <Route path="tree" element={<TreeExample />} />
-        <Route path="hex/*" >
+        <Route path="/svgdraw/tree" element={<TreeExample />} />
+        <Route path="/svgdraw/hex/*" >
           <Route path="" element={<HexBoardIndex />} />
           {hexBoardList.map(({ uid, element }) => (
             <Route key={`${uid}`} path={uid} element={element} />
