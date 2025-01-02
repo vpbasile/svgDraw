@@ -14,7 +14,10 @@ export default function PlaceHolderBoard() {
     {/* A couple of triangles - one red and one green */ }
     const content = [
         <polygon key={'redTriangle'} points="50,5 90,90 10,90" fill="red" />,
-        <polygon key={'greenTriangle'} points={`${10 * x},6 80,${15 * x} ${15 + x},${80 - 2 * x}`} fill="green" />
+        <polygon key={'greenTriangle'} points={`${10 * x},6 80,${15 * x} ${15 + x},${80 - 2 * x}`} fill="green" />,
+        <rect key={'rect'} x={70} y={65} width={50} height={12} fill="gray" />,
+        <text key={'title'} x={75} y={75} fontSize={10} fill="blue">SVGDraw</text>
+
     ]
 
     // Control Panel
