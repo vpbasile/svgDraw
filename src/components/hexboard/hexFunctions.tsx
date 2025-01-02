@@ -4,7 +4,7 @@ import { directionVectors, sCoordinate } from "./hexMath";
 export const centerHexagon: hexDef = coord2hex({ q: 0, r: 0 }, "hexboard-center bg-gray", 0)
 
 export function randomMove(): vector { return directionVectors[Math.floor(6 * Math.random())] }
-export function alreadyThere(hexSearch: hexDef, roster: hexDef[]): boolean {
+export function alreadyThere(hexSearch: coordinateHex, roster: hexDef[]): boolean {
 	if (roster.find((hexCompare: hexDef) => (hexSearch.q === hexCompare.q) && (hexSearch.r === hexCompare.r))) {
 		return true;
 	}

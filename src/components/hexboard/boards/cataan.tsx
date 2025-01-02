@@ -47,27 +47,27 @@ export default function Cataan() {
 		{ q: 0, r: 2, id: 19 }
 	]
 
-	const recommendedRoster = [
-		{ color: colors.mountain },
-		{ color: colors.pasture },
-		{ color: colors.forest },
-		{ color: colors.field },
-		{ color: colors.hill },
-		{ color: colors.pasture },
-		{ color: colors.hill },
-		{ color: colors.field },
-		{ color: colors.forest },
-		{ color: colors.mountaintop },
-		{ color: colors.forest },
-		{ color: colors.mountain },
-		{ color: colors.forest },
-		{ color: colors.mountain },
-		{ color: colors.field },
-		{ color: colors.pasture },
-		{ color: colors.hill },
-		{ color: colors.field },
-		{ color: colors.pasture }
-	];
+	// const recommendedRoster = [
+	// 	{ color: colors.mountain },
+	// 	{ color: colors.pasture },
+	// 	{ color: colors.forest },
+	// 	{ color: colors.field },
+	// 	{ color: colors.hill },
+	// 	{ color: colors.pasture },
+	// 	{ color: colors.hill },
+	// 	{ color: colors.field },
+	// 	{ color: colors.forest },
+	// 	{ color: colors.mountaintop },
+	// 	{ color: colors.forest },
+	// 	{ color: colors.mountain },
+	// 	{ color: colors.forest },
+	// 	{ color: colors.mountain },
+	// 	{ color: colors.field },
+	// 	{ color: colors.pasture },
+	// 	{ color: colors.hill },
+	// 	{ color: colors.field },
+	// 	{ color: colors.pasture }
+	// ];
 
 	const customRoster = [
 		{ color: colors.forest },
