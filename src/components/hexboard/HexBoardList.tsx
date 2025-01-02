@@ -17,6 +17,7 @@ export const hexBoardList: boardDef[] = [
     { uid: 'trivia', displayName: 'Trivia Board', element: <TriviaBoard /> },
     { uid: 'saved', displayName: 'Saved Board', element: <SavedBoard /> },
     { uid: 'create', displayName: 'Create Board', element: <CreateBoard /> },
+    { uid: 'generative', displayName: 'Generative Board', element: <CreateBoard /> },
     { uid: 'candy' , displayName: 'Candy Land', element: <CandyLand /> },
     { uid: 'cataan', displayName: 'Cataan', element: <Cataan /> },
     { uid: 'grid', displayName: 'Grid', element: <Grid /> },
