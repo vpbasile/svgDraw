@@ -1,7 +1,7 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, Flex, FormControl, FormHelperText, FormLabel, Heading, Input } from '@chakra-ui/react';
 import { SetStateAction, useRef, useState } from 'react';
 import ModuleIndex from '../ModuleIndex';
-import ColorModeButton from './colorModeButton';
+import ColorModeButton from './ColorModeButton';
 type SvgWrapperProps = {
     width: number;
     height: number;
