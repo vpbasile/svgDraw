@@ -2,7 +2,7 @@ import { Box, Button, Container, FormControl, FormLabel, Input, NumberDecrementS
 import { useState } from "react";
 import BoardParameters from "../forms/BoardParameters";
 import CanvasParameters from "../forms/CanvasParameters";
-import RosterDisplay from "../forms/hexRosterDisplay";
+import RosterDisplay from "../forms/HexRosterDisplay";
 import HexboardSVG from "../HexBoardSVG";
 import { canvasGlobalsType, coordinateHex, direction, gameGlobalsType, hexDef } from "../hexDefinitions";
 import { cube_neighbor, hexOrientations } from "../hexMath";

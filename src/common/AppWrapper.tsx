@@ -12,39 +12,12 @@ type SvgWrapperProps = {
     controlPanel?: JSX.Element;
 };
 
-/**
- * SVGWrapper component provides a container for rendering SVG elements
- * along with a control panel for additional functionalities.
- * 
- *  Each implementation of SVGWwrapper will contain the following things (not necessarily in this order):
- * * All states and logic required to render the SVG content.  This will allow control panel to interact with the SVG content
- * * SVG Content - this will be passed as children to SVGWrapper
- * * Control Panel - this will be passed as a prop to SVGWrapper
-*
-* @remarks
-* This component includes functionality to save the SVG content as a file.
-* The filename can be specified and will be appended with a .svg extension.
-* 
- * @param {Object} props - The properties object.
- * @param {number} props.width - The width of the SVG canvas.
- * @param {number} props.height - The height of the SVG canvas.
- * @param {JSX.Element | JSX.Element[]} props.children - The SVG elements to be rendered inside the canvas.
- * @param {JSX.Element} props.controlPanel - The control panel element to be displayed alongside the SVG canvas.
- *
- * @returns {JSX.Element} The rendered SVGWrapper component.
-*
-* @example
-* <SVGWrapper width={200} height={200} controlPanel={controlPanel} >
-*  {content}
- * </SVGWrapper>
-*
-*/
-export default function SVGWrapper(props: SvgWrapperProps) {
+export default function AppWrapper(props: SvgWrapperProps) {
 
     // Constants, Props, and States
     const { width, height, children, displayTitle, controlPanel } = props;
     if (width <= 0 || height <= 0) {
-        throw new Error("SVGWrapper: Width and height must be positive numbers.");
+        throw new Error("AppWrapper: Width and height must be positive numbers.");
     }
     // Calculate some style for the parent SVG element
     let styleBuild = {};
@@ -56,9 +29,6 @@ export default function SVGWrapper(props: SvgWrapperProps) {
     const [fileName, setFileName] = useState<string>('tree');
     // Reference to the SVG element
     const svgRef = useRef<SVGSVGElement>(null);
-
-    // Disclosure for collapsible control panel
-    // const { isOpen, onToggle } = useDisclosure();
 
     // Function to save SVG as a file
     const saveSvgAsFile = () => {

@@ -1,34 +1,50 @@
-// App.tsx 
+import { Outlet, Route, Routes } from "react-router-dom";
+import PlaceHolderBoard from "./common/PlaceHolderSVG";
+import { hexboardRoutes } from "./features/hexboard/routes";
+import { scaleRoutes } from "./features/scale/routes";
+import { treeRoutes } from "./features/tree/routes";
 
-import { Route, Routes } from "react-router-dom";
-import PlaceHolderBoard from "./common/placeHolderSVG";
-import Temperatures from "./components/scale/Temperatures";
-import TreeExample from "./components/tree/example";
-import HexBoardIndex from "./features/hexboard/HexBoardIndex";
-import { hexBoardList } from "./features/hexboard/HexBoardList";
+const BASE_PATH = "/svgdraw";
 
-function App() {
-
-  return (
-    // {/* Routes nest inside one another. Nested route paths build upon
-    //         parent route paths, and nested route elements render inside
-    //         parent route elements. See the note about <Outlet> below. */}
-
-    <Routes >
-      <Route path='/svgdraw/'>
-        <Route index element={<PlaceHolderBoard />} />
-        <Route path="/svgdraw/tree" element={<TreeExample />} />
-        <Route path="/svgdraw/scale/temperatures" element={<Temperatures/>} />
-        <Route path="/svgdraw/hex/*" >
-          <Route path="" element={<HexBoardIndex />} />
-          {hexBoardList.map(({ uid, element }) => (
-            <Route key={`${uid}`} path={uid} element={element} />
-          ))}
-          <Route path="*" element={<div>Board not found!</div>} />
-        </Route>
-      </Route >
-    </Routes >
-  )
+function NotFound() {
+  return <div>Page not found!</div>;
 }
 
-export default App
+function App() {
+  return (
+    <Routes>
+      {/* Base path */}
+      <Route path={`${BASE_PATH}/*`}>
+
+        {/* Root /svgdraw */}
+        <Route index element={<PlaceHolderBoard />} />
+
+        {/* Tree feature */}
+        <Route path="tree" element={<Outlet />}>
+          {treeRoutes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Route>
+
+        {/* Scale feature */}
+        <Route path="scale" element={<Outlet />}>
+          {scaleRoutes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Route>
+
+        {/* Hexboard feature */}
+        <Route path="hex" element={<Outlet />}>
+          {hexboardRoutes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Route>
+
+        {/* Catch-all for anything else under /svgdraw */}
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
+  );
+}
+
+export default App;

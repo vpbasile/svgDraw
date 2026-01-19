@@ -3,7 +3,7 @@ import { useState } from "react";
 import { palettes } from "../../../components/palettes";
 import BoardParameters from "../forms/BoardParameters";
 import CanvasParameters from "../forms/CanvasParameters";
-import RosterDisplay from "../forms/hexRosterDisplay";
+import RosterDisplay from "../forms/HexRosterDisplay";
 import HexboardSVG from "../HexBoardSVG";
 import { gameGlobalsType, hexDef, vector } from "../hexDefinitions";
 import { alreadyThere, coord2hex, randomMove } from "../hexFunctions";

@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { useState } from "react";
 import BoardParameters from "../forms/BoardParameters";
 import CanvasParameters from "../forms/CanvasParameters";
-import RosterDisplay from "../forms/hexRosterDisplay";
+import RosterDisplay from "../forms/HexRosterDisplay";
 import HexboardSVG from "../HexBoardSVG";
 import { canvasGlobalsType, gameGlobalsType, hexDef } from "../hexDefinitions";
 import { hexOrientations } from "../hexMath";
