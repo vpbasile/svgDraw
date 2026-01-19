@@ -1,3 +1,4 @@
+import { SVGPart } from '../../types';
 import { gameGlobalsType } from './hexDefinitions';
 import { calcTheta, hex_to_pixel } from './hexMath';
 
@@ -10,6 +11,7 @@ type hexagonProps = {
 	color?: string,
 	id: string,
 	clickMessage: string
+	additionalSVG?: SVGPart
 }
 
 // If textsize is blank, default to 75pt
@@ -21,8 +23,7 @@ export default function Hexagon(props: hexagonProps) {
 	const orientation = gameGlobals.orientation;
 	const cornerAngles = orientation.cornerAngles
 	// Coordinates
-	const q = props.q;
-	const r = props.r;
+	const { q, r, id, additionalSVG } = props
 	// const s = -q - r;
 	// Math
 	const hexText = props.hexText
@@ -62,18 +63,20 @@ export default function Hexagon(props: hexagonProps) {
 	}
 	const textForHex = displayText()
 
+	if (additionalSVG) console.log(`Additional SVG provided for group ${id}`)
 	// Make the SVG
 	return (
-		<g onClick={() => console.log(props.clickMessage)}>
+		<g key={`${id}`} id={`group-${id}`} onClick={() => console.log(props.clickMessage)}>
 			{/* The group is needed to make the text and hexagon work together */}
 			<polygon
 				style={{}}
 				className={`hex`}
 				fill={color}
-				id={`${props.id}`}
+				id={`hex-${id}`}
 				points={polygonString}
 			/>
 			{textForHex}
+			{additionalSVG}
 		</g>
 	)
 }

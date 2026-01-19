@@ -9,6 +9,7 @@ export default function ModuleIndex() {
         <Heading as={'h2'}>Modules</Heading>
         <List>
             <ListItem><LinkIcon /> <Link href={'/svgdraw/tree'}>Tree</Link></ListItem>
+            <ListItem><LinkIcon /> <Link href='/svgdraw/scale/temperatures'>Scale: Temperatures</Link></ListItem>
             <ListItem><LinkIcon /> <Link href='/svgdraw/hex'>HexBoard</Link>
                 <List>
                     {hexBoardList.map(({ uid }) => (

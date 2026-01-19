@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { SVGPart } from "../../types";
 
 // Game stuff
 export type gameGlobalsType = {
@@ -35,6 +36,7 @@ export type hexDef = {
 	color?: string;
 	hexText?: string;
 	clickMessage: string;
+	additionalSVG?: SVGPart
 }
 export type vector = { q: number, r: number }
 export type direction = 0 | 1 | 2 | 3 | 4 | 5;

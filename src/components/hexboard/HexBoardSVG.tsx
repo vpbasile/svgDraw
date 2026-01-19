@@ -59,6 +59,7 @@ export default function HexboardSVG(props: hexboardProps) {
 					hexText={hex.hexText}
 					textSize={props.textSize}
 					gameGlobals={gameGlobals}
+					additionalSVG={hex.additionalSVG}
 					// TODO I should only pass down the parts of gameGlobals that are needed, or maybe Redux would be better
 					clickMessage={defaultClickMessage(hex, thisHexKey, hex.hexText)} />;
 			})}

@@ -50,7 +50,7 @@ export default function TriviaBoard() {
 
   // <><><> Step 1: Create the hex roster
   // Create a center hexagon
-  const centerHexagon: hexDef = { "id": 0, "q": 0, "r": 0, "clickMessage": "Center Hexagon" }
+  const centerHexagon: hexDef = { "id": 0, "q": 0, "r": 0, "clickMessage": "Center Hexagon", additionalSVG: <circle cy={0} cx={0} r={50} fill="red" /> }
   let hexRoster: hexDef[] = [centerHexagon]
 
   // Create a rign and add it to the hex roster
@@ -61,6 +61,13 @@ export default function TriviaBoard() {
     const ring: coordinateHex[] = cube_ring({ "q": 0, "r": 0 }, 4);
     hexRoster = hexRoster.concat(ring.map((hex: coordinateHex) => coord2hex(hex, getNextcolor(), 0)));
   }
+
+  const czcz = <g transform="">
+    <circle cy={0} cx={0} r={50} fill="grey" />
+  </g>
+  hexRoster[4].additionalSVG = czcz
+
+  
 
   const controlPalette = <FormControl id="palette-control">
     <FormLabel>Color Palette</FormLabel>

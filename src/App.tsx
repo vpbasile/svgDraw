@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import HexBoardIndex from "./components/hexboard/HexBoardIndex";
 import { hexBoardList } from "./components/hexboard/HexBoardList";
 import PlaceHolderBoard from "./components/placeHolderSVG";
+import Temperatures from "./components/scale/Temperatures";
 import TreeExample from "./components/tree/example";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Route path='/svgdraw/'>
         <Route index element={<PlaceHolderBoard />} />
         <Route path="/svgdraw/tree" element={<TreeExample />} />
+        <Route path="/svgdraw/scale/temperatures" element={<Temperatures/>} />
         <Route path="/svgdraw/hex/*" >
           <Route path="" element={<HexBoardIndex />} />
           {hexBoardList.map(({ uid, element }) => (
