@@ -1,7 +1,7 @@
 import { Box, FormControl, FormLabel, Heading, List, ListItem } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { palettes } from '../palettes';
+import { palettes } from '../../components/palettes';
 import { hexBoardList } from './HexBoardList';
 import HexboardSVG from './HexBoardSVG';
 import { coordinateHex, hexDef } from './hexDefinitions';

@@ -1,6 +1,6 @@
 import { Box, Button, Container, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { palettes } from "../../palettes";
+import { palettes } from "../../../components/palettes";
 import BoardParameters from "../forms/BoardParameters";
 import CanvasParameters from "../forms/CanvasParameters";
 import RosterDisplay from "../forms/hexRosterDisplay";
@@ -8,7 +8,7 @@ import HexboardSVG from "../HexBoardSVG";
 import { canvasGlobalsType, gameGlobalsType, hexDef } from "../hexDefinitions";
 import { cube_ring, hexOrientations } from "../hexMath";
 
-export default function CreateBoard() {
+export default function Grid() {
 	// <> States that control canvas parameters
 	const [hexRadius, SEThexRadius] = useState(200);
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
@@ -39,24 +39,10 @@ export default function CreateBoard() {
 	// <><><> Step 1: Create the hex roster
 	// Define a color for the genreated hexes - 50% gray with 50% opacity
 	const blankColor = "rgba(128, 128, 128, 0.5)"
-	const centerHex: hexDef = { q: 0, r: 0, color: getNextcolor(), id: 0, clickMessage: "Center Hex" }
-	let tempRoster: hexDef[] = [centerHex]
-	const boardSize: number = 7
-	for (let i = 1; i < boardSize; i++) {
-		const thisRing = cube_ring(centerHex, i)
-			.map((eachHex) => {
-				const uid = tempRoster.length
-				return {
-					q: eachHex.q, r: eachHex.r,
-					color: blankColor,
-					id: uid,
-					clickMessage: `Hex ${uid}`,
-					hexText: `q:${eachHex.q},r:${eachHex.r}`
-					
-				}
-			})
-		tempRoster = tempRoster.concat(thisRing);
-	}
+	const boundary = cube_ring({ q: 0, r: 0 }, 4)
+	const tempRoster: hexDef[] = boundary.map((hex, index) => {
+		return { q: hex.q, r: hex.r, color: blankColor, id: index, clickMessage: `Hex ${index}` }
+	})
 	
 	console.log('Hex Count:', tempRoster.length)
 	const [hexRoster, SEThexRoster] = useState<hexDef[]>(tempRoster)

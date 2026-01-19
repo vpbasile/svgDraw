@@ -1,9 +1,9 @@
 import { Box, FormControl, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
 import { useState } from "react";
+import SVGWrapper from "../../common/AppWrapper";
+import { drawLine, rotateLinesAroundPoint } from "../../components/helpers";
+import { palettes } from "../../components/palettes"; // Import the palettes
 import { coordinateT, myLineT } from "../../types";
-import { drawLine, rotateLinesAroundPoint } from "../helpers";
-import { palettes } from "../palettes"; // Import the palettes
-import SVGWrapper from "../svgWrapper";
 import Tree from "./treeGPT";
 
 export default function TreeExample() {

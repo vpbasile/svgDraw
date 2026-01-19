@@ -1,6 +1,6 @@
 import { LinkIcon } from '@chakra-ui/icons';
 import { Box, Heading, Link, List, ListItem } from '@chakra-ui/react';
-import { hexBoardList } from './components/hexboard/HexBoardList';
+import { hexBoardList } from './features/hexboard/HexBoardList';
 
 export default function ModuleIndex() {
     // TODO Find a way to generate this just like the routes are

@@ -1,11 +1,11 @@
 // App.tsx 
 
 import { Route, Routes } from "react-router-dom";
-import HexBoardIndex from "./components/hexboard/HexBoardIndex";
-import { hexBoardList } from "./components/hexboard/HexBoardList";
-import PlaceHolderBoard from "./components/placeHolderSVG";
+import PlaceHolderBoard from "./common/placeHolderSVG";
 import Temperatures from "./components/scale/Temperatures";
 import TreeExample from "./components/tree/example";
+import HexBoardIndex from "./features/hexboard/HexBoardIndex";
+import { hexBoardList } from "./features/hexboard/HexBoardList";
 
 function App() {
 

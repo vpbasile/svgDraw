@@ -1,6 +1,6 @@
 import { Box, Heading, Link, List, ListItem, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useState } from 'react';
-import SVGWrapper from './svgWrapper';
+import SVGWrapper from './AppWrapper';
 export default function PlaceHolderBoard() {
     // Each implementation of SVGWwrapper will contain the following things (not necessarily in this order):
     // * All states and logic required to render the SVG content.  This will allow control panel to interact with the SVG content

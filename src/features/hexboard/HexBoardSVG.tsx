@@ -6,7 +6,7 @@ import { defaultClickMessage } from './hexFunctions';
 
 //style
 import { Box, Heading } from '@chakra-ui/react';
-import SVGWrapper from '../svgWrapper';
+import SVGWrapper from '../../common/AppWrapper';
 
 export interface hexboardProps {
 	gameGlobals: gameGlobalsType;
