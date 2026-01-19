@@ -75,7 +75,9 @@ export default function AppWrapper(props: SvgWrapperProps) {
     return <Flex height="100vh">
         {/* SVG Canvas - Dynamic width when panel is open */}
         <Center id="canvas-box" flex={1} >
-            <svg ref={svgRef} height='100vh' viewBox={calcViewBox} xmlns="http://www.w3.org/2000/svg" style={styleBuild}>
+            <svg ref={svgRef}
+                width="100%" height="100%"
+                viewBox={calcViewBox} xmlns="http://www.w3.org/2000/svg" style={styleBuild}>
                 {/* If no children are passed, just show a polygon */}
                 {children || <polygon points="100,10 40,198 190,78 10,78 160,198" />}
             </svg>
