@@ -30,16 +30,6 @@ export default function HexBoardIndex() {
     const defaultOrientation = hexOrientations["flat-top"];
     const separationMultiplier = 1.1;
 
-
-    // const canvasGlobals = {
-    //     canvasWidth: 800,
-    //     canvasHeight: 800,
-    //     hexGridOrigin: { x: 400, y: 400 },
-    //     canvasBackgroundColor: '#000',
-    // }
-
-
-
     // <><><> Step 1: Create the hex roster
     // Create a center hexagon
     const centerHexagon: hexDef = { "id": 0, "q": 0, "r": 0, "clickMessage": "Center Hexagon" }
@@ -88,7 +78,7 @@ export default function HexBoardIndex() {
                 hexRadius={hexRadius}
                 separationMultiplier={separationMultiplier}
                 orientation={defaultOrientation}
-                viewBox=
+                viewBox={`-300 -300 600 600`}
             />
         )}
         renderControls={() => buildControlPanel}

@@ -56,15 +56,15 @@ export default function GenerativeBoard() {
 	}
 
 	// Compute canvas size based on parameters
-	const boardBounds: Bounds = {
+	const initBounds: Bounds = {
 		minX: 0,
 		minY: 0,
-		width: 100,
-		height: 100
+		width: 1900,
+		height: 1900
 	}
 
-	const [canvasHeight, SETcanvasHeight] = useState(boardBounds.height)
-	const [canvasWidth, SETcanvasWidth] = useState(boardBounds.width)
+	const [canvasHeight, SETcanvasHeight] = useState(initBounds.height)
+	const [canvasWidth, SETcanvasWidth] = useState(initBounds.width)
 
 
 	// Stuff for handling color palettes
@@ -143,6 +143,7 @@ export default function GenerativeBoard() {
 				hexRadius={hexRadius}
 				separationMultiplier={separationMultiplier}
 				orientation={defaultOrientation}
+				viewBox={`${-canvasWidth / 2} ${-canvasHeight / 2} ${canvasWidth} ${canvasHeight}`}
 			/>
 		)}
 		renderControls={() => buildControlPanel}

@@ -26,6 +26,7 @@ export default function HexBoardSVG({
 		height="100%"
 		viewBox={viewBox}
 		preserveAspectRatio="xMidYMid meet"
+		style={{border:"2px solid"}}
 	>
 		{hexRoster.map((hex, i) => (
 			<Hexagon
