@@ -1,6 +1,7 @@
 import { Box, FormControl, FormLabel, Heading, List, ListItem } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AppWrapper from '../../common/AppWrapper';
 import { palettes } from '../../components/palettes';
 import { hexBoardList } from './HexBoardList';
 import HexboardSVG from './HexBoardSVG';
@@ -22,20 +23,24 @@ export default function HexBoardIndex() {
 
     const gameGlobals = {
         displayTitle: "HexBoard Index",
-        orientation: hexOrientations['flat-top'],
-        hexRadius: 50,
-        separationMultiplier: 1.1,
         textSize: 12,
         drawBackBoard: true,
         onClick: () => { },
     }
 
-    const canvasGlobals = {
-        canvasWidth: 800,
-        canvasHeight: 800,
-        hexGridOrigin: { x: 400, y: 400 },
-        canvasBackgroundColor: '#000',
-    }
+    const hexRadius = 50;
+    const defaultOrientation = hexOrientations["flat-top"];
+    const separationMultiplier = 1.1;
+
+
+    // const canvasGlobals = {
+    //     canvasWidth: 800,
+    //     canvasHeight: 800,
+    //     hexGridOrigin: { x: 400, y: 400 },
+    //     canvasBackgroundColor: '#000',
+    // }
+
+
 
     // <><><> Step 1: Create the hex roster
     // Create a center hexagon
@@ -87,8 +92,17 @@ export default function HexBoardIndex() {
             ))}
         </List>
     </Box>
-    return <HexboardSVG gameGlobals={gameGlobals} canvasGlobals={canvasGlobals} hexRoster={hexRoster}
-        additionalContent={buildAdditionalContent} controlPanel={buildControlPanel} />
-    // return <SVGWrapper width={100} height={100} additionalContent={buildAdditionalContent}>
-    // </SVGWrapper>
+    return <AppWrapper title="HexBoardSVG"
+        initialState={undefined}
+        renderSVG={() => (
+            <HexboardSVG
+                hexRoster={hexRoster}
+                hexRadius={hexRadius}
+                separationMultiplier={separationMultiplier}
+                orientation={defaultOrientation}
+            />
+        )}
+        renderControls={() => buildControlPanel && buildAdditionalContent}
+    >
+    </AppWrapper>
 }

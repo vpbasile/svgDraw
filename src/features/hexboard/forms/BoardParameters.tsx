@@ -1,13 +1,15 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Container, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@chakra-ui/react";
-import { Dispatch, SetStateAction } from "react";
 
-type propsType = {
-	hexRadius: number, separationMultiplier: number
-	SEThexRadius: Dispatch<SetStateAction<number>>, SETseparationMultiplier: Dispatch<number>,
-	hexgridOrigin: { x: number, y: number }, 
-}
+type BoardParametersProps = {
+  hexRadius: number;
+  separationMultiplier: number;
 
-export default function BoardParameters(props: propsType) {
+  SEThexRadius: React.Dispatch<React.SetStateAction<number>>;
+  SETseparationMultiplier: React.Dispatch<React.SetStateAction<number>>;
+};
+
+
+export default function BoardParameters(props: BoardParametersProps) {
 	const hexRadius = props.hexRadius;
 	const separationMultiplier = props.separationMultiplier;
 	const SEThexRadius = props.SEThexRadius;

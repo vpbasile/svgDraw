@@ -1,11 +1,21 @@
-import { canvasGlobalsType, coordinateHex, coordinateXY, direction, gameGlobalsType, hexDef, vector } from "./hexDefinitions"
-import { rollover } from "./math"
+import { coordinateHex, coordinateXY, direction, HexOrientation, vector } from "./hexDefinitions";
+import { rollover } from "./math";
 const sqrt3 = Math.sqrt(3)
 
-export const hexOrientations = {
-	"pointy-top": { "name": "pointy-top", "cornerAngles": [30, 90, 150, 210, 270, 330] },
-	"flat-top": { "name": "flat-top", "cornerAngles": [0, 60, 120, 180, 240, 300] }
-}
+export const hexOrientations: Record<
+	HexOrientation["name"],
+	HexOrientation
+> = {
+	"pointy-top": {
+		name: "pointy-top",
+		cornerAngles: [30, 90, 150, 210, 270, 330],
+	},
+	"flat-top": {
+		name: "flat-top",
+		cornerAngles: [0, 60, 120, 180, 240, 300],
+	},
+};
+
 
 // Store all of the q,r directiom vector pairs in an array
 export const directionVectors: vector[] = [
@@ -42,12 +52,9 @@ export function cube_ring(center: coordinateHex, radius: number): coordinateHex[
 }
 
 
-export function hex_to_pixel(q: number, r: number, gameGlobals: gameGlobalsType): coordinateXY {
+export function hex_to_pixel(q: number, r: number, hexRadius: number, orientation: HexOrientation, separationMultiplier: number): coordinateXY {
 	let x: number
 	let y: number
-	const orientation = gameGlobals.orientation;
-	const hexRadius = gameGlobals.hexRadius;
-	const separationMultiplier = gameGlobals.separationMultiplier;
 	const hexGridOrigin = { x: 0, y: 0 };
 	if (orientation.name === "flat-top") {
 		x = hexRadius * (3. / 2 * q)
@@ -61,42 +68,55 @@ export function hex_to_pixel(q: number, r: number, gameGlobals: gameGlobalsType)
 	return { "x": x * separationMultiplier + hexGridOrigin.x, "y": y * separationMultiplier + hexGridOrigin.y }
 }
 
-type range = { min: number, max: number }
-function rangeDistance(range: range): number { return range.max - range.min }
+export type Point = { x: number; y: number };
 
-export function calcCenteredRectangle(hexRoster: hexDef[], gameGlobals: gameGlobalsType): canvasGlobalsType {
-	// <> Find the min and max values for q and r.  Convert those to rectangular coordinates.  
-	let maxRadius = 0
-	hexRoster.forEach(hex => {
-		const q = hex.q;
-		const r = hex.r;
-		const s = -q - r;
-		if (Math.abs(q) > maxRadius) { maxRadius = q }
-		if (Math.abs(r) > maxRadius) { maxRadius = r }
-		if (Math.abs(s) > maxRadius) { maxRadius = s }
-	});
-	maxRadius++;
-	const cornerPoints: coordinateXY[] = directionVectors.map((vector) => {
-		return hex_to_pixel(vector.q * maxRadius, vector.r * maxRadius, gameGlobals)
-	})
-	// Now that we know all the corners of the enclosing hexagon, we enclose that in a rectangle by finding the min and max for x and y
-	const initRange = { min: 0, max: 0 };
-	const xRange: range = initRange;
-	const yRange: range = initRange;
-	cornerPoints.forEach((point) => {
-		if (point.x < xRange.min) { xRange.min = point.x }
-		if (point.x > xRange.max) { xRange.max = point.x }
-		if (point.y < yRange.min) { yRange.min = point.y }
-		if (point.y > yRange.max) { yRange.max = point.y }
-	})
-
-	const width = rangeDistance(xRange)
-	const height = rangeDistance(yRange)
-	return {
-		canvasWidth: width,
-		canvasHeight: height
-	}
+export function axialToPixel(
+	q: number,
+	r: number,
+	radius: number
+): Point {
+	const x = radius * (Math.sqrt(3) * q + Math.sqrt(3) / 2 * r);
+	const y = radius * (3 / 2 * r);
+	return { x, y };
 }
+
+
+// type range = { min: number, max: number }
+// function rangeDistance(range: range): number { return range.max - range.min }
+
+// export function calcCenteredRectangle(hexRoster: hexDef[]): canvasGlobalsType {
+// 	// <> Find the min and max values for q and r.  Convert those to rectangular coordinates.  
+// 	let maxRadius = 0
+// 	hexRoster.forEach(hex => {
+// 		const q = hex.q;
+// 		const r = hex.r;
+// 		const s = -q - r;
+// 		if (Math.abs(q) > maxRadius) { maxRadius = q }
+// 		if (Math.abs(r) > maxRadius) { maxRadius = r }
+// 		if (Math.abs(s) > maxRadius) { maxRadius = s }
+// 	});
+// 	maxRadius++;
+// 	const cornerPoints: coordinateXY[] = directionVectors.map((vector) => {
+// 		return hex_to_pixel(vector.q * maxRadius, vector.r * maxRadius, hexRadius, orientation,)
+// 	})
+// 	// Now that we know all the corners of the enclosing hexagon, we enclose that in a rectangle by finding the min and max for x and y
+// 	const initRange = { min: 0, max: 0 };
+// 	const xRange: range = initRange;
+// 	const yRange: range = initRange;
+// 	cornerPoints.forEach((point) => {
+// 		if (point.x < xRange.min) { xRange.min = point.x }
+// 		if (point.x > xRange.max) { xRange.max = point.x }
+// 		if (point.y < yRange.min) { yRange.min = point.y }
+// 		if (point.y > yRange.max) { yRange.max = point.y }
+// 	})
+
+// 	const width = rangeDistance(xRange)
+// 	const height = rangeDistance(yRange)
+// 	return {
+// 		canvasWidth: width,
+// 		canvasHeight: height
+// 	}
+// }
 
 export function rolloverDirection(value: number): direction { return (rollover(value, 5)) as direction }
 

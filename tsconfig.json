@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "ignores/Temperatures.tsx"],
+  "include": ["src", "src/features/scale/Temperatures.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

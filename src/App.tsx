@@ -1,7 +1,7 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import PlaceHolderBoard from "./common/PlaceHolderSVG";
 import { hexboardRoutes } from "./features/hexboard/routes";
-import { scaleRoutes } from "./features/scale/routes";
+// import { scaleRoutes } from "./features/scale/routes";
 import { treeRoutes } from "./features/tree/routes";
 
 const BASE_PATH = "/svgdraw";
@@ -26,12 +26,12 @@ function App() {
           ))}
         </Route>
 
-        {/* Scale feature */}
+        {/* Scale feature
         <Route path="scale" element={<Outlet />}>
           {scaleRoutes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
-        </Route>
+        </Route> */}
 
         {/* Hexboard feature */}
         <Route path="hex" element={<Outlet />}>

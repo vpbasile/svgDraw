@@ -1,27 +1,12 @@
-import { ReactNode } from "react";
 import { SVGPart } from "../../types";
 
 // Game stuff
-export type gameGlobalsType = {
-	// Display properties
-	displayTitle: string,
-	// Hexagon propeties
-	orientation: orientation,
-	hexRadius: number,
-	separationMultiplier: number,
-	textSize: number,
-	hexText?: string,
-	drawBackBoard: boolean,
-	// Children
-	children?: ReactNode
-}
 
 export type canvasGlobalsType = {
 	canvasWidth: number, canvasHeight: number
 };
 
-export type orientation = { name: string; cornerAngles: number[]; }
-export type orientationName = 'flat-top' | 'pointy-top'
+export type HexOrientation = { name: 'flat-top' | 'pointy-top'; cornerAngles: number[]; }
 
 // Hexagon stuff
 
@@ -45,3 +30,18 @@ export type coordinateXY = { x: number, y: number }
 
 
 export type hexClickFunction = (hex: hexDef, id: number, hexText?: string) => unknown
+
+
+export type BoardBounds = {
+    minX: number;
+    minY: number;
+    width: number;
+    height: number;
+};
+
+export type HexBoardState = {
+    hexRadius: number;
+    separationMultiplier: number;
+    orientation: HexOrientation;
+};
+

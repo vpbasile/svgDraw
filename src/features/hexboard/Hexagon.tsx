@@ -1,11 +1,14 @@
 import { SVGPart } from '../../types';
-import { gameGlobalsType } from './hexDefinitions';
+import { HexOrientation } from './hexDefinitions';
 import { calcTheta, hex_to_pixel } from './hexMath';
 
 type hexagonProps = {
-	gameGlobals: gameGlobalsType,
+	// gameGlobals: gameGlobalsType,
 	q: number,
 	r: number,
+	radius: number,
+	orientation: HexOrientation,
+	separationMultiplier: number,
 	hexText?: string,
 	textSize?: number,
 	color?: string,
@@ -14,14 +17,16 @@ type hexagonProps = {
 	additionalSVG?: SVGPart
 }
 
+
+
 // If textsize is blank, default to 75pt
 
 export default function Hexagon(props: hexagonProps) {
-	const gameGlobals = props.gameGlobals
 	// Cache global variables
-	const hexRadius = gameGlobals.hexRadius;
-	const orientation = gameGlobals.orientation;
+	const hexRadius = props.radius;
+	const orientation = props.orientation;
 	const cornerAngles = orientation.cornerAngles
+	const separationMultiplier = props.separationMultiplier
 	// Coordinates
 	const { q, r, id, additionalSVG } = props
 	// const s = -q - r;
@@ -30,7 +35,7 @@ export default function Hexagon(props: hexagonProps) {
 	// If the text size is not defined, default to 75pt
 	const hexTextSize = props.textSize || 75
 
-	const center = hex_to_pixel(q, r, gameGlobals)
+	const center = hex_to_pixel(q, r, hexRadius, orientation, separationMultiplier)
 
 	// Find the X and Y of each corner
 	let polygonString = ""

@@ -1,68 +1,40 @@
-// TODO: Allow for svgs to be added and included on a hex, like the special spaces in Candy Land.
+import { Bounds, computeHexBoardBounds } from "./computeBounds";
+import Hexagon from "./Hexagon";
+import { hexDef, HexOrientation } from "./hexDefinitions";
 
-import Hexagon from './Hexagon';
-import { canvasGlobalsType, gameGlobalsType, hexDef } from "./hexDefinitions";
-import { defaultClickMessage } from './hexFunctions';
-
-//style
-import { Box, Heading } from '@chakra-ui/react';
-import SVGWrapper from '../../common/AppWrapper';
-
-export interface hexboardProps {
-	gameGlobals: gameGlobalsType;
-	canvasGlobals: canvasGlobalsType;
+type Props = {
 	hexRoster: hexDef[];
-	controlPanel?: JSX.Element;
-	additionalContent?: JSX.Element;
-	textSize?: number;
-	color?: string;
-}
+	hexRadius: number;
+	separationMultiplier: number;
+	orientation: HexOrientation;
+	boundsDefault?: Bounds;
+};
 
-export default function HexboardSVG(props: hexboardProps) {
-	// Initialize variables
-	const gameGlobals = props.gameGlobals;
-	const hexRoster = props.hexRoster;
-	const canvasGlobals = props.canvasGlobals;
-	const canvasWidth = canvasGlobals.canvasWidth;
-	const canvasHeight = canvasGlobals.canvasHeight;
-	// <> Debugging logs
-	// console.log(`Canvas size: ${Math.floor(canvasWidth)}, ${Math.floor(canvasHeight)}`)
-	// console.log(`Grid origin: ${Math.floor(hexGridOrigin.x)}, ${Math.floor(hexGridOrigin.y)}`)
+export default function HexBoardSVG({
+	hexRoster,
+	hexRadius,
+	separationMultiplier,
+	orientation,
+	boundsDefault
+}: Props) {
+	const bounds = boundsDefault || computeHexBoardBounds(hexRoster, hexRadius);
 
-	// <> Render Functions
-
-	// <> Do some last minute things to the roster, like assigning unique ids if they are missing
-	let hexKey = 0;
-
-	const buildControlPanel = <Box id='control-panel-hexboard'>
-		<Box id='control-panel-hexboard-children'>
-			<Heading as={'h3'}>{gameGlobals.displayTitle}</Heading>
-			{props.controlPanel}
-		</Box>
-	</Box>;
-	// TODO Add a flag that gets thrown the first time a child is out of bounds
-	return (<>
-		{/* <> Parent SVG */}
-		<SVGWrapper width={canvasWidth} height={canvasHeight} displayTitle={'HexBoardSVG'}  controlPanel={buildControlPanel}
-			// The HeaxBoardSVG component assumes that the origin is in the center of the canvas
-			centerOrigin
+	return <svg
+			width="100%"
+			height="100%"
+			viewBox={`${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`}
+			preserveAspectRatio="xMidYMid meet"
 		>
-			{/* All of the hexes */}
-			{hexRoster.map((hex: hexDef) => {
-				const thisHexKey = hexKey++;
-				return <Hexagon
-					key={thisHexKey}
-					id={thisHexKey.toString()}
-					q={hex.q}
-					r={hex.r}
-					color={hex.color}
+			{hexRoster.map((hex, i) => (
+				<Hexagon
+					key={i}
+					radius={hexRadius}
+					separationMultiplier={separationMultiplier}
+					orientation={orientation}
+					q={hex.q} r={hex.r} id={hex.id.toString()} clickMessage={hex.clickMessage} color={hex.color}
 					hexText={hex.hexText}
-					textSize={props.textSize}
-					gameGlobals={gameGlobals}
 					additionalSVG={hex.additionalSVG}
-					// TODO I should only pass down the parts of gameGlobals that are needed, or maybe Redux would be better
-					clickMessage={defaultClickMessage(hex, thisHexKey, hex.hexText)} />;
-			})}
-		</SVGWrapper>
-	</>)
+				/>
+			))}
+		</svg>
 }
