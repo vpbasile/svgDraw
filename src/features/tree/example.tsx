@@ -1,6 +1,6 @@
-import { Box, FormControl, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, FormControl, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
 import { useState } from "react";
-import SVGWrapper from "../../common/AppWrapper";
+import AppWrapper from "../../common/AppWrapper";
 import { drawLine, rotateLinesAroundPoint } from "../../components/helpers";
 import { palettes } from "../../components/palettes"; // Import the palettes
 import { coordinateT, myLineT } from "../../types";
@@ -115,20 +115,28 @@ export default function TreeExample() {
     </FormControl>;
 
     // Assemble the control panel
-    const controlPanel = <Stack spacing={6}>
-        <Heading as="h2" size="lg">Fractal Tree Controls</Heading>
-        <Box>Line count: {allTrees.length}</Box>
-        {controlDepth}
-        {controlCount}
-        {controlAngle}
-        {controlPalette}
-    </Stack>
+    const controlPanel = <Accordion id="FractalTreeAccordion">
+        <AccordionItem id="fractal-tree-controls">
+            <AccordionButton>Fractal Tree Controls<AccordionIcon /></AccordionButton>
+            <AccordionPanel>
+                <Heading as="h2" size="lg">Fractal Tree Controls</Heading>
+                <Box>Line count: {allTrees.length}</Box>
+                {controlDepth}
+                {controlCount}
+                {controlAngle}
+                {controlPalette}
+            </AccordionPanel>
+        </AccordionItem>
+    </Accordion>
 
     // // Return the JSX
-    return <SVGWrapper 
-    width={canvasSize} height={canvasSize} 
-    displayTitle="Fractal Tree"
-    controlPanel={controlPanel}>
-        {allTrees.map((line) => drawLine(line))}
-    </SVGWrapper>
+    // return <AppWrapper title="Fractal Tree Example" controlPanel={controlPanel} canvasSize={canvasSize} lines={allTrees} />;
+    return <AppWrapper title='Fractal Tree'
+        renderSVG={() => (
+            <svg width="100%" height="100%" viewBox={`0 0 ${canvasSize} ${canvasSize}`} preserveAspectRatio="xMidYMid meet">
+                {allTrees.map((line) => drawLine(line))}
+            </svg>
+        )}
+        renderControls={() => controlPanel} initialState={undefined}    >
+    </AppWrapper>
 }

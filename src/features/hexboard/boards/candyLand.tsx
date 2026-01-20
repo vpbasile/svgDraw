@@ -89,14 +89,6 @@ export default function CandyLand() {
 						hexRadius={state.hexRadius}
 						separationMultiplier={state.separationMultiplier}
 						orientation={hexOrientations[state.orientation]}
-					// gameGlobals={{
-					//   displayTitle: "CandyLand",
-					//   orientation: hexOrientations[state.orientation],
-					//   hexRadius: state.hexRadius,
-					//   separationMultiplier: state.separationMultiplier,
-					//   textSize: 12,
-					//   drawBackBoard: false
-					// }}
 					/>
 				);
 			}}

@@ -23,6 +23,7 @@ export default function PlaceHolderBoard() {
     // Control Panel
     const controlPanel = <>
         < Box mt={4} >
+            <>Placeholder RedGreen Control</>
             <Slider aria-label="slider-ex-1"
                 value={x} // Controlled component
                 onChange={(value: number) => setX(value)
@@ -49,7 +50,7 @@ export default function PlaceHolderBoard() {
     </>
 
 
-    return <AppWrapper title='Placeholder'
+    return <AppWrapper title='Placeholder RedGreen'
     renderSVG={() => (
         <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
             {content}
