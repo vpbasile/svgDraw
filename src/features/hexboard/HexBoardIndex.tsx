@@ -1,9 +1,7 @@
-import { Box, FormControl, FormLabel, Heading, List, ListItem } from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, Heading } from '@chakra-ui/react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import AppWrapper from '../../common/AppWrapper';
 import { palettes } from '../../components/palettes';
-import { hexBoardList } from './HexBoardList';
 import HexboardSVG from './HexBoardSVG';
 import { coordinateHex, hexDef } from './hexDefinitions';
 import { coord2hex } from './hexFunctions';
@@ -82,16 +80,6 @@ export default function HexBoardIndex() {
         </Box>
     </Box>;
 
-    const buildAdditionalContent = <Box>
-        <Heading as={'h2'}>Board Index</Heading>
-        <List>
-            {hexBoardList.map(({ uid, displayName }) => (
-                <ListItem key={`link-${uid}`}>
-                    <Link to={uid}>{displayName}</Link>
-                </ListItem>
-            ))}
-        </List>
-    </Box>
     return <AppWrapper title="HexBoardSVG"
         initialState={undefined}
         renderSVG={() => (
@@ -102,7 +90,7 @@ export default function HexBoardIndex() {
                 orientation={defaultOrientation}
             />
         )}
-        renderControls={() => buildControlPanel && buildAdditionalContent}
+        renderControls={() => buildControlPanel}
     >
     </AppWrapper>
 }
