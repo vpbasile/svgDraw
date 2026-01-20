@@ -1,7 +1,7 @@
 
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel } from "@chakra-ui/react";
 import DBTable, { fieldTuple, tableData } from "../../db-man/DBTable";
-import { hexDef } from "../hexDefinitions";
+import { hexDef } from "../utils/hexDefinitions";
 export default function RosterDisplay(props: { hexRoster: hexDef[] }) {
 	const fieldsForHexes: fieldTuple[] = [
 		["q", { matchID: "q", labelText: "q", type: "number", defaultValue: "q", order: 1 },],

@@ -1,11 +1,11 @@
 import { Box, Button, Container, FormControl, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, Select } from "@chakra-ui/react";
 import AppWrapper from "../../../common/AppWrapper";
 import { BoardParameters } from "../forms";
-import CanvasParameters from "../forms/CanvasParameters";
-import RosterDisplay from "../forms/HexRosterDisplay";
+import RosterDisplay from "../forms/D_HexRoster";
+import CanvasParameters from "../forms/F_CanvasParameters";
 import HexBoardSVG from "../HexBoardSVG";
-import { hexDef } from "../hexDefinitions";
-import { cube_neighbor, hexOrientations } from "../hexMath";
+import { hexDef } from "../utils/hexDefinitions";
+import { cube_neighbor, hexOrientations } from "../utils/hexMath";
 
 type CandyLandState = {
 	hexRadius: number;

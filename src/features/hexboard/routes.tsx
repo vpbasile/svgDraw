@@ -13,7 +13,7 @@ interface FeatureRoute {
   element: ReactNode;
 }
 
-const hexBoardList = [
+export const hexBoardList = [
   { uid: 'trivia', displayName: 'Trivia Board', element: <TriviaBoard /> },
   { uid: 'saved', displayName: 'Saved Board', element: <SavedBoard /> },
   { uid: 'create', displayName: 'Create Board', element: <CreateBoard /> },

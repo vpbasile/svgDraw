@@ -1,6 +1,6 @@
 import { SVGPart } from '../../types';
-import { HexOrientation } from './hexDefinitions';
-import { calcTheta, hex_to_pixel } from './hexMath';
+import { HexOrientation } from './utils/hexDefinitions';
+import { calcTheta, hex_to_pixel } from './utils/hexMath';
 
 type hexagonProps = {
 	// gameGlobals: gameGlobalsType,
@@ -16,10 +16,6 @@ type hexagonProps = {
 	clickMessage: string
 	additionalSVG?: SVGPart
 }
-
-
-
-// If textsize is blank, default to 75pt
 
 export default function Hexagon(props: hexagonProps) {
 	// Cache global variables

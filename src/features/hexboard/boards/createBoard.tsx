@@ -1,12 +1,12 @@
 import { Box, Button, Container, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { palettes } from "../../../components/palettes";
-import BoardParameters from "../forms/BoardParameters";
-import CanvasParameters from "../forms/CanvasParameters";
-import RosterDisplay from "../forms/HexRosterDisplay";
+import RosterDisplay from "../forms/D_HexRoster";
+import BoardParameters from "../forms/F_BoardParameters";
+import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
-import { canvasGlobalsType, gameGlobalsType, hexDef } from "../hexDefinitions";
-import { cube_ring, hexOrientations } from "../hexMath";
+import { canvasGlobalsType, gameGlobalsType, hexDef } from "../utils/hexDefinitions";
+import { cube_ring, hexOrientations } from "../utils/hexMath";
 
 export default function CreateBoard() {
 	// <> States that control canvas parameters

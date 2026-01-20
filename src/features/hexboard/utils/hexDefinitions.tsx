@@ -1,4 +1,4 @@
-import { SVGPart } from "../../types";
+import { SVGPart } from "../../../types";
 
 // Game stuff
 

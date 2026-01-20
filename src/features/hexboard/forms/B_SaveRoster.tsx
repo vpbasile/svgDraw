@@ -1,5 +1,5 @@
 import { Button, Container } from "@chakra-ui/react";
-import { gameGlobalsType, hexDef } from "../hexDefinitions";
+import { gameGlobalsType, hexDef } from "../utils/hexDefinitions";
 
 export default function SaveRosterButton(props: {
 	hexRoster: hexDef[],

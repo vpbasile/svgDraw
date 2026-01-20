@@ -1,11 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import { useState } from "react";
-import BoardParameters from "../forms/BoardParameters";
-import CanvasParameters from "../forms/CanvasParameters";
-import RosterDisplay from "../forms/HexRosterDisplay";
+import RosterDisplay from "../forms/D_HexRoster";
+import BoardParameters from "../forms/F_BoardParameters";
+import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
-import { canvasGlobalsType, gameGlobalsType, hexDef } from "../hexDefinitions";
-import { hexOrientations } from "../hexMath";
+import { canvasGlobalsType, gameGlobalsType, hexDef } from "../utils/hexDefinitions";
+import { hexOrientations } from "../utils/hexMath";
 
 export default function Cataan() {
 	// <> States that control canvas parameters

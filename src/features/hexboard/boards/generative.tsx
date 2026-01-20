@@ -2,14 +2,14 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPane
 import { useState } from "react";
 import AppWrapper from "../../../common/AppWrapper";
 import { palettes } from "../../../components/palettes";
-import { Bounds } from "../computeBounds";
-import BoardParameters from "../forms/BoardParameters";
-import CanvasParameters from "../forms/CanvasParameters";
-import RosterDisplay from "../forms/HexRosterDisplay";
+import RosterDisplay from "../forms/D_HexRoster";
+import BoardParameters from "../forms/F_BoardParameters";
+import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
-import { hexDef, vector } from "../hexDefinitions";
-import { alreadyThere, coord2hex, randomMove } from "../hexFunctions";
-import { hexOrientations } from "../hexMath";
+import { Bounds } from "../utils/computeBounds";
+import { hexDef, vector } from "../utils/hexDefinitions";
+import { alreadyThere, coord2hex, randomMove } from "../utils/hexFunctions";
+import { hexOrientations } from "../utils/hexMath";
 
 export default function GenerativeBoard() {
 

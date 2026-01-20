@@ -3,9 +3,9 @@ import { useState } from 'react';
 import AppWrapper from '../../common/AppWrapper';
 import { palettes } from '../../components/palettes';
 import HexboardSVG from './HexBoardSVG';
-import { coordinateHex, hexDef } from './hexDefinitions';
-import { coord2hex } from './hexFunctions';
-import { cube_ring, hexOrientations } from './hexMath';
+import { coordinateHex, hexDef } from './utils/hexDefinitions';
+import { coord2hex } from './utils/hexFunctions';
+import { cube_ring, hexOrientations } from './utils/hexMath';
 
 export default function HexBoardIndex() {
 
@@ -88,6 +88,7 @@ export default function HexBoardIndex() {
                 hexRadius={hexRadius}
                 separationMultiplier={separationMultiplier}
                 orientation={defaultOrientation}
+                viewBox=
             />
         )}
         renderControls={() => buildControlPanel}

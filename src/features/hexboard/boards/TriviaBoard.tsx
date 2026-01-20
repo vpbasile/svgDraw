@@ -1,13 +1,13 @@
 import { Box, FormControl, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
 import { palettes } from "../../../components/palettes"; // Import the palettes
-import BoardParameters from "../forms/BoardParameters";
-import CanvasParameters from "../forms/CanvasParameters";
-import RosterDisplay from "../forms/HexRosterDisplay";
+import RosterDisplay from "../forms/D_HexRoster";
+import BoardParameters from "../forms/F_BoardParameters";
+import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
-import { coordinateHex, gameGlobalsType, hexDef } from "../hexDefinitions";
-import { coord2hex } from "../hexFunctions";
-import { cube_ring, hexOrientations } from "../hexMath";
+import { coordinateHex, gameGlobalsType, hexDef } from "../utils/hexDefinitions";
+import { coord2hex } from "../utils/hexFunctions";
+import { cube_ring, hexOrientations } from "../utils/hexMath";
 
 export default function TriviaBoard() {
   // Constants, States, and Functions unique to this board
