@@ -5,7 +5,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { ReactNode, useState } from "react";
-import ColorModeButton from "../features/hexboard/forms/B_ColorMode";
+import SVGDrawControls from "../features/hexboard/forms/F_SVGDraw";
 import ModuleIndex from "./ModuleIndex";
 
 type AppWrapperProps<TState> = {
@@ -52,7 +52,7 @@ export default function AppWrapper<TState>({
           {title}
         </Heading>
         {ModuleIndex()}
-        {<ColorModeButton />}
+        {<SVGDrawControls />}
         {renderControls
           ? renderControls(state, setState)
           : <Box>No controls</Box>}

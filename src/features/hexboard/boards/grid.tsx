@@ -1,11 +1,12 @@
 import { Box, Button, Container, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { palettes } from "../../../components/palettes";
+import AppWrapper from "../../../common/AppWrapper";
+import { palettes } from "../../../common/palettes";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
-import { canvasGlobalsType, gameGlobalsType, hexDef } from "../utils/hexDefinitions";
+import { hexDef } from "../utils/hexDefinitions";
 import { cube_ring, hexOrientations } from "../utils/hexMath";
 
 export default function Grid() {
@@ -14,7 +15,7 @@ export default function Grid() {
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
 	const [canvasHeight, SETcanvasHeight] = useState(3600)
 	const [canvasWidth, SETcanvasWidth] = useState(3600)
-	const [defaultOrientation, SETdefaultOrientation] = useState(hexOrientations["pointy-top"])	
+	const [defaultOrientation, SETdefaultOrientation] = useState(hexOrientations["pointy-top"])
 	// Constants, States, and Functions unique to this board
 	// <> This color stuff is reusable across all boards
 	const [selectedPalette, setSelectedPalette] = useState<string>('trivia');
@@ -43,7 +44,7 @@ export default function Grid() {
 	const tempRoster: hexDef[] = boundary.map((hex, index) => {
 		return { q: hex.q, r: hex.r, color: blankColor, id: index, clickMessage: `Hex ${index}` }
 	})
-	
+
 	console.log('Hex Count:', tempRoster.length)
 	const [hexRoster, SEThexRoster] = useState<hexDef[]>(tempRoster)
 
@@ -53,6 +54,18 @@ export default function Grid() {
 		tempRoster.push({ q: qTemp, r: rTemp, color: colorTemp, id: hexRoster.length, clickMessage: `Hex ${hexRoster.length}` })
 		SEThexRoster(tempRoster);
 	}
+
+	const initialState = {
+		hexRadius: 200,
+		separationMultiplier: 1.1,
+		canvasWidth: 4800,
+		canvasHeight: 3600,
+		howManyHexes: 9,
+		hexRoster: hexRoster,
+		qTemp: 0,
+		rTemp: 0,
+		orientation: "flat-top",
+	};
 
 	// <><><> Step 2: Create the control panel
 
@@ -77,7 +90,7 @@ export default function Grid() {
 
 	const orientationControl = <FormControl id="orientation-control">
 		<FormLabel>Orientation</FormLabel>
-		<Select  onChange={(e) => SETdefaultOrientation(hexOrientations[e.target.value as keyof typeof hexOrientations])}>
+		<Select onChange={(e) => SETdefaultOrientation(hexOrientations[e.target.value as keyof typeof hexOrientations])}>
 			{Object.keys(hexOrientations).map((orientation) => <option key={orientation} value={orientation}>{orientation}</option>)}
 		</Select>
 	</FormControl>;
@@ -99,10 +112,7 @@ export default function Grid() {
 				hexRadius={hexRadius}
 				separationMultiplier={separationMultiplier}
 				SEThexRadius={SEThexRadius}
-				SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
-					x: 0,
-					y: 0
-				}} />
+				SETseparationMultiplier={SETseparationMultiplier} />
 		</Box>
 		<Container color={'orange.500'}>
 			<h3>Add Hex</h3>
@@ -125,22 +135,14 @@ export default function Grid() {
 		</Container>
 		<RosterDisplay hexRoster={hexRoster} />
 	</Box>
-
-	const gameGlobals: gameGlobalsType = {
-		displayTitle: "Create Board",
-		orientation: defaultOrientation,
-		hexRadius: hexRadius,
-		separationMultiplier: separationMultiplier,
-		textSize: 12,
-		drawBackBoard: false,
-	}
-
-	const canvasGlobals: canvasGlobalsType = {
-		canvasWidth: canvasWidth,
-		canvasHeight: canvasHeight,
-	}
-
-	return <HexboardSVG gameGlobals={gameGlobals} canvasGlobals={canvasGlobals} hexRoster={hexRoster}
-		controlPanel={buildControlPanel}
-	/>
+	return <AppWrapper title="Grid HexBoard"
+		initialState={initialState}
+		renderSVG={(state) => <HexboardSVG
+			// Hex Roster	
+			hexRoster={hexRoster}
+			// Hex Radius
+			hexRadius={hexRadius}
+			// Separation Multiplier
+			separationMultiplier={separationMultiplier} orientation={defaultOrientation} viewBox={""} />}
+		renderControls={(state, setState) => buildControlPanel} />
 }

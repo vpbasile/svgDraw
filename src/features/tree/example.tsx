@@ -1,8 +1,8 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, FormControl, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 import AppWrapper from "../../common/AppWrapper";
-import { drawLine, rotateLinesAroundPoint } from "../../components/helpers";
-import { palettes } from "../../components/palettes"; // Import the palettes
+import { drawLine, rotateLinesAroundPoint } from "../../common/helpers";
+import { palettes } from "../../common/palettes"; // Import the palettes
 import { coordinateT, myLineT } from "../../types";
 import Tree from "./treeGPT";
 

@@ -1,7 +1,7 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Container, FormControl, FormLabel, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
 import { useState } from "react";
 import AppWrapper from "../../../common/AppWrapper";
-import { palettes } from "../../../components/palettes";
+import { palettes } from "../../../common/palettes";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import CanvasParameters from "../forms/F_CanvasParameters";
@@ -97,7 +97,7 @@ export default function GenerativeBoard() {
 
 	const buildControlPanel = <Box id="control-panel-generative">
 		{/* Canvas Parameters */}
-		<Accordion id="control-panel-generative">
+		<Accordion id="control-panel-generative" allowMultiple>
 			<AccordionItem id="generative-parameters">
 				<AccordionButton>Generative HexBoard Controls<AccordionIcon /></AccordionButton>
 				<AccordionPanel>

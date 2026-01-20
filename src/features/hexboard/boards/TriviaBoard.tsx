@@ -1,6 +1,6 @@
 import { Box, FormControl, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
-import { palettes } from "../../../components/palettes"; // Import the palettes
+import { palettes } from "../../../common/palettes"; // Import the palettes
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import CanvasParameters from "../forms/F_CanvasParameters";

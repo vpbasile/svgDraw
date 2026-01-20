@@ -1,7 +1,7 @@
 import { Box, FormControl, FormLabel, Heading } from '@chakra-ui/react';
 import { useState } from 'react';
 import AppWrapper from '../../common/AppWrapper';
-import { palettes } from '../../components/palettes';
+import { palettes } from '../../common/palettes';
 import HexboardSVG from './HexBoardSVG';
 import { coordinateHex, hexDef } from './utils/hexDefinitions';
 import { coord2hex } from './utils/hexFunctions';
