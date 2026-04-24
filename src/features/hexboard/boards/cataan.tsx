@@ -1,18 +1,19 @@
 import { Box } from "@chakra-ui/react";
 import { useState } from "react";
+import { PageSizeKey } from "../../../common/pageSizeSettings";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
-import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
-import { canvasGlobalsType, gameGlobalsType, hexDef } from "../utils/hexDefinitions";
+import { computeHexBoardBounds } from "../utils/computeBounds";
+import { gameGlobalsType, hexDef } from "../utils/hexDefinitions";
 import { hexOrientations } from "../utils/hexMath";
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 
 export default function Cataan() {
 	// <> States that control canvas parameters
 	const [hexRadius, SEThexRadius] = useState(200);
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
-	const [canvasHeight, SETcanvasHeight] = useState(3600)
-	const [canvasWidth, SETcanvasWidth] = useState(3600)
 	// Constants, States, and Functions unique to this board
 	// <> This color stuff is reusable across all boards
 
@@ -112,10 +113,6 @@ export default function Cataan() {
 	const buildControlPanel = <Box id="control-panel-trivia">
 		{/* Canvas Parameters */}
 		<Box id="control-panel-trivia">
-			<CanvasParameters
-				// Canvas-specific parameters
-				canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-				canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
 			<BoardParameters
 				// Hexagonally-specific parameters
 				hexRadius={hexRadius}
@@ -129,21 +126,22 @@ export default function Cataan() {
 		<RosterDisplay hexRoster={hexRoster} />
 	</Box>
 
+	const orientation = hexOrientations['pointy-top'];
+
 	const gameGlobals: gameGlobalsType = {
 		displayTitle: "Create Board",
-		orientation: hexOrientations['pointy-top'],
+		orientation,
 		hexRadius: hexRadius,
 		separationMultiplier: separationMultiplier,
 		textSize: 12,
 		drawBackBoard: false,
 	}
 
-	const canvasGlobals: canvasGlobalsType = {
-		canvasWidth: canvasWidth,
-		canvasHeight: canvasHeight,
-	}
+	const bounds = computeHexBoardBounds(hexRoster, hexRadius, orientation, separationMultiplier, hexRadius);
+	const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
 
-	return <HexboardSVG gameGlobals={gameGlobals} canvasGlobals={canvasGlobals} hexRoster={hexRoster}
+	return <HexboardSVG gameGlobals={gameGlobals} viewBox={viewBox} hexRoster={hexRoster}
+		defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
 		controlPanel={buildControlPanel}
 	/>
 }

@@ -1,7 +1,10 @@
 import { Box, Center, Flex } from "@chakra-ui/react";
+import { useEffect } from "react";
 import ControlSidebar from "../../common/ControlSidebar";
+import { PageSizeKey } from "../../common/pageSizeSettings";
+import { BASE_VIEWBOX_EVENT } from "../../common/useCanvasZoom";
 import Hexagon from "./Hexagon";
-import { canvasGlobalsType, gameGlobalsType, hexDef, HexOrientation } from "./utils/hexDefinitions";
+import { gameGlobalsType, hexDef, HexOrientation } from "./utils/hexDefinitions";
 import { hexOrientations } from "./utils/hexMath";
 
 export type HexBoardSVGProps = {
@@ -11,8 +14,8 @@ export type HexBoardSVGProps = {
 	separationMultiplier?: number;
 	orientation?: HexOrientation;
 	gameGlobals?: gameGlobalsType;
-	canvasGlobals?: canvasGlobalsType;
 	controlPanel?: JSX.Element;
+	defaultPageSize?: PageSizeKey;
 
 	width?: number;
 	height?: number;
@@ -26,15 +29,18 @@ export default function HexBoardSVG({
 	orientation,
 	viewBox,
 	gameGlobals,
-	canvasGlobals,
 	controlPanel,
+	defaultPageSize,
 }: HexBoardSVGProps) {
 	const effectiveHexRadius = hexRadius ?? gameGlobals?.hexRadius ?? 100;
 	const effectiveSeparation = separationMultiplier ?? gameGlobals?.separationMultiplier ?? 1;
 	const effectiveOrientation = orientation ?? gameGlobals?.orientation ?? hexOrientations["flat-top"];
-	const effectiveViewBox = viewBox ?? (canvasGlobals
-		? `${-canvasGlobals.canvasWidth / 2} ${-canvasGlobals.canvasHeight / 2} ${canvasGlobals.canvasWidth} ${canvasGlobals.canvasHeight}`
-		: "-300 -300 600 600");
+	const effectiveViewBox = viewBox ?? "-300 -300 600 600";
+
+	// Notify useCanvasZoom of the new base viewBox so it can preserve zoom/pan state
+	useEffect(() => {
+		document.dispatchEvent(new CustomEvent(BASE_VIEWBOX_EVENT, { detail: effectiveViewBox }));
+	}, [effectiveViewBox]);
 
 	const svgElement = (
 		<Box border="2px solid" width="100%" height="100%">
@@ -63,7 +69,7 @@ export default function HexBoardSVG({
 		<Flex height="100vh">
 			<Center id="canvas-box" flex={1}>{svgElement}</Center>
 			{controlPanel ? (
-				<ControlSidebar title={gameGlobals?.displayTitle ?? "HexBoardSVG"}>
+				<ControlSidebar title={gameGlobals?.displayTitle ?? "HexBoardSVG"} defaultPageSize={defaultPageSize}>
 					{controlPanel}
 				</ControlSidebar>
 			) : null}

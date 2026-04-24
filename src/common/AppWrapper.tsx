@@ -4,9 +4,11 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode, useState } from "react";
 import ControlSidebar from "./ControlSidebar";
+import { PageSizeKey } from "./pageSizeSettings";
 
 type AppWrapperProps<TState> = {
   title: string;
+  defaultPageSize?: PageSizeKey;
 
   /** Initial state owned by the wrapper */
   initialState: TState;
@@ -23,6 +25,7 @@ type AppWrapperProps<TState> = {
 
 export default function AppWrapper<TState>({
   title,
+  defaultPageSize,
   initialState,
   renderSVG,
   renderControls,
@@ -37,7 +40,7 @@ export default function AppWrapper<TState>({
       </Center>
 
       {/* CONTROL PANEL */}
-      <ControlSidebar title={title}>
+      <ControlSidebar title={title} defaultPageSize={defaultPageSize}>
         {renderControls ? renderControls(state, setState) : undefined}
       </ControlSidebar>
     </Flex>

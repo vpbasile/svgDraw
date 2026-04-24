@@ -1,32 +1,14 @@
 import { Button, ButtonGroup, FormControl, FormHelperText, FormLabel, HStack, Input, Stack, Text } from '@chakra-ui/react';
 import { ReactNode, SetStateAction, useEffect, useState } from 'react';
+import { DEFAULT_PAGE_SIZE, PAGE_SIZES, PageSizeKey } from '../../../common/pageSizeSettings';
 import SidebarSection from '../../../common/SidebarSection';
 import { useCanvasZoom } from '../../../common/useCanvasZoom';
 import ColorModeButton from './B_ColorMode';
 
 type SVGDrawControlsProps = {
     children?: ReactNode;
+    defaultPageSize?: PageSizeKey;
 };
-
-// This will control how pixels scale to inches in the exported SVG.  
-// 300 DPI is a common standard for print quality. It is also high enough that it should look good even when printed at smaller sizes.
-// 300 DPI is also good for laser engraving wood or acrylic.  
-// 600 DPI is good for engraving glass or metal.
-const DPI = 300;
-
-function pxFromInches(inches: number): number {
-    return inches * DPI;
-}
-
-const PAGE_SIZES = {
-    'none':      null,
-    '8.5x11':    { width: pxFromInches(8.5),  height: pxFromInches(11),  label: '8.5" × 11" (portrait)' },
-    '11x8.5':    { width: pxFromInches(11),   height: pxFromInches(8.5), label: '11" × 8.5" (landscape)' },
-    '24x36':     { width: pxFromInches(24),   height: pxFromInches(36),  label: '24" × 36" (portrait)' },
-    '36x24':     { width: pxFromInches(36),   height: pxFromInches(24),  label: '36" × 24" (landscape)' },
-} as const;
-
-type PageSizeKey = keyof typeof PAGE_SIZES;
 
 const PAGE_RECT_ID = 'svgdraw-page-outline';
 
@@ -34,9 +16,11 @@ type ZoomControlsProps = {
     zoomIn: () => void;
     zoomOut: () => void;
     resetZoom: () => void;
+    zoomToPage: () => void;
+    canZoomToPage: boolean;
 };
 
-function ZoomControls({ zoomIn, zoomOut, resetZoom }: ZoomControlsProps) {
+function ZoomControls({ zoomIn, zoomOut, resetZoom, zoomToPage, canZoomToPage }: ZoomControlsProps) {
     return (
         <FormControl>
             <FormLabel mb={1}>Zoom</FormLabel>
@@ -45,6 +29,9 @@ function ZoomControls({ zoomIn, zoomOut, resetZoom }: ZoomControlsProps) {
                 <Button onClick={resetZoom} flex={2}>Reset</Button>
                 <Button onClick={zoomIn} flex={1} aria-label="Zoom in">+</Button>
             </ButtonGroup>
+            <Button mt={2} size="sm" variant="outline" width="100%" onClick={zoomToPage} isDisabled={!canZoomToPage}>
+                Zoom to Page
+            </Button>
             <Text fontSize="xs" color="gray.500" mt={1}>Drag or scroll to pan · Ctrl+scroll or pinch to zoom</Text>
         </FormControl>
     );
@@ -108,10 +95,14 @@ function FileExportControls({ fileName, setFileName, downloadCurrentSvg }: FileE
     );
 }
 
-export default function SVGDrawControls({ children }: SVGDrawControlsProps) {
+export default function SVGDrawControls({ children, defaultPageSize }: SVGDrawControlsProps) {
     const [fileName, setFileName] = useState<string>('svgdraw');
-    const [pageSize, setPageSize] = useState<PageSizeKey>('none');
-    const { zoomIn, zoomOut, resetZoom } = useCanvasZoom();
+    const [pageSize, setPageSize] = useState<PageSizeKey>(defaultPageSize ?? DEFAULT_PAGE_SIZE);
+    const { zoomIn, zoomOut, resetZoom, zoomToArea } = useCanvasZoom();
+
+    useEffect(() => {
+        setPageSize(defaultPageSize ?? DEFAULT_PAGE_SIZE);
+    }, [defaultPageSize]);
 
     useEffect(() => {
         const svgElement = document.querySelector('#canvas-box svg');
@@ -150,9 +141,21 @@ export default function SVGDrawControls({ children }: SVGDrawControlsProps) {
         URL.revokeObjectURL(url);
     };
 
+    const zoomToPage = () => {
+        const size = PAGE_SIZES[pageSize];
+        if (!size) return;
+        zoomToArea(-size.width / 2, -size.height / 2, size.width, size.height);
+    };
+
     return <>
         <SidebarSection id="svgdraw-appearance" title="Appearance">
-            <ZoomControls zoomIn={zoomIn} zoomOut={zoomOut} resetZoom={resetZoom} />
+            <ZoomControls
+                zoomIn={zoomIn}
+                zoomOut={zoomOut}
+                resetZoom={resetZoom}
+                zoomToPage={zoomToPage}
+                canZoomToPage={pageSize !== 'none'}
+            />
             <FormControl>
                 <ColorModeButton />
             <Text fontSize="sm" color="gray.600">Color Mode only affects the controls inside this app.  They do not impact the exported SVG.</Text>

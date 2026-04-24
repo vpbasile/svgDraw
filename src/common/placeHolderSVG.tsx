@@ -1,7 +1,10 @@
 import { Box, Heading, Link, List, ListItem, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useState } from 'react';
 import AppWrapper from './AppWrapper';
+import { PageSizeKey } from './pageSizeSettings';
 import SidebarSection from './SidebarSection';
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 export default function PlaceHolderBoard() {
     // Each implementation should provide the SVG content plus any sidebar controls.
     // AppWrapper owns the shared layout and SVG draw controls.
@@ -50,6 +53,7 @@ export default function PlaceHolderBoard() {
 
 
         return <AppWrapper title='Placeholder RedGreen'
+            defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
             renderSVG={() => (
                 <svg width="100%" height="100%" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
                     {content}

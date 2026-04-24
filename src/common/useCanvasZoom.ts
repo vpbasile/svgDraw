@@ -3,6 +3,8 @@ import { useEffect, useRef } from 'react';
 const ZOOM_FACTOR = 1.15;
 const SVG_SELECTOR = '#canvas-box svg';
 
+export const BASE_VIEWBOX_EVENT = 'svgdraw:baseviewbox';
+
 function getSvg(): SVGSVGElement | null {
     const el = document.querySelector(SVG_SELECTOR);
     return el instanceof SVGSVGElement ? el : null;
@@ -13,44 +15,95 @@ function parseViewBox(vb: string): [number, number, number, number] {
     return [parts[0], parts[1], parts[2], parts[3]];
 }
 
-function scaleViewBox(svg: SVGSVGElement, factor: number): void {
-    const vbStr = svg.getAttribute('viewBox');
-    if (!vbStr) return;
-    const [minX, minY, w, h] = parseViewBox(vbStr);
-    const cx = minX + w / 2;
-    const cy = minY + h / 2;
-    const newW = w / factor;
-    const newH = h / factor;
-    svg.setAttribute('viewBox', `${cx - newW / 2} ${cy - newH / 2} ${newW} ${newH}`);
-}
-
-/** Translate the viewBox by (dx, dy) in SVG user-units. */
-function panViewBox(svg: SVGSVGElement, dxPx: number, dyPx: number): void {
-    const vbStr = svg.getAttribute('viewBox');
-    if (!vbStr) return;
-    const [minX, minY, w, h] = parseViewBox(vbStr);
-    // Convert pixel delta to viewBox units via the ratio of vb-size / element-size
-    const rect = svg.getBoundingClientRect();
-    const scaleX = w / rect.width;
-    const scaleY = h / rect.height;
-    svg.setAttribute('viewBox', `${minX - dxPx * scaleX} ${minY - dyPx * scaleY} ${w} ${h}`);
-}
-
 export function useCanvasZoom() {
-    const naturalViewBox = useRef<string | null>(null);
+    // Base viewBox (natural, un-zoomed, un-panned) — updated via custom event when board changes
+    const baseRef = useRef<string | null>(null);
+    // Zoom >1 = zoomed in (showing less content), maintained across base changes
+    const zoomRef = useRef(1.0);
+    // Pan as fraction of base width/height so it scales proportionally with board size changes
+    const panRef = useRef({ fx: 0, fy: 0 });
+
+    function applyTransform(svg: SVGSVGElement) {
+        const base = baseRef.current;
+        if (!base) return;
+        const [bx, by, bw, bh] = parseViewBox(base);
+        const zoom = zoomRef.current;
+        const w = bw / zoom;
+        const h = bh / zoom;
+        const cx = bx + bw / 2 + panRef.current.fx * bw;
+        const cy = by + bh / 2 + panRef.current.fy * bh;
+        svg.setAttribute('viewBox', `${cx - w / 2} ${cy - h / 2} ${w} ${h}`);
+    }
+
+    function doScale(svg: SVGSVGElement, factor: number) {
+        zoomRef.current *= factor;
+        applyTransform(svg);
+    }
+
+    function doPan(svg: SVGSVGElement, dxPx: number, dyPx: number) {
+        const base = baseRef.current;
+        if (!base) return;
+        const [, , bw, bh] = parseViewBox(base);
+        const zoom = zoomRef.current;
+        const currentW = bw / zoom;
+        const currentH = bh / zoom;
+        const rect = svg.getBoundingClientRect();
+        panRef.current.fx -= (dxPx * currentW / rect.width) / bw;
+        panRef.current.fy -= (dyPx * currentH / rect.height) / bh;
+        applyTransform(svg);
+    }
+
+    function doZoomToArea(svg: SVGSVGElement, minX: number, minY: number, width: number, height: number) {
+        if (width <= 0 || height <= 0) return;
+        const base = baseRef.current;
+        if (!base) {
+            svg.setAttribute('viewBox', `${minX} ${minY} ${width} ${height}`);
+            return;
+        }
+
+        const [bx, by, bw, bh] = parseViewBox(base);
+        const baseRatio = bw / bh;
+        const targetCx = minX + width / 2;
+        const targetCy = minY + height / 2;
+
+        // Keep uniform zoom and fit the full target area into the viewport.
+        const fitH = Math.max(height, width / baseRatio);
+        const fitW = fitH * baseRatio;
+
+        zoomRef.current = bw / fitW;
+        panRef.current = {
+            fx: (targetCx - (bx + bw / 2)) / bw,
+            fy: (targetCy - (by + bh / 2)) / bh,
+        };
+        applyTransform(svg);
+    }
 
     useEffect(() => {
-        const capture = () => {
+        // When the board dispatches a new base viewBox (e.g. separationMultiplier changed),
+        // preserve current zoom/pan fractions and reapply on top of the new base.
+        const onBaseChange = (e: Event) => {
+            baseRef.current = (e as CustomEvent<string>).detail;
             const svg = getSvg();
-            if (svg && naturalViewBox.current === null) {
-                naturalViewBox.current = svg.getAttribute('viewBox');
+            if (svg) applyTransform(svg);
+        };
+        document.addEventListener(BASE_VIEWBOX_EVENT, onBaseChange);
+        return () => document.removeEventListener(BASE_VIEWBOX_EVENT, onBaseChange);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useEffect(() => {
+        const tryCapture = () => {
+            if (baseRef.current !== null) return;
+            const svg = getSvg();
+            if (svg) {
+                const vb = svg.getAttribute('viewBox');
+                if (vb) { baseRef.current = vb; applyTransform(svg); }
             }
         };
-        capture();
-        const t = setTimeout(capture, 200);
+        tryCapture();
+        const t = setTimeout(tryCapture, 200);
 
         const canvasBox = document.getElementById('canvas-box');
-        if (!canvasBox) return;
+        if (!canvasBox) return () => clearTimeout(t);
 
         // ── Mouse drag pan ────────────────────────────────────────────────
         let dragging = false;
@@ -75,7 +128,7 @@ export function useCanvasZoom() {
             lastMouseX = e.clientX;
             lastMouseY = e.clientY;
             const svg = getSvg();
-            if (svg) panViewBox(svg, dx, dy);
+            if (svg) doPan(svg, dx, dy);
         };
 
         const onMouseUp = () => {
@@ -93,9 +146,9 @@ export function useCanvasZoom() {
             if (!svg) return;
             if (e.ctrlKey) {
                 const factor = e.deltaY < 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
-                scaleViewBox(svg, factor);
+                doScale(svg, factor);
             } else {
-                panViewBox(svg, -e.deltaX, -e.deltaY);
+                doPan(svg, -e.deltaX, -e.deltaY);
             }
         };
 
@@ -124,14 +177,14 @@ export function useCanvasZoom() {
             if (!svg) return;
             if (e.touches.length === 2 && lastPinchDistance !== null) {
                 const newDist = pinchDistance(e);
-                scaleViewBox(svg, newDist / lastPinchDistance);
+                doScale(svg, newDist / lastPinchDistance);
                 lastPinchDistance = newDist;
             } else if (e.touches.length === 1) {
                 const dx = e.touches[0].clientX - lastTouchX;
                 const dy = e.touches[0].clientY - lastTouchY;
                 lastTouchX = e.touches[0].clientX;
                 lastTouchY = e.touches[0].clientY;
-                panViewBox(svg, dx, dy);
+                doPan(svg, dx, dy);
             }
         };
 
@@ -154,7 +207,7 @@ export function useCanvasZoom() {
 
         return () => {
             clearTimeout(t);
-            canvasBox.style.cursor = '';
+            if (canvasBox) canvasBox.style.cursor = '';
             canvasBox.removeEventListener('mousedown',  onMouseDown);
             canvasBox.removeEventListener('mousemove',  onMouseMove);
             canvasBox.removeEventListener('mouseup',    onMouseUp);
@@ -164,14 +217,21 @@ export function useCanvasZoom() {
             canvasBox.removeEventListener('touchmove',  onTouchMove);
             canvasBox.removeEventListener('touchend',   onTouchEnd);
         };
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const zoomIn  = () => { const svg = getSvg(); if (svg) scaleViewBox(svg, ZOOM_FACTOR); };
-    const zoomOut = () => { const svg = getSvg(); if (svg) scaleViewBox(svg, 1 / ZOOM_FACTOR); };
+    const zoomIn  = () => { const svg = getSvg(); if (svg) doScale(svg, ZOOM_FACTOR); };
+    const zoomOut = () => { const svg = getSvg(); if (svg) doScale(svg, 1 / ZOOM_FACTOR); };
     const resetZoom = () => {
+        zoomRef.current = 1.0;
+        panRef.current = { fx: 0, fy: 0 };
         const svg = getSvg();
-        if (svg && naturalViewBox.current) svg.setAttribute('viewBox', naturalViewBox.current);
+        if (svg) applyTransform(svg);
     };
 
-    return { zoomIn, zoomOut, resetZoom };
+    const zoomToArea = (minX: number, minY: number, width: number, height: number) => {
+        const svg = getSvg();
+        if (svg) doZoomToArea(svg, minX, minY, width, height);
+    };
+
+    return { zoomIn, zoomOut, resetZoom, zoomToArea };
 }

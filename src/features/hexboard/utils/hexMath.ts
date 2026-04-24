@@ -84,7 +84,7 @@ export function axialToPixel(
 // type range = { min: number, max: number }
 // function rangeDistance(range: range): number { return range.max - range.min }
 
-// export function calcCenteredRectangle(hexRoster: hexDef[]): canvasGlobalsType {
+// export function calcCenteredRectangle(hexRoster: hexDef[]) {
 // 	// <> Find the min and max values for q and r.  Convert those to rectangular coordinates.  
 // 	let maxRadius = 0
 // 	hexRoster.forEach(hex => {

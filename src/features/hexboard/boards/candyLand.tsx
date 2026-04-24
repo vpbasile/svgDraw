@@ -1,18 +1,17 @@
 import { Box, Button, Container, FormControl, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField } from "@chakra-ui/react";
 import AppWrapper from "../../../common/AppWrapper";
+import { PageSizeKey } from "../../../common/pageSizeSettings";
 import SidebarSection from "../../../common/SidebarSection";
 import { BoardParameters } from "../forms";
 import RosterDisplay from "../forms/D_HexRoster";
-import CanvasParameters from "../forms/F_CanvasParameters";
 import HexBoardSVG from "../HexBoardSVG";
+import { computeHexBoardBounds } from "../utils/computeBounds";
 import { hexDef } from "../utils/hexDefinitions";
 import { cube_neighbor, hexOrientations } from "../utils/hexMath";
 
 type CandyLandState = {
 	hexRadius: number;
 	separationMultiplier: number;
-	canvasWidth: number;
-	canvasHeight: number;
 	howManyHexes: number;
 	hexRoster: hexDef[];
 	qTemp: number;
@@ -20,6 +19,8 @@ type CandyLandState = {
 	colorTemp: string;
 	orientation: "flat-top" | "pointy-top";
 };
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24'
 
 export default function CandyLand() {
 	const colors = {
@@ -67,8 +68,6 @@ export default function CandyLand() {
 	const initialState: CandyLandState = {
 		hexRadius: 200,
 		separationMultiplier: 1.1,
-		canvasWidth: 4800,
-		canvasHeight: 3600,
 		howManyHexes: 9,
 		hexRoster: initialRoster(9),
 		qTemp: 0,
@@ -82,24 +81,24 @@ export default function CandyLand() {
 	return (
 		<AppWrapper
 			title="CandyLand Board"
+			defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
 			initialState={initialState}
 			renderSVG={(state) => {
+				const orientation = hexOrientations[state.orientation];
+				const bounds = computeHexBoardBounds(state.hexRoster, state.hexRadius, orientation, state.separationMultiplier, state.hexRadius);
+				const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
 				return (
 					<HexBoardSVG
 						hexRoster={state.hexRoster}
 						hexRadius={state.hexRadius}
 						separationMultiplier={state.separationMultiplier}
-						orientation={hexOrientations[state.orientation]}
-						viewBox={`${-state.canvasWidth / 2} ${-state.canvasHeight / 2} ${state.canvasWidth} ${state.canvasHeight}`}
+						orientation={orientation}
+						viewBox={viewBox}
 					/>
 				);
 			}}
 			renderControls={(state, setState) => (
 				<>
-					<CanvasParameters
-						canvasWidth={state.canvasWidth} SETcanvasWidth={(v) => setState(s => ({ ...s, canvasWidth: v }))}
-						canvasHeight={state.canvasHeight} SETcanvasHeight={(v) => setState(s => ({ ...s, canvasHeight: v }))}
-					/>
 					<BoardParameters
 						hexRadius={state.hexRadius}
 						separationMultiplier={state.separationMultiplier}

@@ -2,10 +2,13 @@ import { Box, FormControl, FormLabel, NumberDecrementStepper, NumberIncrementSte
 import { useState } from "react";
 import AppWrapper from "../../common/AppWrapper";
 import { drawLine, rotateLinesAroundPoint } from "../../common/helpers";
+import { PageSizeKey } from "../../common/pageSizeSettings";
 import { palettes } from "../../common/palettes"; // Import the palettes
 import SidebarSection from "../../common/SidebarSection";
 import { coordinateT, myLineT } from "../../types";
 import Tree from "./treeGPT";
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 
 export default function TreeExample() {
     // Constants
@@ -130,6 +133,7 @@ export default function TreeExample() {
     // // Return the JSX
     // return <AppWrapper title="Fractal Tree Example" controlPanel={controlPanel} canvasSize={canvasSize} lines={allTrees} />;
     return <AppWrapper title='Fractal Tree'
+        defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
         renderSVG={() => (
             <svg width="100%" height="100%" viewBox={`0 0 ${canvasSize} ${canvasSize}`} preserveAspectRatio="xMidYMid meet">
                 {allTrees.map((line) => drawLine(line))}

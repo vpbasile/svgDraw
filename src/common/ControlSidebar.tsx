@@ -2,13 +2,15 @@ import { Box, HStack, Heading, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import SVGDrawControls from "../features/hexboard/forms/F_SVGDraw";
 import ModuleIndex from "./ModuleIndex";
+import { PageSizeKey } from "./pageSizeSettings";
 
 type ControlSidebarProps = {
   title: string;
   children?: ReactNode;
+  defaultPageSize?: PageSizeKey;
 };
 
-export default function ControlSidebar({ title, children }: ControlSidebarProps) {
+export default function ControlSidebar({ title, children, defaultPageSize }: ControlSidebarProps) {
   const sidebarBg = useColorModeValue("gray.50", "gray.900");
   const borderColor = useColorModeValue("gray.200", "gray.700");
   const titleColor = useColorModeValue("gray.700", "gray.100");
@@ -49,7 +51,7 @@ export default function ControlSidebar({ title, children }: ControlSidebarProps)
           Module: {title}
         </Heading>
       </HStack>
-      <SVGDrawControls>
+      <SVGDrawControls defaultPageSize={defaultPageSize}>
         {children ?? <Box>No controls</Box>}
       </SVGDrawControls>
     </Box>

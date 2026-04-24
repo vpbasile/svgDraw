@@ -1,22 +1,18 @@
-import { hexDef } from "./hexDefinitions";
-import { axialToPixel } from "./hexMath";
-
-export type Bounds = {
-    minX: number;
-    minY: number;
-    width: number;
-    height: number;
-};
+import { Bounds, emptyBounds, padBounds } from "../../../common/bounds";
+import { hexDef, HexOrientation } from "./hexDefinitions";
+import { calcTheta, hex_to_pixel } from "./hexMath";
 
 export function computeHexBoardBounds(
     hexes: hexDef[],
     radius: number,
+    orientation: HexOrientation,
+    separationMultiplier: number,
     padding: number = radius,
     center: boolean = false
 ): Bounds {
 
     if (hexes.length === 0) {
-        return { minX: 0, minY: 0, width: 0, height: 0 };
+        return emptyBounds();
     }
 
     let minX = Infinity;
@@ -25,15 +21,20 @@ export function computeHexBoardBounds(
     let maxY = -Infinity;
 
     for (const hex of hexes) {
-        const { x, y } = axialToPixel(hex.q, hex.r, radius);
+        const centerPoint = hex_to_pixel(hex.q, hex.r, radius, orientation, separationMultiplier);
 
-        // include full hex extents
-        minX = Math.min(minX, x - radius);
-        maxX = Math.max(maxX, x + radius);
-        minY = Math.min(minY, y - radius);
-        maxY = Math.max(maxY, y + radius);
+        for (const angle of orientation.cornerAngles) {
+            const theta = calcTheta(angle);
+            const x = centerPoint.x + radius * Math.cos(theta);
+            const y = centerPoint.y + radius * Math.sin(theta);
 
+            minX = Math.min(minX, x);
+            maxX = Math.max(maxX, x);
+            minY = Math.min(minY, y);
+            maxY = Math.max(maxY, y);
+        }
     }
+
     if (center) {
         const centerX = (minX + maxX) / 2;
         const centerY = (minY + maxY) / 2;
@@ -44,10 +45,10 @@ export function computeHexBoardBounds(
         minY = centerY - halfHeight;
         maxY = centerY + halfHeight;
     }
-    return {
-        minX: minX - padding,
-        minY: minY - padding,
-        width: maxX - minX + padding * 2,
-        height: maxY - minY + padding * 2,
-    };
+    return padBounds({
+        minX,
+        minY,
+        width: maxX - minX,
+        height: maxY - minY,
+    }, padding);
 }

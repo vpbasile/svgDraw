@@ -1,12 +1,15 @@
 import { FormControl, FormLabel } from '@chakra-ui/react';
 import { useState } from 'react';
 import AppWrapper from '../../common/AppWrapper';
-import SidebarSection from '../../common/SidebarSection';
+import { PageSizeKey } from '../../common/pageSizeSettings';
 import { palettes } from '../../common/palettes';
+import SidebarSection from '../../common/SidebarSection';
 import HexboardSVG from './HexBoardSVG';
 import { coordinateHex, hexDef } from './utils/hexDefinitions';
 import { coord2hex } from './utils/hexFunctions';
 import { cube_ring, hexOrientations } from './utils/hexMath';
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 
 export default function HexBoardIndex() {
 
@@ -62,6 +65,7 @@ export default function HexBoardIndex() {
     const buildControlPanel = controlPalette;
 
     return <AppWrapper title="HexBoardSVG"
+        defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
         initialState={undefined}
         renderSVG={() => (
             <HexboardSVG

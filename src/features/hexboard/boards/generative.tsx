@@ -1,16 +1,18 @@
 import { Box, Button, Container, FormControl, FormLabel, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
 import { useState } from "react";
 import AppWrapper from "../../../common/AppWrapper";
+import { PageSizeKey } from "../../../common/pageSizeSettings";
 import { palettes } from "../../../common/palettes";
 import SidebarSection from "../../../common/SidebarSection";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
-import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
-import { Bounds } from "../utils/computeBounds";
+import { computeHexBoardBounds } from "../utils/computeBounds";
 import { hexDef, vector } from "../utils/hexDefinitions";
 import { alreadyThere, coord2hex, randomMove } from "../utils/hexFunctions";
 import { hexOrientations } from "../utils/hexMath";
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 
 export default function GenerativeBoard() {
 
@@ -55,18 +57,6 @@ export default function GenerativeBoard() {
 		// Give the hexes some color
 		return tempHexList;
 	}
-
-	// Compute canvas size based on parameters
-	const initBounds: Bounds = {
-		minX: 0,
-		minY: 0,
-		width: 1900,
-		height: 1900
-	}
-
-	const [canvasHeight, SETcanvasHeight] = useState(initBounds.height)
-	const [canvasWidth, SETcanvasWidth] = useState(initBounds.width)
-
 
 	// Stuff for handling color palettes
 	function getNextcolor(colors: string[]) {
@@ -116,9 +106,6 @@ export default function GenerativeBoard() {
 			</Container>
 		</SidebarSection>
 		{palettePicker}
-		<CanvasParameters
-			canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-			canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
 		<BoardParameters
 			hexRadius={hexRadius}
 			separationMultiplier={separationMultiplier}
@@ -128,16 +115,21 @@ export default function GenerativeBoard() {
 	</Box>
 
 	return <AppWrapper title="Generative HexBoard"
+		defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
 		initialState={undefined}
-		renderSVG={() => (
-			<HexboardSVG
-				hexRoster={hexRoster}
-				hexRadius={hexRadius}
-				separationMultiplier={separationMultiplier}
-				orientation={defaultOrientation}
-				viewBox={`${-canvasWidth / 2} ${-canvasHeight / 2} ${canvasWidth} ${canvasHeight}`}
-			/>
-		)}
+		renderSVG={() => {
+			const bounds = computeHexBoardBounds(hexRoster, hexRadius, defaultOrientation, separationMultiplier, hexRadius);
+			const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
+			return (
+				<HexboardSVG
+					hexRoster={hexRoster}
+					hexRadius={hexRadius}
+					separationMultiplier={separationMultiplier}
+					orientation={defaultOrientation}
+					viewBox={viewBox}
+				/>
+			);
+		}}
 		renderControls={() => buildControlPanel}
 	/>
 }

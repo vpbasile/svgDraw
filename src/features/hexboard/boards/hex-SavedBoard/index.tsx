@@ -1,21 +1,21 @@
 import { FormControl, FormLabel } from '@chakra-ui/react';
 import { useState } from 'react';
+import { PageSizeKey } from '../../../../common/pageSizeSettings';
 import { palettes } from '../../../../common/palettes';
 import SidebarSection from '../../../../common/SidebarSection';
 import RosterDisplay from '../../forms/D_HexRoster';
 import BoardParameters from '../../forms/F_BoardParameters';
-import CanvasParameters from '../../forms/F_CanvasParameters';
 import HexboardSVG from '../../HexBoardSVG';
-import { canvasGlobalsType, gameGlobalsType, hexDef } from '../../utils/hexDefinitions';
+import { computeHexBoardBounds } from '../../utils/computeBounds';
+import { gameGlobalsType, hexDef } from '../../utils/hexDefinitions';
 import { hexOrientations } from '../../utils/hexMath';
 
 export default function SavedBoard() {
 	// <> States that control canvas parameters
-	const [canvasWidth, SETcanvasWidth] = useState(6000)
-	const [canvasHeight, SETcanvasHeight] = useState(6000)
 	const [hexRadius, SEThexRadius] = useState(200);
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
 	const [orientation] = useState(hexOrientations["flat-top"])
+	const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '24x36';
 
 	// Constants, States, and Functions unique to this board
 	let colorIndex = 0;
@@ -104,7 +104,6 @@ export default function SavedBoard() {
 		{ "q": -4, "r": 8, id: idGen++, clickMessage: "zzzz", color: getNextcolor() },
 		{ "q": -3, "r": 7, id: idGen++, clickMessage: "zzzz", color: getNextcolor() }
 	]
-	// const canvasGlobals = fileData.canvasGlobals;
 
 	const gameGlobals: gameGlobalsType = {
 		// Hexagons
@@ -116,17 +115,17 @@ export default function SavedBoard() {
 		displayTitle: "Board from Save File",
 	}
 
-	const canvasGlobals: canvasGlobalsType = {
-		canvasWidth: canvasWidth,
-		canvasHeight: canvasHeight,
-	}
+	const bounds = computeHexBoardBounds(
+		hexRoster,
+		hexRadius,
+		orientation,
+		separationMultiplier,
+		hexRadius,
+	);
+	const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
 
 	const buildControlPanel = <>
 		{controlPalette}
-		<CanvasParameters
-			// Canvas-specific parameters
-			canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-			canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
 		<BoardParameters
 			// Hexagonally-specific parameters
 			hexRadius={hexRadius}
@@ -139,5 +138,5 @@ export default function SavedBoard() {
 		<RosterDisplay hexRoster={hexRoster} />
 	</>
 
-	return <HexboardSVG gameGlobals={gameGlobals} canvasGlobals={canvasGlobals} hexRoster={hexRoster} controlPanel={buildControlPanel} />
+	return <HexboardSVG gameGlobals={gameGlobals} viewBox={viewBox} hexRoster={hexRoster} controlPanel={buildControlPanel} defaultPageSize={MODULE_DEFAULT_PAGE_SIZE} />
 }

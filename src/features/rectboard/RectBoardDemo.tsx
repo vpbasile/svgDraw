@@ -1,8 +1,11 @@
 import { Box, FormControl, FormLabel, Input, Stack, Text } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import AppWrapper from "../../common/AppWrapper";
+import { PageSizeKey } from "../../common/pageSizeSettings";
 import SidebarSection from "../../common/SidebarSection";
 import RectBoard from "./RectBoard";
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 
 const LETTER_WIDTH = 850;
 const LETTER_HEIGHT = 1100;
@@ -94,6 +97,7 @@ export default function RectBoardDemo() {
   return (
     <AppWrapper
       title="RectBoard Demo"
+      defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
       initialState={undefined}
       renderSVG={() => (
         <Box width="min(80vw, 54vh)" maxHeight="88vh" border="1px solid" borderColor="gray.300">

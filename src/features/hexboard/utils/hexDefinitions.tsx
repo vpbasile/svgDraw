@@ -1,12 +1,7 @@
+import { Bounds } from "../../../common/bounds";
 import { SVGPart } from "../../../types";
 
 // Game stuff
-
-export type canvasGlobalsType = {
-	canvasWidth: number, canvasHeight: number,
-	hexGridOrigin?: { x: number; y: number },
-	canvasBackgroundColor?: string,
-};
 
 export type gameGlobalsType = {
 	displayTitle: string;
@@ -43,13 +38,7 @@ export type coordinateXY = { x: number, y: number }
 
 export type hexClickFunction = (hex: hexDef, id: number, hexText?: string) => unknown
 
-
-export type BoardBounds = {
-    minX: number;
-    minY: number;
-    width: number;
-    height: number;
-};
+export type BoardBounds = Bounds;
 
 export type HexBoardState = {
     hexRadius: number;

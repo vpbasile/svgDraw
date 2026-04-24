@@ -1,21 +1,22 @@
 import { Box, Button, Container, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import AppWrapper from "../../../common/AppWrapper";
+import { PageSizeKey } from "../../../common/pageSizeSettings";
 import { palettes } from "../../../common/palettes";
 import SidebarSection from "../../../common/SidebarSection";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
-import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
+import { computeHexBoardBounds } from "../utils/computeBounds";
 import { hexDef } from "../utils/hexDefinitions";
 import { cube_ring, hexOrientations } from "../utils/hexMath";
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 
 export default function Grid() {
 	// <> States that control canvas parameters
 	const [hexRadius, SEThexRadius] = useState(200);
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
-	const [canvasHeight, SETcanvasHeight] = useState(3600)
-	const [canvasWidth, SETcanvasWidth] = useState(3600)
 	const [defaultOrientation, SETdefaultOrientation] = useState(hexOrientations["pointy-top"])
 	// Constants, States, and Functions unique to this board
 	// <> This color stuff is reusable across all boards
@@ -137,9 +138,6 @@ export default function Grid() {
 	const buildControlPanel = <Box id="control-panel-trivia">
 		{controlPalette}
 		{orientationControl}
-		<CanvasParameters
-			canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-			canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
 		<BoardParameters
 			hexRadius={hexRadius}
 			separationMultiplier={separationMultiplier}
@@ -149,13 +147,17 @@ export default function Grid() {
 		<RosterDisplay hexRoster={hexRoster} />
 	</Box>
 	return <AppWrapper title="Grid HexBoard"
+		defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
 		initialState={initialState}
-		renderSVG={(_state) => <HexboardSVG
-			// Hex Roster	
-			hexRoster={hexRoster}
-			// Hex Radius
-			hexRadius={hexRadius}
-			// Separation Multiplier
-			separationMultiplier={separationMultiplier} orientation={defaultOrientation} viewBox={""} />}
+		renderSVG={(_state) => {
+			const bounds = computeHexBoardBounds(hexRoster, hexRadius, defaultOrientation, separationMultiplier, hexRadius);
+			const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
+			return <HexboardSVG
+				hexRoster={hexRoster}
+				hexRadius={hexRadius}
+				separationMultiplier={separationMultiplier}
+				orientation={defaultOrientation}
+				viewBox={viewBox} />;
+		}}
 		renderControls={(_state, _setState) => buildControlPanel} />
 }

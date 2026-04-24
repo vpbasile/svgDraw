@@ -1,14 +1,17 @@
 import { Box, FormControl, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
+import { PageSizeKey } from "../../../common/pageSizeSettings";
 import { palettes } from "../../../common/palettes"; // Import the palettes
 import SidebarSection from "../../../common/SidebarSection";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
-import CanvasParameters from "../forms/F_CanvasParameters";
 import HexboardSVG from "../HexBoardSVG";
+import { computeHexBoardBounds } from "../utils/computeBounds";
 import { coordinateHex, gameGlobalsType, hexDef } from "../utils/hexDefinitions";
 import { coord2hex } from "../utils/hexFunctions";
 import { cube_ring, hexOrientations } from "../utils/hexMath";
+
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 
 export default function TriviaBoard() {
   // Constants, States, and Functions unique to this board
@@ -27,7 +30,6 @@ export default function TriviaBoard() {
   const [hexRadius, SEThexRadius] = useState(200);
   const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
 
-
   // <><><> The game globals needed for rendering
   const gameGlobals: gameGlobalsType = {
     // Hexagons
@@ -40,15 +42,6 @@ export default function TriviaBoard() {
 
 
   }
-  const [canvasHeight, SETcanvasHeight] = useState(3600)
-  const [canvasWidth, SETcanvasWidth] = useState(3600)
-  // Since this is a centered board, we can calculate the origin based on the height and width
-  const hexGridOrigin = { x: canvasWidth / 2, y: canvasHeight / 2 }
-  const canvasGlobals = {
-    canvasWidth: canvasWidth, canvasHeight: canvasHeight, hexGridOrigin: hexGridOrigin,
-    canvasBackgroundColor: '#000',
-  }
-
   // <><><> Step 1: Create the hex roster
   // Create a center hexagon
   const centerHexagon: hexDef = { "id": 0, "q": 0, "r": 0, "clickMessage": "Center Hexagon", additionalSVG: <circle cy={0} cx={0} r={50} fill="red" /> }
@@ -93,10 +86,6 @@ export default function TriviaBoard() {
 
   const buildControlPanel = <Box id="control-panel-trivia">
     {controlPalette}
-    <CanvasParameters
-      // Canvas-specific parameters
-      canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-      canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
     <BoardParameters
       // Hexagonally-specific parameters
       hexRadius={hexRadius}
@@ -109,7 +98,12 @@ export default function TriviaBoard() {
     <RosterDisplay hexRoster={hexRoster} />
   </Box>
 
-  return <HexboardSVG gameGlobals={gameGlobals} canvasGlobals={canvasGlobals} hexRoster={hexRoster}
+  const orientation = hexOrientations['flat-top'];
+  const bounds = computeHexBoardBounds(hexRoster, hexRadius, orientation, separationMultiplier, hexRadius);
+  const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
+
+  return <HexboardSVG gameGlobals={gameGlobals} viewBox={viewBox} hexRoster={hexRoster}
+    defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
     controlPanel={buildControlPanel}
   />
 }
