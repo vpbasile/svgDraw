@@ -13,6 +13,7 @@ export default function ModuleIndex() {
                 <List>
                     <ListItem><LinkIcon /> <Link href={'/svgdraw/tree'}>Tree</Link></ListItem>
                     {/* <ListItem><LinkIcon /> <Link href='/svgdraw/scale/temperatures'>Scale: Temperatures</Link></ListItem> */}
+                    <ListItem><LinkIcon /> <Link href='/svgdraw/rect'>RectBoard</Link></ListItem>
                     <ListItem><LinkIcon /> <Link href='/svgdraw/hex'>HexBoard</Link>
                         <List>
                             {hexBoardList.map(({ uid }) => (

@@ -1,6 +1,7 @@
 import { Outlet, Route, Routes } from "react-router-dom";
-import PlaceHolderBoard from "./common/PlaceHolderSVG";
+import PlaceHolderBoard from './common/placeHolderSVG';
 import { hexboardRoutes } from "./features/hexboard/routes";
+import { rectBoardRoutes } from "./features/rectboard/routes";
 // import { scaleRoutes } from "./features/scale/routes";
 import { treeRoutes } from "./features/tree/routes";
 
@@ -36,6 +37,13 @@ function App() {
         {/* Hexboard feature */}
         <Route path="hex" element={<Outlet />}>
           {hexboardRoutes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Route>
+
+        {/* Rectboard feature */}
+        <Route path="rect" element={<Outlet />}>
+          {rectBoardRoutes.map(({ path, element }) => (
             <Route key={path} path={path} element={element} />
           ))}
         </Route>
