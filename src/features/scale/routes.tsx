@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { FeatureRoute, route } from "../../common/routing";
 import Temperatures from "./Temperatures";
 
-export const scaleRoutes: { path: string; element: ReactNode }[] = [
-  { path: 'temperatures', element: <Temperatures /> },
+export const scaleRoutes: FeatureRoute[] = [
+  route('temperatures', <Temperatures />),
 ];

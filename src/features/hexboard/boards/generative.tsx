@@ -147,6 +147,5 @@ export default function GenerativeBoard() {
 			/>
 		)}
 		renderControls={() => buildControlPanel}
-	>
-	</AppWrapper>
+	/>
 }

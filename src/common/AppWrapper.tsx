@@ -51,7 +51,7 @@ export default function AppWrapper<TState>({
         <Heading size="md" mb={3}>
           {title}
         </Heading>
-        {ModuleIndex()}
+        <ModuleIndex />
         {<SVGDrawControls />}
         {renderControls
           ? renderControls(state, setState)

@@ -82,6 +82,5 @@ export default function HexBoardIndex() {
             />
         )}
         renderControls={() => buildControlPanel}
-    >
-    </AppWrapper>
+    />
 }

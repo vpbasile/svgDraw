@@ -1,35 +1,32 @@
 import { LinkIcon } from '@chakra-ui/icons';
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Heading, Link, List, ListItem } from '@chakra-ui/react';
-import { hexBoardList } from '../features/hexboard/routes';
+import { Heading, Link, List, ListItem } from '@chakra-ui/react';
+import { BASE_PATH, featureModules } from './featureRegistry';
 
 export default function ModuleIndex() {
-    // TODO Find a way to generate this just like the routes are
-    // <> Links to all the modules
-    return <Accordion id="ModuleIndexAccordion" allowMultiple>
-        <AccordionItem id='module-index-item'>
-            <AccordionButton>Module Index<AccordionIcon /></AccordionButton>
-            <AccordionPanel>
-                <Heading as={'h2'}>Modules</Heading>
-                <List>
-                    <ListItem><LinkIcon /> <Link href={'/svgdraw/tree'}>Tree</Link></ListItem>
-                    {/* <ListItem><LinkIcon /> <Link href='/svgdraw/scale/temperatures'>Scale: Temperatures</Link></ListItem> */}
-                    <ListItem><LinkIcon /> <Link href='/svgdraw/rect'>RectBoard</Link></ListItem>
-                    <ListItem><LinkIcon /> <Link href='/svgdraw/hex'>HexBoard</Link>
+    return <>
+        <Heading as={'h2'}>Modules</Heading>
+        <List>
+            {featureModules.map(({ segment, label, navChildren }) => (
+                <ListItem key={segment}>
+                    <LinkIcon /> <Link href={`${BASE_PATH}/${segment}`}>{label}</Link>
+                    {navChildren && navChildren.length > 0 && (
                         <List>
-                            {hexBoardList.map(({ uid }) => (
-                                <ListItem key={uid}><LinkIcon /> <Link href={`/svgdraw/hex/${uid}`}>HexBoard: {uid}</Link></ListItem>
+                            {navChildren.map(({ path, label: childLabel }) => (
+                                <ListItem key={path}>
+                                    <LinkIcon /> <Link href={`${BASE_PATH}/${segment}/${path}`}>{label}: {childLabel}</Link>
+                                </ListItem>
                             ))}
                         </List>
-                    </ListItem>
-                    <ListItem>GitHub:
-                        <List>
-                            <ListItem><LinkIcon /><Link href='https://github.com/vpbasile/svgDraw'>Repo on Github</Link></ListItem>
-                            <ListItem><LinkIcon /><Link href='https://vpbasile.github.io/svgDraw/'>Live version on Github Pages</Link></ListItem>
-                        </List>
-                    </ListItem>
-
+                    )}
+                </ListItem>
+            ))}
+            <ListItem>GitHub:
+                <List>
+                    <ListItem><LinkIcon /><Link href='https://github.com/vpbasile/svgDraw'>Repo on Github</Link></ListItem>
+                    <ListItem><LinkIcon /><Link href='https://vpbasile.github.io/svgDraw/'>Live version on Github Pages</Link></ListItem>
                 </List>
-            </AccordionPanel>
-        </AccordionItem>
-    </Accordion>
+            </ListItem>
+
+        </List>
+    </>
 }

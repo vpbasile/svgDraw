@@ -89,6 +89,7 @@ export default function CandyLand() {
 						hexRadius={state.hexRadius}
 						separationMultiplier={state.separationMultiplier}
 						orientation={hexOrientations[state.orientation]}
+						viewBox={`${-state.canvasWidth / 2} ${-state.canvasHeight / 2} ${state.canvasWidth} ${state.canvasHeight}`}
 					/>
 				);
 			}}

@@ -137,12 +137,12 @@ export default function Grid() {
 	</Box>
 	return <AppWrapper title="Grid HexBoard"
 		initialState={initialState}
-		renderSVG={(state) => <HexboardSVG
+		renderSVG={(_state) => <HexboardSVG
 			// Hex Roster	
 			hexRoster={hexRoster}
 			// Hex Radius
 			hexRadius={hexRadius}
 			// Separation Multiplier
 			separationMultiplier={separationMultiplier} orientation={defaultOrientation} viewBox={""} />}
-		renderControls={(state, setState) => buildControlPanel} />
+		renderControls={(_state, _setState) => buildControlPanel} />
 }

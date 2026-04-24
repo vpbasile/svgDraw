@@ -3,7 +3,19 @@ import { SVGPart } from "../../../types";
 // Game stuff
 
 export type canvasGlobalsType = {
-	canvasWidth: number, canvasHeight: number
+	canvasWidth: number, canvasHeight: number,
+	hexGridOrigin?: { x: number; y: number },
+	canvasBackgroundColor?: string,
+};
+
+export type gameGlobalsType = {
+	displayTitle: string;
+	orientation: HexOrientation;
+	hexRadius: number;
+	separationMultiplier: number;
+	textSize: number;
+	drawBackBoard: boolean;
+	onClick?: () => void;
 };
 
 export type HexOrientation = { name: 'flat-top' | 'pointy-top'; cornerAngles: number[]; }

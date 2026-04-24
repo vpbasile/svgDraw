@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { FeatureRoute, indexRoute } from "../../common/routing";
 import RectBoardDemo from "./RectBoardDemo";
 
-export const rectBoardRoutes: { path: string; element: ReactNode }[] = [
-  { path: "", element: <RectBoardDemo /> },
+export const rectBoardRoutes: FeatureRoute[] = [
+  indexRoute(<RectBoardDemo />),
 ];

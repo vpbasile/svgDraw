@@ -137,6 +137,5 @@ export default function TreeExample() {
                 {allTrees.map((line) => drawLine(line))}
             </svg>
         )}
-        renderControls={() => controlPanel} initialState={undefined}    >
-    </AppWrapper>
+        renderControls={() => controlPanel} initialState={undefined} />
 }

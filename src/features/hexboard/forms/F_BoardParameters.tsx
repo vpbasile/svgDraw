@@ -3,6 +3,7 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPane
 type BoardParametersProps = {
   hexRadius: number;
   separationMultiplier: number;
+	hexgridOrigin?: { x: number; y: number };
 
   SEThexRadius: React.Dispatch<React.SetStateAction<number>>;
   SETseparationMultiplier: React.Dispatch<React.SetStateAction<number>>;

@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { FeatureRoute, indexRoute } from "../../common/routing";
 import TreeExample from "./example";
 
-export const treeRoutes: { path: string; element: ReactNode }[] = [
-  { path: '', element: <TreeExample /> },
+export const treeRoutes: FeatureRoute[] = [
+  indexRoute(<TreeExample />),
 ];

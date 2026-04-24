@@ -67,6 +67,5 @@ export default function PlaceHolderBoard() {
                     {content}
                 </SVGWrapper>
             )}
-            renderControls={() => controlPanel} initialState={undefined}    >
-        </AppWrapper>
+            renderControls={() => controlPanel} initialState={undefined} />
 }

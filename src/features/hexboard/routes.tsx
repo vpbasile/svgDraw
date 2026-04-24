@@ -1,5 +1,5 @@
 import { Grid } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { FeatureRoute, indexRoute, route } from "../../common/routing";
 import CandyLand from "./boards/candyLand";
 import Cataan from "./boards/cataan";
 import CreateBoard from "./boards/createBoard";
@@ -7,11 +7,6 @@ import GenerativeBoard from "./boards/generative";
 import SavedBoard from "./boards/hex-SavedBoard";
 import TriviaBoard from "./boards/TriviaBoard";
 import HexBoardIndex from "./HexBoardIndex";
-
-interface FeatureRoute {
-  path: string;
-  element: ReactNode;
-}
 
 export const hexBoardList = [
   { uid: 'trivia', displayName: 'Trivia Board', element: <TriviaBoard /> },
@@ -25,7 +20,7 @@ export const hexBoardList = [
 ];
 
 export const hexboardRoutes: FeatureRoute[] = [
-  { path: '', element: <HexBoardIndex /> },
-  ...hexBoardList.map(({ uid, element }) => ({ path: uid, element })),
-  { path: '*', element: <div>Board not found!</div> },
+  indexRoute(<HexBoardIndex />),
+  ...hexBoardList.map(({ uid, element }) => route(uid, element)),
+  route('*', <div>Board not found!</div>),
 ];
