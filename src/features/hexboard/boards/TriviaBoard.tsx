@@ -1,6 +1,7 @@
 import { Box, FormControl, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
 import { palettes } from "../../../common/palettes"; // Import the palettes
+import SidebarSection from "../../../common/SidebarSection";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import CanvasParameters from "../forms/F_CanvasParameters";
@@ -68,26 +69,27 @@ export default function TriviaBoard() {
   hexRoster[4].additionalSVG = czcz
 
   
-
-  const controlPalette = <FormControl id="palette-control">
-    <FormLabel>Color Palette</FormLabel>
-    {Object.keys(palettes).map((paletteKey) => (
-      <FormControl key={paletteKey} display="flex" alignItems="center">
-        <FormLabel htmlFor={paletteKey} mb="0">
-          {paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
-        </FormLabel>
-        <input
-          type="radio"
-          id={paletteKey}
-					aria-label={`Select Palette ${paletteKey}`}
-          name="palette"
-          value={paletteKey}
-          checked={selectedPalette === paletteKey}
-          onChange={(e) => setSelectedPalette(e.target.value)}
-        />
-      </FormControl>
-    ))}
-  </FormControl>;
+  const controlPalette = (
+    <SidebarSection id="palette-control" title="Color Palette">
+      {Object.keys(palettes).map((paletteKey) => (
+        <FormControl key={paletteKey} display="flex" alignItems="center">
+          <FormLabel htmlFor={paletteKey} mb="0">
+            {paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
+          </FormLabel>
+          <input
+            type="radio"
+            id={paletteKey}
+            aria-label={`Select Palette ${paletteKey}`}
+            title={`Select Palette ${paletteKey}`}
+            name="palette"
+            value={paletteKey}
+            checked={selectedPalette === paletteKey}
+            onChange={(e) => setSelectedPalette(e.target.value)}
+          />
+        </FormControl>
+      ))}
+    </SidebarSection>
+  );
 
   const buildControlPanel = <Box id="control-panel-trivia">
     {controlPalette}

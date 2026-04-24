@@ -1,5 +1,4 @@
-
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel } from "@chakra-ui/react";
+import SidebarSection from "../../../common/SidebarSection";
 import DBTable, { fieldTuple, tableData } from "../../db-man/DBTable";
 import { hexDef } from "../utils/hexDefinitions";
 export default function RosterDisplay(props: { hexRoster: hexDef[] }) {
@@ -14,17 +13,10 @@ export default function RosterDisplay(props: { hexRoster: hexDef[] }) {
 	const hexRoster = props.hexRoster
 	const rosterTable: tableData[][] = hexRoster.map((hex) => { return [hex.q, hex.r, hex.hexText, hex.color] })
 	return (
-		<Accordion id={'hex-roster'} allowMultiple>
-			<AccordionItem id='roster'>
-				<AccordionButton>Roster<AccordionIcon /></AccordionButton>
-				<AccordionPanel>
-					<DBTable dataContents={rosterTable} fields={fieldsForHexes} newRowF={function (): void {
-						throw new Error("Function not implemented.");
-					}} />
-				</AccordionPanel>
-			</AccordionItem>
-		</Accordion>
-
-
+		<SidebarSection id="hex-roster" title="Roster">
+			<DBTable dataContents={rosterTable} fields={fieldsForHexes} newRowF={function (): void {
+				throw new Error("Function not implemented.");
+			}} />
+		</SidebarSection>
 	)
 }

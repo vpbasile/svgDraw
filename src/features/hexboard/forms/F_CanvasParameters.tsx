@@ -1,6 +1,7 @@
 
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Container, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text } from "@chakra-ui/react";
+import { Container, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text } from "@chakra-ui/react";
 import { Dispatch } from "react";
+import SidebarSection from "../../../common/SidebarSection";
 // import { useState } from 'react';
 
 type myProps = {
@@ -29,11 +30,8 @@ export default function CanvasParameters(props: myProps): JSX.Element {
 	const SETcanvasHeight = props.SETcanvasHeight;
 
 	const key = "CanvasParametersBox";
-	return (<Container id={key} key={key} color={'blue.500'}>
-		<Accordion id={key} allowMultiple>
-			<AccordionItem id='canvas-params'>
-				<AccordionButton>Canvas Parameters<AccordionIcon /></AccordionButton>
-				<AccordionPanel>
+	return (<Container id={key} key={key} color={'blue.500'} p={0}>
+		<SidebarSection id="canvas-params" title="Canvas Parameters">
 					<Text>Note: Pixels are being used as a relative measure.  The image will be scaled to fit the viewport.</Text>
 					<InputGroup>
 						<InputLeftAddon children="Width" />
@@ -59,8 +57,6 @@ export default function CanvasParameters(props: myProps): JSX.Element {
 							</NumberInputStepper>
 						</NumberInput>
 					</InputGroup>
-				</AccordionPanel>
-			</AccordionItem>
-		</Accordion>
+		</SidebarSection>
 	</Container>)
 }

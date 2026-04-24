@@ -1,11 +1,10 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Heading, Link, List, ListItem, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
+import { Box, Heading, Link, List, ListItem, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useState } from 'react';
 import AppWrapper from './AppWrapper';
+import SidebarSection from './SidebarSection';
 export default function PlaceHolderBoard() {
-    // Each implementation of SVGWwrapper will contain the following things (not necessarily in this order):
-    // * All states and logic required to render the SVG content.  This will allow control panel to interact with the SVG content
-    // * SVG Content - this will be passed as children to SVGWrapper
-    // * Control Panel - this will be passed as a prop to SVGWrapper
+    // Each implementation should provide the SVG content plus any sidebar controls.
+    // AppWrapper owns the shared layout and SVG draw controls.
 
     // States and Logic
     const [x, setX] = useState(11);
@@ -22,32 +21,23 @@ export default function PlaceHolderBoard() {
 
     // Control Panel
     const controlPanel = <>
-        <Accordion allowMultiple>
-            <AccordionItem>
-                <AccordionButton>
-                    <>Placeholder RedGreen Control</>
-                    <AccordionIcon />
-                </AccordionButton>
-                <AccordionPanel pb={4}>
-                    <Slider aria-label="slider-ex-1"
-                        value={x} // Controlled component
-                        onChange={(value: number) => setX(value)
-                        } // Update state on change
-                        step={1}
-                        min={0}
-                        max={100}
-                    >
-                        <SliderTrack>
-                            <SliderFilledTrack />
-                        </SliderTrack>
-                        <SliderThumb />
-                    </Slider >
-                    {/* Display Current Value */}
-                    Value: {x}
-                </AccordionPanel>
-            </AccordionItem>
-        </Accordion>
-        <Box mt={4} >
+        <SidebarSection id="placeholder-controls" title="Placeholder RedGreen Control">
+            <Slider aria-label="slider-ex-1"
+                value={x} // Controlled component
+                onChange={(value: number) => setX(value)
+                } // Update state on change
+                step={1}
+                min={0}
+                max={100}
+            >
+                <SliderTrack>
+                    <SliderFilledTrack />
+                </SliderTrack>
+                <SliderThumb />
+            </Slider >
+            Value: {x}
+        </SidebarSection>
+        <SidebarSection id="placeholder-todo" title="To Do">
             <Box id="to-do-list">
                 <Heading as={'h2'}>To Do:</Heading>
                 <List>
@@ -56,7 +46,7 @@ export default function PlaceHolderBoard() {
                     <ListItem>Handle classes for svg components</ListItem>
                 </List>
             </Box>
-        </Box>
+        </SidebarSection>
         </>
 
 

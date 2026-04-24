@@ -1,6 +1,7 @@
-import { Box, Button, Container, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
+import { Box, Button, Container, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { palettes } from "../../../common/palettes";
+import SidebarSection from "../../../common/SidebarSection";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import CanvasParameters from "../forms/F_CanvasParameters";
@@ -70,45 +71,73 @@ export default function CreateBoard() {
 
 	// <><><> Step 2: Create the control panel
 
-	const controlPalette = <FormControl id="palette-control">
-		<FormLabel>Color Palette</FormLabel>
-		{Object.keys(palettes).map((paletteKey) => (
-			<FormControl key={paletteKey} display="flex" alignItems="center">
-				<FormLabel htmlFor={paletteKey} mb="0">
-					{paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
-				</FormLabel>
-				<input
-					type="radio"
-					id={paletteKey}
-					aria-label={`Select Palette ${paletteKey}`}
-					name="palette"
-					value={paletteKey}
-					checked={selectedPalette === paletteKey}
-					onChange={(e) => setSelectedPalette(e.target.value)}
-				/>
-			</FormControl>
-		))}
-	</FormControl>;
+	const controlPalette = (
+		<SidebarSection id="palette-control" title="Color Palette">
+					{Object.keys(palettes).map((paletteKey) => (
+						<FormControl key={paletteKey} display="flex" alignItems="center">
+							<FormLabel htmlFor={paletteKey} mb="0">
+								{paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
+							</FormLabel>
+							<input
+								type="radio"
+								id={paletteKey}
+								aria-label={`Select Palette ${paletteKey}`}
+								title={`Select Palette ${paletteKey}`}
+								name="palette"
+								value={paletteKey}
+								checked={selectedPalette === paletteKey}
+								onChange={(e) => setSelectedPalette(e.target.value)}
+							/>
+						</FormControl>
+					))}
+		</SidebarSection>
+	);
 
-	const orientationControl = <FormControl id="orientation-control">
-		<FormLabel htmlFor="orientation-select">Orientation</FormLabel>
-		<Select
-		id="orientation-select"
-		aria-label="Select Orientation"
-		title="Select Orientation"
-		onChange={(e) => SETdefaultOrientation(hexOrientations[e.target.value as keyof typeof hexOrientations])}>
-			{Object.keys(hexOrientations).map((orientation) => <option key={orientation} value={orientation}>{orientation}</option>)}
-		</Select>
-	</FormControl>;
+	const orientationControl = (
+		<SidebarSection id="orientation-control" title="Orientation">
+					<FormControl>
+						<FormLabel htmlFor="orientation-select">Orientation</FormLabel>
+						<select
+							id="orientation-select"
+							aria-label="Select Orientation"
+							title="Select Orientation"
+							onChange={(e) => SETdefaultOrientation(hexOrientations[e.target.value as keyof typeof hexOrientations])}
+						>
+							{Object.keys(hexOrientations).map((orientation) => <option key={orientation} value={orientation}>{orientation}</option>)}
+						</select>
+					</FormControl>
+		</SidebarSection>
+	);
 
 	let keyGen = 0;
+	const addHexControl = (
+		<SidebarSection id="add-hex-control" title="Add Hex">
+					<Container color={'orange.500'}>
+						<Box id="setQBox">
+							<label className="" htmlFor="qField">q:</label>
+							<Input id="qField" className="form-control" name="qField" value={qTemp} onChange={(e) => SETqTemp(+e.target.value)} />
+						</Box>
+						<Box className="setRBox">
+							<label className="" htmlFor="rField">r:</label>
+							<Input id="rField" className="form-control" name="rField" value={rTemp} onChange={(e) => SETrTemp(+e.target.value)} />
+						</Box>
+						<Box id="chooseColor">
+							<FormLabel htmlFor="colorSelect">Color</FormLabel>
+							<select id="colorSelect" aria-label="Select Color" title="Select Color" value={colorTemp} onChange={(e) => SETcolorTemp(e.target.value)}>
+								<option value="">-- Select a color --</option>
+								{colors.map((color) => <option key={`colorChoice-${keyGen++}`} value={color}>{color}</option>)}
+							</select>
+						</Box>
+						<Box id="buttons">
+							<Button onClick={() => addHex()}>Add</Button>
+						</Box>
+					</Container>
+		</SidebarSection>
+	);
+
 	const buildControlPanel = <Box id="control-panel-trivia">
-		{/* Select Palette */}
 		{controlPalette}
-		{/* Canvas Parameters */}
-		<Box id="control-panel-trivia">
-			{orientationControl}
-			{controlPalette}
+		{orientationControl}
 			<CanvasParameters
 				// Canvas-specific parameters
 				canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
@@ -122,28 +151,7 @@ export default function CreateBoard() {
 					x: 0,
 					y: 0
 				}} />
-		</Box>
-		<Container color={'orange.500'}>
-			<h3>Add Hex</h3>
-			<Box id="setQBox">
-				<label className="" htmlFor="qField">q:</label>
-				<Input className="form-control" name="qField" defaultValue={qTemp} onChange={(e) => SETqTemp(+e.target.value)} />
-			</Box>
-			<Box className="setRBox">
-				<label className="" htmlFor="rField">r:</label>
-				<Input className="form-control" name="rField" defaultValue={rTemp} onChange={(e) => SETrTemp(+e.target.value)} />
-			</Box>
-			<Box id="chooseColor">
-				<FormLabel htmlFor="colorSelect">Color</FormLabel>
-				<Select id="colorSelect" aria-label="Select Color" title="Select Color" defaultValue={colorTemp} onChange={(e) => SETcolorTemp(e.target.value)}>
-					<option value="">-- Select a color --</option>
-					{colors.map((color) => <option key={`colorChoice-${keyGen++}`} value={color}>{color}</option>)}
-				</Select>
-			</Box>
-			<Box id="buttons">
-				<Button onClick={() => addHex()}>Add</Button>
-			</Box>
-		</Container>
+		{addHexControl}
 		<RosterDisplay hexRoster={hexRoster} />
 	</Box>
 

@@ -1,5 +1,6 @@
 import { Box, Button, Container, FormControl, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField } from "@chakra-ui/react";
 import AppWrapper from "../../../common/AppWrapper";
+import SidebarSection from "../../../common/SidebarSection";
 import { BoardParameters } from "../forms";
 import RosterDisplay from "../forms/D_HexRoster";
 import CanvasParameters from "../forms/F_CanvasParameters";
@@ -105,36 +106,41 @@ export default function CandyLand() {
 						SEThexRadius={(v) => setState(s => ({ ...s, hexRadius: typeof v === "function" ? v(s.hexRadius) : v }))}
 						SETseparationMultiplier={(v) => setState(s => ({ ...s, separationMultiplier: typeof v === "function" ? v(s.separationMultiplier) : v }))}
 					/>
-					<FormControl mt={4}>
-						<FormLabel htmlFor="orientation-select">Orientation</FormLabel>
-						<select
-							id="orientation-select"
-							title="Orientation"
-							aria-label="Orientation"
-							value={state.orientation}
-							onChange={(e) => setState(s => ({ ...s, orientation: e.target.value as "flat-top" | "pointy-top" }))}
-						>
-							<option value="flat-top">Flat Top</option>
-							<option value="pointy-top">Pointy Top</option>
-						</select>
-					</FormControl>
-					<FormControl mt={4}>
-						<FormLabel>Spaces between special spaces</FormLabel>
-						<NumberInput
-							value={state.howManyHexes}
-							min={1}
-							onChange={(v) => {
-								const n = Number(v);
-								setState(s => ({ ...s, howManyHexes: n, hexRoster: initialRoster(n) }));
-							}}
-						>
-							<NumberInputField />
-							<NumberIncrementStepper />
-							<NumberDecrementStepper />
-						</NumberInput>
-					</FormControl>
+					<SidebarSection id="orientation-control" title="Orientation">
+						<FormControl>
+							<FormLabel htmlFor="orientation-select">Orientation</FormLabel>
+							<select
+								id="orientation-select"
+								title="Orientation"
+								aria-label="Orientation"
+								value={state.orientation}
+								onChange={(e) => setState(s => ({ ...s, orientation: e.target.value as "flat-top" | "pointy-top" }))}
+							>
+								<option value="flat-top">Flat Top</option>
+								<option value="pointy-top">Pointy Top</option>
+							</select>
+						</FormControl>
+					</SidebarSection>
+					<SidebarSection id="special-spacing-control" title="Special Spacing">
+						<FormControl>
+							<FormLabel>Spaces between special spaces</FormLabel>
+							<NumberInput
+								value={state.howManyHexes}
+								min={1}
+								onChange={(v) => {
+									const n = Number(v);
+									setState(s => ({ ...s, howManyHexes: n, hexRoster: initialRoster(n) }));
+								}}
+							>
+								<NumberInputField />
+								<NumberIncrementStepper />
+								<NumberDecrementStepper />
+							</NumberInput>
+						</FormControl>
+					</SidebarSection>
 					<RosterDisplay hexRoster={state.hexRoster} />
-					<Container mt={4}>
+					<SidebarSection id="add-hex-control" title="Add Hex">
+						<Container p={0}>
 						<Box>
 							<FormLabel htmlFor="color-select">Add a Hex</FormLabel>
 							<Input
@@ -174,7 +180,8 @@ export default function CandyLand() {
 								}
 							}}>Add Hex</Button>
 						</Box>
-					</Container>
+						</Container>
+					</SidebarSection>
 				</>
 			)}
 		/>

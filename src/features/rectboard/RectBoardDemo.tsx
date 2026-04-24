@@ -1,6 +1,7 @@
-import { Box, FormControl, FormLabel, Heading, Input, Stack, Text } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, Input, Stack, Text } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import AppWrapper from "../../common/AppWrapper";
+import SidebarSection from "../../common/SidebarSection";
 import RectBoard from "./RectBoard";
 
 const LETTER_WIDTH = 850;
@@ -39,54 +40,55 @@ export default function RectBoardDemo() {
   }, [safeCols, safeRows, gapX, gapY]);
 
   const panel = (
-    <Stack spacing={3}>
-      <Heading size="sm">Letter Layout (8.5x11)</Heading>
-      <Text fontSize="sm" color="gray.600">
-        Grid is auto-sized to stay inside a portrait 8.5x11 page.
-      </Text>
+    <SidebarSection id="rectboard-layout" title="Letter Layout (8.5x11)">
+      <Stack spacing={3}>
+        <Text fontSize="sm" color="gray.600">
+          Grid is auto-sized to stay inside a portrait 8.5x11 page.
+        </Text>
 
-      <FormControl>
-        <FormLabel>Rows</FormLabel>
-        <Input
-          type="number"
-          min={1}
-          value={rows}
-          onChange={(e) => setRows(clampPositiveInt(Number(e.target.value), 11))}
-        />
-      </FormControl>
+        <FormControl>
+          <FormLabel>Rows</FormLabel>
+          <Input
+            type="number"
+            min={1}
+            value={rows}
+            onChange={(e) => setRows(clampPositiveInt(Number(e.target.value), 11))}
+          />
+        </FormControl>
 
-      <FormControl>
-        <FormLabel>Columns</FormLabel>
-        <Input
-          type="number"
-          min={1}
-          value={cols}
-          onChange={(e) => setCols(clampPositiveInt(Number(e.target.value), 8))}
-        />
-      </FormControl>
+        <FormControl>
+          <FormLabel>Columns</FormLabel>
+          <Input
+            type="number"
+            min={1}
+            value={cols}
+            onChange={(e) => setCols(clampPositiveInt(Number(e.target.value), 8))}
+          />
+        </FormControl>
 
-      <FormControl>
-        <FormLabel>Horizontal Gap</FormLabel>
-        <Input
-          type="number"
-          min={0}
-          value={gapX}
-          onChange={(e) => setGapX(Math.max(0, Number(e.target.value) || 0))}
-        />
-      </FormControl>
+        <FormControl>
+          <FormLabel>Horizontal Gap</FormLabel>
+          <Input
+            type="number"
+            min={0}
+            value={gapX}
+            onChange={(e) => setGapX(Math.max(0, Number(e.target.value) || 0))}
+          />
+        </FormControl>
 
-      <FormControl>
-        <FormLabel>Vertical Gap</FormLabel>
-        <Input
-          type="number"
-          min={0}
-          value={gapY}
-          onChange={(e) => setGapY(Math.max(0, Number(e.target.value) || 0))}
-        />
-      </FormControl>
+        <FormControl>
+          <FormLabel>Vertical Gap</FormLabel>
+          <Input
+            type="number"
+            min={0}
+            value={gapY}
+            onChange={(e) => setGapY(Math.max(0, Number(e.target.value) || 0))}
+          />
+        </FormControl>
 
-      <Text fontSize="sm">Cell size: {cellWidth.toFixed(1)} x {cellHeight.toFixed(1)}</Text>
-    </Stack>
+        <Text fontSize="sm">Cell size: {cellWidth.toFixed(1)} x {cellHeight.toFixed(1)}</Text>
+      </Stack>
+    </SidebarSection>
   );
 
   return (

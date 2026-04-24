@@ -1,4 +1,5 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Container, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@chakra-ui/react";
+import { Container, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from "@chakra-ui/react";
+import SidebarSection from "../../../common/SidebarSection";
 
 type BoardParametersProps = {
   hexRadius: number;
@@ -17,11 +18,8 @@ export default function BoardParameters(props: BoardParametersProps) {
 	const SETseparationMultiplier = props.SETseparationMultiplier;
 
 	const key = "BoardParametersBox";
-	return (<Container id={key} key={key} color={'gray.500'}>
-		<Accordion id={'hex-roster'} allowMultiple>
-			<AccordionItem id='roster'>
-				<AccordionButton>Board Parameters<AccordionIcon /></AccordionButton>
-				<AccordionPanel>
+	return (<Container id={key} key={key} color={'gray.500'} p={0}>
+		<SidebarSection id="board-parameters" title="Board Parameters">
 					<InputGroup>
 						<InputLeftAddon children="Hex Radius" />
 						<NumberInput id="hexRadius" defaultValue={hexRadius} onChange={(e) => SEThexRadius(+e)}
@@ -54,8 +52,6 @@ export default function BoardParameters(props: BoardParametersProps) {
 			</Select>
 	</InputGroup>
 			*/}
-				</AccordionPanel>
-			</AccordionItem>
-		</Accordion>
+		</SidebarSection>
 	</Container >)
 }

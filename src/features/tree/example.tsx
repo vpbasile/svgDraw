@@ -1,8 +1,9 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, FormControl, FormLabel, Heading, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Select, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 import AppWrapper from "../../common/AppWrapper";
 import { drawLine, rotateLinesAroundPoint } from "../../common/helpers";
 import { palettes } from "../../common/palettes"; // Import the palettes
+import SidebarSection from "../../common/SidebarSection";
 import { coordinateT, myLineT } from "../../types";
 import Tree from "./treeGPT";
 
@@ -102,33 +103,29 @@ export default function TreeExample() {
 
     const controlPalette = <FormControl id="palette-control">
         <FormLabel>Color Palette</FormLabel>
-        <Select
+        <select
+            id="tree-palette-select"
             onChange={(e) => setSelectedPalette(e.target.value)}
             value={selectedPalette}
-					aria-label={`Select Palette ${selectedPalette}`}
+            aria-label={`Select Palette ${selectedPalette}`}
+            title="Select Palette"
         >
             {Object.keys(palettes).map((paletteKey) => (
                 <option key={paletteKey} value={paletteKey}>
                     {paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
                 </option>
             ))}
-        </Select>
+        </select>
     </FormControl>;
 
     // Assemble the control panel
-    const controlPanel = <Accordion id="FractalTreeAccordion">
-        <AccordionItem id="fractal-tree-controls">
-            <AccordionButton>Fractal Tree Controls<AccordionIcon /></AccordionButton>
-            <AccordionPanel>
-                <Heading as="h2" size="lg">Fractal Tree Controls</Heading>
-                <Box>Line count: {allTrees.length}</Box>
-                {controlDepth}
-                {controlCount}
-                {controlAngle}
-                {controlPalette}
-            </AccordionPanel>
-        </AccordionItem>
-    </Accordion>
+    const controlPanel = <SidebarSection id="fractal-tree-controls" title="Fractal Tree Controls">
+        <Box>Line count: {allTrees.length}</Box>
+        {controlDepth}
+        {controlCount}
+        {controlAngle}
+        {controlPalette}
+    </SidebarSection>
 
     // // Return the JSX
     // return <AppWrapper title="Fractal Tree Example" controlPanel={controlPanel} canvasSize={canvasSize} lines={allTrees} />;

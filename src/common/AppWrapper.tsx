@@ -32,7 +32,7 @@ export default function AppWrapper<TState>({
   return (
     <Flex height="100vh">
       {/* SVG AREA */}
-      <Center flex={1}>
+      <Center id="canvas-box" flex={1}>
         {renderSVG(state)}
       </Center>
 

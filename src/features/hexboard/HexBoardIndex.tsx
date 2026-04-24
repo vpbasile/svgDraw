@@ -1,6 +1,7 @@
-import { Box, FormControl, FormLabel, Heading } from '@chakra-ui/react';
+import { FormControl, FormLabel } from '@chakra-ui/react';
 import { useState } from 'react';
 import AppWrapper from '../../common/AppWrapper';
+import SidebarSection from '../../common/SidebarSection';
 import { palettes } from '../../common/palettes';
 import HexboardSVG from './HexBoardSVG';
 import { coordinateHex, hexDef } from './utils/hexDefinitions';
@@ -19,13 +20,6 @@ export default function HexBoardIndex() {
     const [selectedPalette, setSelectedPalette] = useState<string>('tree');
     const colors = palettes[selectedPalette]
 
-    const gameGlobals = {
-        displayTitle: "HexBoard Index",
-        textSize: 12,
-        drawBackBoard: true,
-        onClick: () => { },
-    }
-
     const hexRadius = 50;
     const defaultOrientation = hexOrientations["flat-top"];
     const separationMultiplier = 1.1;
@@ -43,34 +37,29 @@ export default function HexBoardIndex() {
     }
 
     // Build Control Panel
-    const controlPalette = <FormControl id="palette-control">
-        <FormLabel>Color Palette</FormLabel>
-        {Object.keys(palettes).map((paletteKey) => (
-            <FormControl key={paletteKey} display="flex" alignItems="center">
-                <FormLabel htmlFor={paletteKey} mb="0">
-                    {paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
-                </FormLabel>
-                <input
-                    type="radio"
-                    id={paletteKey}
+    const controlPalette = (
+        <SidebarSection id="palette-control" title="Color Palette">
+            {Object.keys(palettes).map((paletteKey) => (
+                <FormControl key={paletteKey} display="flex" alignItems="center">
+                    <FormLabel htmlFor={paletteKey} mb="0">
+                        {paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
+                    </FormLabel>
+                    <input
+                        type="radio"
+                        id={paletteKey}
+                        aria-label={`Select Palette ${paletteKey}`}
+                        title={`Select Palette ${paletteKey}`}
+                        name="palette"
+                        value={paletteKey}
+                        checked={selectedPalette === paletteKey}
+                        onChange={(e) => setSelectedPalette(e.target.value)}
+                    />
+                </FormControl>
+            ))}
+        </SidebarSection>
+    );
 
-					aria-label={`Select Palette ${paletteKey}`}
-                    name="palette"
-                    value={paletteKey}
-                    checked={selectedPalette === paletteKey}
-                    onChange={(e) => setSelectedPalette(e.target.value)}
-                />
-            </FormControl>
-        ))}
-    </FormControl>;
-
-    const buildControlPanel = <Box id='control-panel-hexboard'>
-        {/* <Heading as={'h2'}><Link to='/hex/'>HexBoardSVG</Link></Heading> */}
-        <Box id='control-panel-hexboard-children' border={'2px'}>
-            <Heading as={'h3'}>{gameGlobals.displayTitle}</Heading>
-            {controlPalette}
-        </Box>
-    </Box>;
+    const buildControlPanel = controlPalette;
 
     return <AppWrapper title="HexBoardSVG"
         initialState={undefined}

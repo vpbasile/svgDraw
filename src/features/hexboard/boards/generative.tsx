@@ -1,7 +1,8 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Container, FormControl, FormLabel, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
+import { Box, Button, Container, FormControl, FormLabel, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
 import { useState } from "react";
 import AppWrapper from "../../../common/AppWrapper";
 import { palettes } from "../../../common/palettes";
+import SidebarSection from "../../../common/SidebarSection";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import CanvasParameters from "../forms/F_CanvasParameters";
@@ -74,65 +75,55 @@ export default function GenerativeBoard() {
 		return color;
 	}
 
-	const PalettePicker = <FormControl id="palette-control">
-		<FormLabel>Color Palette</FormLabel>
-		{Object.keys(palettes).map((paletteKey) => (
-			<FormControl key={paletteKey} display="flex" alignItems="center">
-				<FormLabel htmlFor={paletteKey} mb="0">
-					{paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
-				</FormLabel>
-				<input
-					aria-label={`Select Palette ${paletteKey}`}
-					type="radio"
-					id={paletteKey}
-					name="palette"
-					value={paletteKey}
-					checked={selectedPalette === paletteKey}
-					onChange={(e) => setSelectedPalette(e.target.value)}
-				/>
-			</FormControl>
-		))}
-	</FormControl>;
+	const palettePicker = (
+		<SidebarSection id="palette-control" title="Color Palette">
+			{Object.keys(palettes).map((paletteKey) => (
+				<FormControl key={paletteKey} display="flex" alignItems="center">
+					<FormLabel htmlFor={paletteKey} mb="0">
+						{paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
+					</FormLabel>
+					<input
+						aria-label={`Select Palette ${paletteKey}`}
+						title={`Select Palette ${paletteKey}`}
+						type="radio"
+						id={paletteKey}
+						name="palette"
+						value={paletteKey}
+						checked={selectedPalette === paletteKey}
+						onChange={(e) => setSelectedPalette(e.target.value)}
+					/>
+				</FormControl>
+			))}
+		</SidebarSection>
+	);
 
 	// Interface for changing things
 
 	const buildControlPanel = <Box id="control-panel-generative">
-		{/* Canvas Parameters */}
-		<Accordion id="control-panel-generative" allowMultiple>
-			<AccordionItem id="generative-parameters">
-				<AccordionButton>Generative HexBoard Controls<AccordionIcon /></AccordionButton>
-				<AccordionPanel>
-					<Container id="reRender" key="reRender">
-						{/* <h3>Generation Parameters</h3> */}
-						<InputGroup><InputLeftAddon children="Number of cells" />
-							<NumberInput id="cellCount" defaultValue={numberOfSpaces} min={2}
-								onChange={(e) => { SETnumberOfSpaces(+e); SEThexRoster(newRoster(+e, colors)); }} step={1} precision={0}>
-								<NumberInputField />
-								<NumberInputStepper>
-									<NumberIncrementStepper />
-									<NumberDecrementStepper />
-								</NumberInputStepper>
-							</NumberInput>
-						</InputGroup>
-						<Button onClick={() => SEThexRoster(newRoster(numberOfSpaces, colors))}>Shuffle</Button>
-					</Container>
-					<Container id="paletteSelect" key={"paletteSelect"}>
-						{/* Color Palette Control */}
-						{PalettePicker}
-					</Container>
-				</AccordionPanel>
-			</AccordionItem>
-			<CanvasParameters
-				// Canvas-specific parameters
-				canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
-				canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
-			<BoardParameters
-				// Hexagonally-specific parameters
-				hexRadius={hexRadius}
-				separationMultiplier={separationMultiplier}
-				SEThexRadius={SEThexRadius}
-				SETseparationMultiplier={SETseparationMultiplier} />
-		</Accordion>
+		<SidebarSection id="generative-parameters" title="Generative HexBoard Controls">
+			<Container id="reRender" key="reRender" p={0}>
+				<InputGroup><InputLeftAddon children="Number of cells" />
+					<NumberInput id="cellCount" defaultValue={numberOfSpaces} min={2}
+						onChange={(e) => { SETnumberOfSpaces(+e); SEThexRoster(newRoster(+e, colors)); }} step={1} precision={0}>
+						<NumberInputField />
+						<NumberInputStepper>
+							<NumberIncrementStepper />
+							<NumberDecrementStepper />
+						</NumberInputStepper>
+					</NumberInput>
+				</InputGroup>
+				<Button onClick={() => SEThexRoster(newRoster(numberOfSpaces, colors))}>Shuffle</Button>
+			</Container>
+		</SidebarSection>
+		{palettePicker}
+		<CanvasParameters
+			canvasWidth={canvasWidth} SETcanvasWidth={SETcanvasWidth}
+			canvasHeight={canvasHeight} SETcanvasHeight={SETcanvasHeight} />
+		<BoardParameters
+			hexRadius={hexRadius}
+			separationMultiplier={separationMultiplier}
+			SEThexRadius={SEThexRadius}
+			SETseparationMultiplier={SETseparationMultiplier} />
 		<RosterDisplay hexRoster={hexRoster} />
 	</Box>
 

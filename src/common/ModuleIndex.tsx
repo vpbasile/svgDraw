@@ -1,10 +1,10 @@
 import { LinkIcon } from '@chakra-ui/icons';
-import { Heading, Link, List, ListItem } from '@chakra-ui/react';
+import { Link, List, ListItem } from '@chakra-ui/react';
 import { BASE_PATH, featureModules } from './featureRegistry';
+import SidebarSection from './SidebarSection';
 
 export default function ModuleIndex() {
-    return <>
-        <Heading as={'h2'}>Modules</Heading>
+    return <SidebarSection id="module-index" title="Modules">
         <List>
             {featureModules.map(({ segment, label, navChildren }) => (
                 <ListItem key={segment}>
@@ -28,5 +28,5 @@ export default function ModuleIndex() {
             </ListItem>
 
         </List>
-    </>
+    </SidebarSection>
 }

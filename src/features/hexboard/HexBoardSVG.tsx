@@ -1,4 +1,4 @@
-import { Center, Flex } from "@chakra-ui/react";
+import { Box, Center, Flex } from "@chakra-ui/react";
 import ControlSidebar from "../../common/ControlSidebar";
 import Hexagon from "./Hexagon";
 import { canvasGlobalsType, gameGlobalsType, hexDef, HexOrientation } from "./utils/hexDefinitions";
@@ -36,29 +36,32 @@ export default function HexBoardSVG({
 		? `${-canvasGlobals.canvasWidth / 2} ${-canvasGlobals.canvasHeight / 2} ${canvasGlobals.canvasWidth} ${canvasGlobals.canvasHeight}`
 		: "-300 -300 600 600");
 
-	const svgElement = <svg
-		width="100%"
-		height="100%"
-		viewBox={effectiveViewBox}
-		preserveAspectRatio="xMidYMid meet"
-		style={{ border: "2px solid" }}
-	>
-		{hexRoster.map((hex, i) => (
-			<Hexagon
-				key={i}
-				radius={effectiveHexRadius}
-				separationMultiplier={effectiveSeparation}
-				orientation={effectiveOrientation}
-				q={hex.q} r={hex.r} id={hex.id.toString()} clickMessage={hex.clickMessage} color={hex.color}
-				hexText={hex.hexText}
-				additionalSVG={hex.additionalSVG}
-			/>
-		))}
-	</svg>;
+	const svgElement = (
+		<Box border="2px solid" width="100%" height="100%">
+			<svg
+				width="100%"
+				height="100%"
+				viewBox={effectiveViewBox}
+				preserveAspectRatio="xMidYMid meet"
+			>
+				{hexRoster.map((hex, i) => (
+					<Hexagon
+						key={i}
+						radius={effectiveHexRadius}
+						separationMultiplier={effectiveSeparation}
+						orientation={effectiveOrientation}
+						q={hex.q} r={hex.r} id={hex.id.toString()} clickMessage={hex.clickMessage} color={hex.color}
+						hexText={hex.hexText}
+						additionalSVG={hex.additionalSVG}
+					/>
+				))}
+			</svg>
+		</Box>
+	);
 
 	return (
 		<Flex height="100vh">
-			<Center flex={1}>{svgElement}</Center>
+			<Center id="canvas-box" flex={1}>{svgElement}</Center>
 			<ControlSidebar title={gameGlobals?.displayTitle ?? "HexBoardSVG"}>
 				{controlPanel}
 			</ControlSidebar>
