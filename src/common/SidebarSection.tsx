@@ -7,11 +7,12 @@ type SidebarSectionProps = {
 	children: ReactNode;
 	defaultOpen?: boolean;
 	alwaysAccordion?: boolean;
+	flat?: boolean;
 };
 
 const SidebarSectionDepthContext = createContext(0);
 
-export default function SidebarSection({ id, title, children, defaultOpen = false, alwaysAccordion = false }: SidebarSectionProps) {
+export default function SidebarSection({ id, title, children, defaultOpen = false, alwaysAccordion = false, flat = false }: SidebarSectionProps) {
 	const depth = useContext(SidebarSectionDepthContext);
 	const cardBg = useColorModeValue("white", "gray.800");
 	const headerBg = useColorModeValue("gray.50", "gray.700");
@@ -31,6 +32,19 @@ export default function SidebarSection({ id, title, children, defaultOpen = fals
 					{title}
 				</Box>
 				<Box px={3} py={3} display="flex" flexDirection="column" gap={3}>
+					{nestedContent}
+				</Box>
+			</Box>
+		);
+	}
+
+	if (flat) {
+		return (
+			<Box id={id} mb={3}>
+				<Box px={1} py={2} fontWeight="semibold" fontSize="sm" color={headerColor}>
+					{title}
+				</Box>
+				<Box px={0} py={1} display="flex" flexDirection="column" gap={3}>
 					{nestedContent}
 				</Box>
 			</Box>

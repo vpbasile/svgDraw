@@ -30,7 +30,7 @@ export default function SVGDrawControls({ children }: SVGDrawControlsProps) {
         URL.revokeObjectURL(url);
     };
 
-    return <SidebarSection id="svgdraw-controls" title="SVGDraw Controls">
+    return <>
         <SidebarSection id="svgdraw-appearance" title="Appearance">
             <FormControl>
                 <ColorModeButton />
@@ -56,5 +56,5 @@ export default function SVGDrawControls({ children }: SVGDrawControlsProps) {
         </SidebarSection>
 
         {children}
-    </SidebarSection>
+    </>
 }

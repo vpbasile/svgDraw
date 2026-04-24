@@ -41,7 +41,6 @@ export default function PlaceHolderBoard() {
             <Box id="to-do-list">
                 <Heading as={'h2'}>To Do:</Heading>
                 <List>
-                    <ListItem>Migrate HexBoard (begun but not completed)</ListItem>
                     <ListItem>Move the save menu to an <Link href="https://www.chakra-ui.com/docs/components/action-bar" >Action Bar</Link></ListItem>
                     <ListItem>Handle classes for svg components</ListItem>
                 </List>

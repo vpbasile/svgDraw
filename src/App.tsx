@@ -26,7 +26,9 @@ function App() {
     { path: '*', element: <NotFound /> },
   ];
 
-  return useRoutes(routes);
+  const renderedRoutes = useRoutes(routes);
+
+  return renderedRoutes;
 }
 
 export default App;

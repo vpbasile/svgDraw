@@ -1,4 +1,4 @@
-import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
+import { Box, HStack, Heading, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import SVGDrawControls from "../features/hexboard/forms/F_SVGDraw";
 import ModuleIndex from "./ModuleIndex";
@@ -43,13 +43,15 @@ export default function ControlSidebar({ title, children }: ControlSidebarProps)
         },
       }}
     >
-      <Heading size="sm" mb={3} color={titleColor} letterSpacing="wide">
-        Module: {title}
-      </Heading>
+      <HStack mb={3} align="center">
+        <ModuleIndex />
+        <Heading size="sm" color={titleColor} letterSpacing="wide">
+          Module: {title}
+        </Heading>
+      </HStack>
       <SVGDrawControls>
         {children ?? <Box>No controls</Box>}
       </SVGDrawControls>
-      <ModuleIndex />
     </Box>
   );
 }

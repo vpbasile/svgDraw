@@ -1,32 +1,47 @@
-import { LinkIcon } from '@chakra-ui/icons';
-import { Link, List, ListItem } from '@chakra-ui/react';
+import { ExternalLinkIcon, HamburgerIcon } from '@chakra-ui/icons';
+import {
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuItem,
+    MenuList,
+} from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import { BASE_PATH, featureModules } from './featureRegistry';
-import SidebarSection from './SidebarSection';
 
 export default function ModuleIndex() {
-    return <SidebarSection id="module-index" title="Modules">
-        <List>
-            {featureModules.map(({ segment, label, navChildren }) => (
-                <ListItem key={segment}>
-                    <LinkIcon /> <Link href={`${BASE_PATH}/${segment}`}>{label}</Link>
-                    {navChildren && navChildren.length > 0 && (
-                        <List>
-                            {navChildren.map(({ path, label: childLabel }) => (
-                                <ListItem key={path}>
-                                    <LinkIcon /> <Link href={`${BASE_PATH}/${segment}/${path}`}>{label}: {childLabel}</Link>
-                                </ListItem>
-                            ))}
-                        </List>
-                    )}
-                </ListItem>
-            ))}
-            <ListItem>GitHub:
-                <List>
-                    <ListItem><LinkIcon /><Link href='https://github.com/vpbasile/svgDraw'>Repo on Github</Link></ListItem>
-                    <ListItem><LinkIcon /><Link href='https://vpbasile.github.io/svgDraw/'>Live version on Github Pages</Link></ListItem>
-                </List>
-            </ListItem>
-
-        </List>
-    </SidebarSection>
+    return (
+        <Menu>
+            <MenuButton
+                as={IconButton}
+                aria-label="Open module menu"
+                icon={<HamburgerIcon />}
+                variant="ghost"
+                size="sm"
+            />
+            <MenuList>
+                {featureModules.map(({ segment, label, navChildren }) => (
+                    navChildren && navChildren.length > 0 ? (
+                        navChildren.map(({ path, label: childLabel }) => (
+                            <MenuItem as={RouterLink} to={`${BASE_PATH}/${segment}/${path}`} key={path}>
+                                {label}: {childLabel}
+                            </MenuItem>
+                        ))
+                    ) : (
+                        <MenuItem as={RouterLink} to={`${BASE_PATH}/${segment}`} key={segment}>
+                            {label}
+                        </MenuItem>
+                    )
+                ))}
+                <MenuDivider />
+                <MenuItem as="a" href="https://github.com/vpbasile/svgDraw" target="_blank" rel="noreferrer">
+                    Repo <ExternalLinkIcon mx="2px" />
+                </MenuItem>
+                <MenuItem as="a" href="https://vpbasile.github.io/svgDraw/" target="_blank" rel="noreferrer">
+                    Live <ExternalLinkIcon mx="2px" />
+                </MenuItem>
+            </MenuList>
+        </Menu>
+    );
 }
