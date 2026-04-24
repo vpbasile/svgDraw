@@ -13,7 +13,7 @@ export default function RosterDisplay(props: { hexRoster: hexDef[] }) {
 	const hexRoster = props.hexRoster
 	const rosterTable: tableData[][] = hexRoster.map((hex) => { return [hex.q, hex.r, hex.hexText, hex.color] })
 	return (
-		<SidebarSection id="hex-roster" title="Roster">
+		<SidebarSection id="hex-roster" title="Roster" alwaysAccordion>
 			<DBTable dataContents={rosterTable} fields={fieldsForHexes} newRowF={function (): void {
 				throw new Error("Function not implemented.");
 			}} />

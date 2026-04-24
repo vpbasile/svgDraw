@@ -1,5 +1,5 @@
 
-import { Container, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text } from "@chakra-ui/react";
+import { Box, FormControl, FormLabel, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text } from "@chakra-ui/react";
 import { Dispatch } from "react";
 import SidebarSection from "../../../common/SidebarSection";
 // import { useState } from 'react';
@@ -30,12 +30,12 @@ export default function CanvasParameters(props: myProps): JSX.Element {
 	const SETcanvasHeight = props.SETcanvasHeight;
 
 	const key = "CanvasParametersBox";
-	return (<Container id={key} key={key} color={'blue.500'} p={0}>
+	return (<Box id={key} key={key} p={0}>
 		<SidebarSection id="canvas-params" title="Canvas Parameters">
-					<Text>Note: Pixels are being used as a relative measure.  The image will be scaled to fit the viewport.</Text>
-					<InputGroup>
-						<InputLeftAddon children="Width" />
-						<NumberInput id="canvasWidth" defaultValue={canvasWidth} min={500} onChange={(e) => SETcanvasWidth(+e)}
+
+					<FormControl>
+						<FormLabel mb={1}>Width</FormLabel>
+						<NumberInput id="canvasWidth" size="sm" value={canvasWidth} min={500} onChange={(e) => SETcanvasWidth(+e)}
 							step={50} precision={0}
 						>
 							<NumberInputField />
@@ -44,10 +44,11 @@ export default function CanvasParameters(props: myProps): JSX.Element {
 								<NumberDecrementStepper />
 							</NumberInputStepper>
 						</NumberInput>
-					</InputGroup>
-					<InputGroup>
-						<InputLeftAddon children="Height" />
-						<NumberInput id="canvasHeight" defaultValue={canvasHeight} min={500} onChange={(e) => SETcanvasHeight(+e)}
+					</FormControl>
+
+					<FormControl>
+						<FormLabel mb={1}>Height</FormLabel>
+						<NumberInput id="canvasHeight" size="sm" value={canvasHeight} min={500} onChange={(e) => SETcanvasHeight(+e)}
 							step={50} precision={0}
 						>
 							<NumberInputField />
@@ -56,7 +57,8 @@ export default function CanvasParameters(props: myProps): JSX.Element {
 								<NumberDecrementStepper />
 							</NumberInputStepper>
 						</NumberInput>
-					</InputGroup>
+					</FormControl>
+					<Text fontSize="sm" color="gray.600">Pixels are used as a relative measure. The image is scaled to fit the viewport.</Text>
 		</SidebarSection>
-	</Container>)
+	</Box>)
 }

@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import SVGDrawControls from "../features/hexboard/forms/F_SVGDraw";
 import ModuleIndex from "./ModuleIndex";
@@ -9,6 +9,13 @@ type ControlSidebarProps = {
 };
 
 export default function ControlSidebar({ title, children }: ControlSidebarProps) {
+  const sidebarBg = useColorModeValue("gray.50", "gray.900");
+  const borderColor = useColorModeValue("gray.200", "gray.700");
+  const titleColor = useColorModeValue("gray.700", "gray.100");
+  const inputBorderColor = useColorModeValue("gray.300", "gray.600");
+  const inputBg = useColorModeValue("white", "gray.800");
+  const radioAccent = useColorModeValue("#2b6cb0", "#63b3ed");
+
   return (
     <Box
       width={320}
@@ -17,15 +24,32 @@ export default function ControlSidebar({ title, children }: ControlSidebarProps)
       height="100vh"
       overflowY="auto"
       borderLeft="1px solid"
-      borderColor="gray.200"
+      borderColor={borderColor}
+      bg={sidebarBg}
       p={3}
+      sx={{
+        "select, input[type='text'], input[type='number']": {
+          width: "100%",
+          minHeight: "32px",
+          border: "1px solid",
+          borderColor: inputBorderColor,
+          borderRadius: "md",
+          background: inputBg,
+          paddingLeft: "8px",
+          paddingRight: "8px",
+        },
+        "input[type='radio']": {
+          accentColor: radioAccent,
+        },
+      }}
     >
-      <Heading size="md" mb={3}>
-        {title}
+      <Heading size="sm" mb={3} color={titleColor} letterSpacing="wide">
+        Module: {title}
       </Heading>
+      <SVGDrawControls>
+        {children ?? <Box>No controls</Box>}
+      </SVGDrawControls>
       <ModuleIndex />
-      <SVGDrawControls />
-      {children ?? <Box>No controls</Box>}
     </Box>
   );
 }

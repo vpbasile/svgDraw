@@ -62,9 +62,11 @@ export default function HexBoardSVG({
 	return (
 		<Flex height="100vh">
 			<Center id="canvas-box" flex={1}>{svgElement}</Center>
-			<ControlSidebar title={gameGlobals?.displayTitle ?? "HexBoardSVG"}>
-				{controlPanel}
-			</ControlSidebar>
+			{controlPanel ? (
+				<ControlSidebar title={gameGlobals?.displayTitle ?? "HexBoardSVG"}>
+					{controlPanel}
+				</ControlSidebar>
+			) : null}
 		</Flex>
 	);
 }

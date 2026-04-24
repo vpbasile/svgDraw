@@ -1,9 +1,13 @@
-import { Button, FormControl, FormHelperText, FormLabel, Input, InputGroup } from '@chakra-ui/react';
-import { SetStateAction, useState } from 'react';
+import { Button, FormControl, FormHelperText, FormLabel, Input, Text } from '@chakra-ui/react';
+import { ReactNode, SetStateAction, useState } from 'react';
 import SidebarSection from '../../../common/SidebarSection';
 import ColorModeButton from './B_ColorMode';
 
-export default function SVGDrawControls() {
+type SVGDrawControlsProps = {
+    children?: ReactNode;
+};
+
+export default function SVGDrawControls({ children }: SVGDrawControlsProps) {
     const [fileName, setFileName] = useState<string>('svgdraw');
 
     const downloadCurrentSvg = () => {
@@ -27,22 +31,30 @@ export default function SVGDrawControls() {
     };
 
     return <SidebarSection id="svgdraw-controls" title="SVGDraw Controls">
-        <InputGroup>
-            <ColorModeButton />
-        </InputGroup>
-        <InputGroup>
+        <SidebarSection id="svgdraw-appearance" title="Appearance">
+            <FormControl>
+                <ColorModeButton />
+            </FormControl>
+            <Text fontSize="sm" color="gray.600">Color Mode only affects the controls inside this app.  They do not impact the exported SVG.</Text>
+        </SidebarSection>
+
+        <SidebarSection id="svgdraw-export" title="Export SVG">
             <FormControl>
                 <FormLabel>Filename</FormLabel>
                 <Input
-                    placeholder={fileName}
+                    value={fileName}
+                    placeholder="svgdraw"
+                    size="sm"
                     onChange={(e: { target: { value: SetStateAction<string>; }; }) => setFileName(e.target.value)}
                     transition={'width 0.75s'}
                 />
-                <FormHelperText>Filename will be appended with .svg</FormHelperText>
-                <Button mt={2} onClick={downloadCurrentSvg}>
+                <FormHelperText mt={1}>Filename will be appended with .svg</FormHelperText>
+                <Button mt={3} size="sm" colorScheme="blue" onClick={downloadCurrentSvg}>
                     Download SVG
                 </Button>
             </FormControl>
-        </InputGroup>
+        </SidebarSection>
+
+        {children}
     </SidebarSection>
 }
