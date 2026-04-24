@@ -1,12 +1,9 @@
 import {
-  Box,
-  Center,
-  Flex,
-  Heading,
+    Center,
+    Flex,
 } from "@chakra-ui/react";
 import { ReactNode, useState } from "react";
-import SVGDrawControls from "../features/hexboard/forms/F_SVGDraw";
-import ModuleIndex from "./ModuleIndex";
+import ControlSidebar from "./ControlSidebar";
 
 type AppWrapperProps<TState> = {
   title: string;
@@ -40,23 +37,9 @@ export default function AppWrapper<TState>({
       </Center>
 
       {/* CONTROL PANEL */}
-      <Box
-        width={320}
-        height="100vh"
-        overflowY="auto"
-        borderLeft="1px solid"
-        borderColor="gray.200"
-        p={3}
-      >
-        <Heading size="md" mb={3}>
-          {title}
-        </Heading>
-        <ModuleIndex />
-        {<SVGDrawControls />}
-        {renderControls
-          ? renderControls(state, setState)
-          : <Box>No controls</Box>}
-      </Box>
+      <ControlSidebar title={title}>
+        {renderControls ? renderControls(state, setState) : undefined}
+      </ControlSidebar>
     </Flex>
   );
 }

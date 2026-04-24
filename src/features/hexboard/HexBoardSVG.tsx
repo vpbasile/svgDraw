@@ -1,4 +1,5 @@
-import { Box, Center, Flex } from "@chakra-ui/react";
+import { Center, Flex } from "@chakra-ui/react";
+import ControlSidebar from "../../common/ControlSidebar";
 import Hexagon from "./Hexagon";
 import { canvasGlobalsType, gameGlobalsType, hexDef, HexOrientation } from "./utils/hexDefinitions";
 import { hexOrientations } from "./utils/hexMath";
@@ -55,16 +56,12 @@ export default function HexBoardSVG({
 		))}
 	</svg>;
 
-	if (!controlPanel) {
-		return svgElement;
-	}
-
 	return (
 		<Flex height="100vh">
 			<Center flex={1}>{svgElement}</Center>
-			<Box width={320} height="100vh" overflowY="auto" borderLeft="1px solid" borderColor="gray.200" p={3}>
+			<ControlSidebar title={gameGlobals?.displayTitle ?? "HexBoardSVG"}>
 				{controlPanel}
-			</Box>
+			</ControlSidebar>
 		</Flex>
 	);
 }

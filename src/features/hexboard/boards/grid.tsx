@@ -79,6 +79,7 @@ export default function Grid() {
 				<input
 					type="radio"
 					id={paletteKey}
+					aria-label={`Select Palette ${paletteKey}`}
 					name="palette"
 					value={paletteKey}
 					checked={selectedPalette === paletteKey}

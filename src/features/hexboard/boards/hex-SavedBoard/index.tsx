@@ -34,6 +34,7 @@ export default function SavedBoard() {
 					{paletteKey.charAt(0).toUpperCase() + paletteKey.slice(1)}
 				</FormLabel>
 				<input
+					aria-label={`Select Palette ${paletteKey}`}
 					type="radio"
 					id={paletteKey}
 					name="palette"

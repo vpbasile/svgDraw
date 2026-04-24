@@ -1,7 +1,6 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Heading, Link, List, ListItem, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useState } from 'react';
 import AppWrapper from './AppWrapper';
-import SVGWrapper from './SvgWrapper';
 export default function PlaceHolderBoard() {
     // Each implementation of SVGWwrapper will contain the following things (not necessarily in this order):
     // * All states and logic required to render the SVG content.  This will allow control panel to interact with the SVG content
@@ -63,9 +62,9 @@ export default function PlaceHolderBoard() {
 
         return <AppWrapper title='Placeholder RedGreen'
             renderSVG={() => (
-                <SVGWrapper viewBox="0 0 500 500" displayTitle='Placeholder RedGreen' controlPanel={controlPanel} >
+                <svg width="100%" height="100%" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet">
                     {content}
-                </SVGWrapper>
+                </svg>
             )}
             renderControls={() => controlPanel} initialState={undefined} />
 }

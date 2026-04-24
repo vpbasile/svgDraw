@@ -80,6 +80,7 @@ export default function CreateBoard() {
 				<input
 					type="radio"
 					id={paletteKey}
+					aria-label={`Select Palette ${paletteKey}`}
 					name="palette"
 					value={paletteKey}
 					checked={selectedPalette === paletteKey}
@@ -90,8 +91,12 @@ export default function CreateBoard() {
 	</FormControl>;
 
 	const orientationControl = <FormControl id="orientation-control">
-		<FormLabel>Orientation</FormLabel>
-		<Select  onChange={(e) => SETdefaultOrientation(hexOrientations[e.target.value as keyof typeof hexOrientations])}>
+		<FormLabel htmlFor="orientation-select">Orientation</FormLabel>
+		<Select
+		id="orientation-select"
+		aria-label="Select Orientation"
+		title="Select Orientation"
+		onChange={(e) => SETdefaultOrientation(hexOrientations[e.target.value as keyof typeof hexOrientations])}>
 			{Object.keys(hexOrientations).map((orientation) => <option key={orientation} value={orientation}>{orientation}</option>)}
 		</Select>
 	</FormControl>;
@@ -129,7 +134,9 @@ export default function CreateBoard() {
 				<Input className="form-control" name="rField" defaultValue={rTemp} onChange={(e) => SETrTemp(+e.target.value)} />
 			</Box>
 			<Box id="chooseColor">
-				<Select id="colorSelect" defaultValue={colorTemp} onChange={(e) => SETcolorTemp(e.target.value)}>
+				<FormLabel htmlFor="colorSelect">Color</FormLabel>
+				<Select id="colorSelect" aria-label="Select Color" title="Select Color" defaultValue={colorTemp} onChange={(e) => SETcolorTemp(e.target.value)}>
+					<option value="">-- Select a color --</option>
 					{colors.map((color) => <option key={`colorChoice-${keyGen++}`} value={color}>{color}</option>)}
 				</Select>
 			</Box>

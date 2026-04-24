@@ -1,4 +1,4 @@
-import { Box, Button, Container, FormControl, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, Select } from "@chakra-ui/react";
+import { Box, Button, Container, FormControl, FormLabel, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField } from "@chakra-ui/react";
 import AppWrapper from "../../../common/AppWrapper";
 import { BoardParameters } from "../forms";
 import RosterDisplay from "../forms/D_HexRoster";
@@ -106,14 +106,17 @@ export default function CandyLand() {
 						SETseparationMultiplier={(v) => setState(s => ({ ...s, separationMultiplier: typeof v === "function" ? v(s.separationMultiplier) : v }))}
 					/>
 					<FormControl mt={4}>
-						<FormLabel>Orientation</FormLabel>
-						<Select
+						<FormLabel htmlFor="orientation-select">Orientation</FormLabel>
+						<select
+							id="orientation-select"
+							title="Orientation"
+							aria-label="Orientation"
 							value={state.orientation}
 							onChange={(e) => setState(s => ({ ...s, orientation: e.target.value as "flat-top" | "pointy-top" }))}
 						>
 							<option value="flat-top">Flat Top</option>
 							<option value="pointy-top">Pointy Top</option>
-						</Select>
+						</select>
 					</FormControl>
 					<FormControl mt={4}>
 						<FormLabel>Spaces between special spaces</FormLabel>
@@ -133,7 +136,7 @@ export default function CandyLand() {
 					<RosterDisplay hexRoster={state.hexRoster} />
 					<Container mt={4}>
 						<Box>
-							<FormLabel>Add a Hex</FormLabel>
+							<FormLabel htmlFor="color-select">Add a Hex</FormLabel>
 							<Input
 								placeholder="q"
 								type="number"
@@ -146,14 +149,17 @@ export default function CandyLand() {
 								value={state.rTemp}
 								onChange={e => setState(s => ({ ...s, rTemp: +e.target.value }))}
 							/>
-							<Select
+							<select
+								id="color-select"
+								title="Color"
+								aria-label="Color"
 								value={state.colorTemp}
 								onChange={e => setState(s => ({ ...s, colorTemp: e.target.value }))}
 							>
 								{Object.entries(colors).map(([name, color], idx) => (
 									<option key={idx} value={color}>{name}</option>
 								))}
-							</Select>
+							</select>
 							<Button mt={2} onClick={() => {
 								const exists = state.hexRoster.some(h => h.q === state.qTemp && h.r === state.rTemp);
 								if (!exists) {

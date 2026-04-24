@@ -105,6 +105,7 @@ export default function TreeExample() {
         <Select
             onChange={(e) => setSelectedPalette(e.target.value)}
             value={selectedPalette}
+					aria-label={`Select Palette ${selectedPalette}`}
         >
             {Object.keys(palettes).map((paletteKey) => (
                 <option key={paletteKey} value={paletteKey}>

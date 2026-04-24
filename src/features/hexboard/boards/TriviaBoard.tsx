@@ -79,6 +79,7 @@ export default function TriviaBoard() {
         <input
           type="radio"
           id={paletteKey}
+					aria-label={`Select Palette ${paletteKey}`}
           name="palette"
           value={paletteKey}
           checked={selectedPalette === paletteKey}
