@@ -43,7 +43,9 @@ export default function HexBoardSVG({
 	}, [effectiveViewBox]);
 
 	const svgElement = (
-		<Box border="2px solid" width="100%" height="100%">
+		<Box 
+		// border="2px solid" 
+		width="100%" height="100%">
 			<svg
 				width="100%"
 				height="100%"

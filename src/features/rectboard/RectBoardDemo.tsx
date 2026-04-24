@@ -5,7 +5,7 @@ import { PageSizeKey } from "../../common/pageSizeSettings";
 import SidebarSection from "../../common/SidebarSection";
 import RectBoard from "./RectBoard";
 
-const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '8.5x11';
 
 const LETTER_WIDTH = 850;
 const LETTER_HEIGHT = 1100;
