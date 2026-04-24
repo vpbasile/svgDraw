@@ -55,7 +55,7 @@ export default function RectBoard({
   cells = [],
   onRectClick,
   className,
-  style,
+  // style,
 }: RectBoardProps) {
   const safeRows = Math.max(0, Math.floor(rows));
   const safeCols = Math.max(0, Math.floor(cols));
@@ -109,7 +109,6 @@ export default function RectBoard({
       viewBox={viewBox ?? computedViewBox}
       preserveAspectRatio="xMidYMid meet"
       className={className}
-      style={style}
     >
       {rects}
     </svg>
