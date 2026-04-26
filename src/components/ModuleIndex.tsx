@@ -8,7 +8,7 @@ import {
     MenuList,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { BASE_PATH, modules } from './moduleRegistry';
+import { BASE_PATH, modules } from '../moduleRegistry';
 
 export default function ModuleIndex() {
     return (
