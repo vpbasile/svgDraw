@@ -1,6 +1,6 @@
-import SidebarSection from "../../../common/SidebarSection";
-import DBTable, { fieldTuple, tableData } from "../../db-man/DBTable";
-import { hexDef } from "../utils/hexDefinitions";
+import SidebarSection from "../../../components/SidebarSection";
+import DBTable, { fieldTuple, tableData } from "../../../db-man/DBTable";
+import { hexDef } from "../hexUtils/hexDefinitions";
 export default function RosterDisplay(props: { hexRoster: hexDef[] }) {
 	const fieldsForHexes: fieldTuple[] = [
 		["q", { matchID: "q", labelText: "q", type: "number", defaultValue: "q", order: 1 },],

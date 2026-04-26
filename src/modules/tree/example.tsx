@@ -1,11 +1,11 @@
 import { Box, FormControl, FormLabel, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack } from "@chakra-ui/react";
 import { useState } from "react";
-import AppWrapper from "../../common/AppWrapper";
-import { drawLine, rotateLinesAroundPoint } from "../../common/helpers";
-import { PAGE_SIZES, PageSizeKey } from "../../common/pageSizeSettings";
-import { palettes } from "../../common/palettes"; // Import the palettes
-import SidebarSection from "../../common/SidebarSection";
-import { coordinateT, myLineT } from "../../types";
+import AppWrapper from "../../components/AppWrapper";
+import SidebarSection from "../../components/SidebarSection";
+import { PAGE_SIZES, PageSizeKey } from "../../config/pageSizeSettings";
+import { palettes } from "../../config/palettes"; // Import the palettes
+import { drawLine, rotateLinesAroundPoint } from "../../utils/helpers";
+import { coordinateT, myLineT } from "../../utils/types";
 import Tree from "./treeGPT";
 
 const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '8.5x11';

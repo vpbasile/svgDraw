@@ -1,4 +1,4 @@
-import { Bounds, emptyBounds, padBounds } from "../../../common/bounds";
+import { Bounds, emptyBounds, padBounds } from "../../../utils/bounds";
 import { hexDef, HexOrientation } from "./hexDefinitions";
 import { calcTheta, hex_to_pixel } from "./hexMath";
 

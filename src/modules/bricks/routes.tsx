@@ -1,4 +1,4 @@
-import { ModuleRoute, indexRoute } from "../../common/routing";
+import { ModuleRoute, indexRoute } from "../../routing";
 import BricksIndex from "./BricksIndex";
 
 export const bricksRoutes: ModuleRoute[] = [indexRoute(<BricksIndex />)];

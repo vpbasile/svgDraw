@@ -1,4 +1,4 @@
-import { myLineT } from '../../types';
+import { myLineT } from '../../utils/types';
 
 export default function Tree(root: myLineT, delta: number, depth: number, palette: string[]): myLineT[] {
     const maxDepth = depth;

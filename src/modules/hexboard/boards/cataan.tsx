@@ -1,12 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import { useState } from "react";
-import { PageSizeKey } from "../../../common/pageSizeSettings";
+import { PageSizeKey } from "../../../config/pageSizeSettings";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import HexboardWrapper from "../HexboardWrapper";
-import { computeHexBoardBounds } from "../utils/computeBounds";
-import { gameGlobalsType, hexDef } from "../utils/hexDefinitions";
-import { hexOrientations } from "../utils/hexMath";
+import { computeHexBoardBounds } from "../hexUtils/computeBounds";
+import { gameGlobalsType, hexDef } from "../hexUtils/hexDefinitions";
+import { hexOrientations } from "../hexUtils/hexMath";
 
 const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '11x8.5';
 

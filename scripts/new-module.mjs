@@ -72,12 +72,12 @@ export default function ${pascalName}Index() {
       initialState={initialState}
       renderSVG={(_state) => (
         <svg>
-          {/* TODO: render SVG content */}
+          {/* [ ]: render SVG content */}
         </svg>
       )}
       renderControls={(_state, _setState) => (
         <div>
-          {/* TODO: add controls */}
+          {/* [ ]: add controls */}
         </div>
       )}
     />

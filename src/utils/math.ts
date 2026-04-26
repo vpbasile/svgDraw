@@ -4,6 +4,10 @@ export function randomBounded(min: number, max: number) {
 	return min + Math.floor(difference * Math.random());
 }
 
+// [ ] This could be fun to use the fibonacci sequence
+export const sizeOrder: string[] = ['13px', '8px', '5px', '3px', '2px', '1px', '1px']
+    
+
 // Window fit sqaure
 // export const smallerDimension = Math.min(window.innerWidth,window.innerHeight)
 

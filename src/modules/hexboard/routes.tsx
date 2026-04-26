@@ -1,4 +1,4 @@
-import { ModuleRoute, indexRoute, route } from "../../common/routing";
+import { ModuleRoute, indexRoute, route } from "../../routing";
 import CandyLand from "./boards/candyLand";
 import Cataan from "./boards/cataan";
 import CreateBoard from "./boards/createBoard";

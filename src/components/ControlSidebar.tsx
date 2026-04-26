@@ -1,8 +1,8 @@
 import { Box, HStack, Heading, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
+import { PageSizeKey } from "../config/pageSizeSettings";
 import SVGDrawControls from "../modules/hexboard/forms/F_SVGDraw";
 import ModuleIndex from "./ModuleIndex";
-import { PageSizeKey } from "./pageSizeSettings";
 
 type ControlSidebarProps = {
   title: string;

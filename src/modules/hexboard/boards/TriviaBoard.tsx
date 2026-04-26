@@ -1,15 +1,15 @@
 import { Box, FormControl, FormLabel } from "@chakra-ui/react";
 import { useState } from "react";
-import { PageSizeKey } from "../../../common/pageSizeSettings";
-import { palettes } from "../../../common/palettes"; // Import the palettes
-import SidebarSection from "../../../common/SidebarSection";
+import SidebarSection from "../../../components/SidebarSection";
+import { PageSizeKey } from "../../../config/pageSizeSettings";
+import { palettes } from "../../../config/palettes"; // Import the palettes
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import HexboardWrapper from "../HexboardWrapper";
-import { computeHexBoardBounds } from "../utils/computeBounds";
-import { coordinateHex, gameGlobalsType, hexDef } from "../utils/hexDefinitions";
-import { coord2hex } from "../utils/hexFunctions";
-import { cube_ring, hexOrientations } from "../utils/hexMath";
+import { computeHexBoardBounds } from "../hexUtils/computeBounds";
+import { coordinateHex, gameGlobalsType, hexDef } from "../hexUtils/hexDefinitions";
+import { coord2hex } from "../hexUtils/hexFunctions";
+import { cube_ring, hexOrientations } from "../hexUtils/hexMath";
 
 const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 

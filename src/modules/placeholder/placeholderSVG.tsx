@@ -1,8 +1,9 @@
 import { Box, Heading, Link, List, ListItem, Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import { useState } from 'react';
-import AppWrapper from './AppWrapper';
-import { PageSizeKey } from './pageSizeSettings';
-import SidebarSection from './SidebarSection';
+import AppWrapper from '../../components/AppWrapper';
+import SidebarSection from '../../components/SidebarSection';
+import { PageSizeKey } from '../../config/pageSizeSettings';
+
 
 const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = 'none';
 export default function PlaceHolderBoard() {

@@ -1,6 +1,7 @@
 import { RouteObject, useRoutes } from "react-router-dom";
-import { BASE_PATH, modules } from "./common/moduleRegistry";
-import PlaceHolderBoard from './common/placeHolderSVG';
+import { BASE_PATH, modules } from "./moduleRegistry";
+import PlaceHolderBoard from "./modules/placeholder/placeholderSVG";
+
 
 function NotFound() {
   return <div>Page not found!</div>;

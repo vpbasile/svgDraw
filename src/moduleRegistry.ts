@@ -1,7 +1,7 @@
-import { hexBoardList, hexboardRoutes } from "../modules/hexboard/routes";
+import { hexBoardList, hexboardRoutes } from "./modules/hexboard/routes";
 // import { scaleRoutes } from "../modules/scale/routes";
-import { bricksRoutes } from "../modules/bricks/routes";
-import { treeRoutes } from "../modules/tree/routes";
+import { bricksRoutes } from "./modules/bricks/routes";
+import { treeRoutes } from "./modules/tree/routes";
 import { ModuleRoute } from "./routing";
 
 export const BASE_PATH = "/svgdraw";

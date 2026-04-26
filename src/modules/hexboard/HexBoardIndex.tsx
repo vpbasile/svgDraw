@@ -1,13 +1,13 @@
 import { FormControl, FormLabel } from '@chakra-ui/react';
 import { useState } from 'react';
-import AppWrapper from '../../common/AppWrapper';
-import { PageSizeKey } from '../../common/pageSizeSettings';
-import { palettes } from '../../common/palettes';
-import SidebarSection from '../../common/SidebarSection';
+import AppWrapper from '../../components/AppWrapper';
+import SidebarSection from '../../components/SidebarSection';
+import { PageSizeKey } from '../../config/pageSizeSettings';
+import { palettes } from '../../config/palettes';
 import HexboardSVG from './HexBoardSVG';
-import { coordinateHex, hexDef } from './utils/hexDefinitions';
-import { coord2hex } from './utils/hexFunctions';
-import { cube_ring, hexOrientations } from './utils/hexMath';
+import { coordinateHex, hexDef } from './hexUtils/hexDefinitions';
+import { coord2hex } from './hexUtils/hexFunctions';
+import { cube_ring, hexOrientations } from './hexUtils/hexMath';
 
 const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 

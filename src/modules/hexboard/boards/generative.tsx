@@ -1,16 +1,16 @@
 import { Box, Button, Container, FormControl, FormLabel, InputGroup, InputLeftAddon, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from "@chakra-ui/react";
 import { useState } from "react";
-import AppWrapper from "../../../common/AppWrapper";
-import { PageSizeKey } from "../../../common/pageSizeSettings";
-import { palettes } from "../../../common/palettes";
-import SidebarSection from "../../../common/SidebarSection";
+import AppWrapper from "../../../components/AppWrapper";
+import SidebarSection from "../../../components/SidebarSection";
+import { PageSizeKey } from "../../../config/pageSizeSettings";
+import { palettes } from "../../../config/palettes";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
 import HexboardSVG from "../HexBoardSVG";
-import { computeHexBoardBounds } from "../utils/computeBounds";
-import { hexDef, vector } from "../utils/hexDefinitions";
-import { alreadyThere, coord2hex, randomMove } from "../utils/hexFunctions";
-import { hexOrientations } from "../utils/hexMath";
+import { computeHexBoardBounds } from "../hexUtils/computeBounds";
+import { hexDef, vector } from "../hexUtils/hexDefinitions";
+import { alreadyThere, coord2hex, randomMove } from "../hexUtils/hexFunctions";
+import { hexOrientations } from "../hexUtils/hexMath";
 
 const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 

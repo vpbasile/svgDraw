@@ -1,7 +1,7 @@
 // function with a single aprameter, wonce, which has a default value of "blumber"
 // function greet(name = "blumber") {
 
-import { coordinateT, myLineT } from "../types";
+import { coordinateT, myLineT } from "./types";
 
 /**
  * Draws a line based on the provided line properties.
@@ -24,7 +24,7 @@ export function drawLine(zLine: myLineT): JSX.Element {
     if (!key) console.error('drawLine: key is undefined', zLine)
     console.log(zLine)
     return <line id={`line-${key}`}
-        x1={x1} y1={y1} x2={x2} y2={y2} style={{ strokeWidth: width, stroke: color }} key={`line${key}`} />
+        x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth={width} key={`line${key}`} />
 }
 
 export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point: coordinateT): myLineT[] {
@@ -55,7 +55,7 @@ export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point: c
 
 
 // Find the perpendiculr bisector of a line and return a line half the length of the original
-// TODO - This is really just a helper function for the tree module, should it be moved there?  Or should it be made more general and used in other places?
+// TODO - This is only used in the tree module, but it should be made more general to be used in other places
 export function findPerpendicularBisector(line: myLineT): myLineT {
     const { start, angle, length, z } = line
     const { x: x1, y: y1 } = start

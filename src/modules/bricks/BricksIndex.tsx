@@ -1,18 +1,18 @@
 import {
-  Box,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Radio,
-  RadioGroup,
-  Stack,
-  Text,
+    Box,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Input,
+    Radio,
+    RadioGroup,
+    Stack,
+    Text,
 } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
-import AppWrapper from "../../common/AppWrapper";
-import { DPI, PageSizeKey } from "../../common/pageSizeSettings";
-import SidebarSection from "../../common/SidebarSection";
+import AppWrapper from "../../components/AppWrapper";
+import SidebarSection from "../../components/SidebarSection";
+import { DPI, PageSizeKey } from "../../config/pageSizeSettings";
 
 const DEFAULT_PAGE_SIZE: PageSizeKey = "8.5x11";
 

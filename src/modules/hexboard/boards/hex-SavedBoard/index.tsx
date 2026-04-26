@@ -1,14 +1,14 @@
 import { FormControl, FormLabel } from '@chakra-ui/react';
 import { useState } from 'react';
-import { PageSizeKey } from '../../../../common/pageSizeSettings';
-import { palettes } from '../../../../common/palettes';
-import SidebarSection from '../../../../common/SidebarSection';
+import SidebarSection from '../../../../components/SidebarSection';
+import { PageSizeKey } from '../../../../config/pageSizeSettings';
+import { palettes } from '../../../../config/palettes';
 import RosterDisplay from '../../forms/D_HexRoster';
 import BoardParameters from '../../forms/F_BoardParameters';
 import HexboardWrapper from '../../HexboardWrapper';
-import { computeHexBoardBounds } from '../../utils/computeBounds';
-import { gameGlobalsType, hexDef } from '../../utils/hexDefinitions';
-import { hexOrientations } from '../../utils/hexMath';
+import { computeHexBoardBounds } from '../../hexUtils/computeBounds';
+import { gameGlobalsType, hexDef } from '../../hexUtils/hexDefinitions';
+import { hexOrientations } from '../../hexUtils/hexMath';
 
 export default function SavedBoard() {
 	// <> States that control canvas parameters

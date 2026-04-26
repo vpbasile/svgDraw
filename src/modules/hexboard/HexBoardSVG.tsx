@@ -1,11 +1,11 @@
 import { Box, Center, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
-import ControlSidebar from "../../common/ControlSidebar";
-import { PageSizeKey } from "../../common/pageSizeSettings";
-import { BASE_VIEWBOX_EVENT } from "../../common/useCanvasZoom";
+import ControlSidebar from "../../components/ControlSidebar";
+import { PageSizeKey } from "../../config/pageSizeSettings";
+import { BASE_VIEWBOX_EVENT } from "../../hooks/useCanvasZoom";
 import Hexagon from "./Hexagon";
-import { gameGlobalsType, hexDef, HexOrientation } from "./utils/hexDefinitions";
-import { hexOrientations } from "./utils/hexMath";
+import { gameGlobalsType, hexDef, HexOrientation } from "./hexUtils/hexDefinitions";
+import { hexOrientations } from "./hexUtils/hexMath";
 
 type HexBoardSVGProps = {
 	hexRoster: hexDef[];

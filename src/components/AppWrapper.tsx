@@ -1,11 +1,11 @@
 import {
-    Box,
-    Flex,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
 import { ReactNode, useEffect, useState } from "react";
+import { PAGE_SIZES, PageSizeKey } from "../config/pageSizeSettings";
+import { useCanvasZoom } from "../hooks/useCanvasZoom";
 import ControlSidebar from "./ControlSidebar";
-import { PAGE_SIZES, PageSizeKey } from "./pageSizeSettings";
-import { useCanvasZoom } from "./useCanvasZoom";
 
 type AppWrapperProps<TState> = {
   title: string;

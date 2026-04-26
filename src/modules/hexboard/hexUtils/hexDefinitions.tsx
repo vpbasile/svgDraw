@@ -1,5 +1,5 @@
-import { Bounds } from "../../../common/bounds";
-import { SVGPart } from "../../../types";
+import { Bounds } from "../../../utils/bounds";
+import { SVGPart } from "../../../utils/types";
 
 // Game stuff
 

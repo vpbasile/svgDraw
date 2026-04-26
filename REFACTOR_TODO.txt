@@ -31,12 +31,13 @@ PRIORITY 2 - CODE SMELL FIXES
     - DEFAULT_HEX_RADIUS = 200
     - Other values determined by each board's purpose
 
+[ ] Address browser warnings
+
 PRIORITY 3 - POLISH & CLEANUP
 =============================
 
 [ ] Remove redundant files:
     - types.tsx
-    - 
 
 [ ] Fix typos
     - TriviaBoard.tsx: "Create a rign" → "Create a ring"

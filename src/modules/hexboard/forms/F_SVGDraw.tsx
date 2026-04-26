@@ -1,8 +1,8 @@
 import { Button, ButtonGroup, FormControl, FormHelperText, FormLabel, HStack, Input, Stack, Text } from '@chakra-ui/react';
 import { ReactNode, SetStateAction, useEffect, useState } from 'react';
-import { DEFAULT_PAGE_SIZE, PAGE_SIZES, PageSizeKey } from '../../../common/pageSizeSettings';
-import SidebarSection from '../../../common/SidebarSection';
-import { useCanvasZoom } from '../../../common/useCanvasZoom';
+import SidebarSection from '../../../components/SidebarSection';
+import { DEFAULT_PAGE_SIZE, PAGE_SIZES, PageSizeKey } from '../../../config/pageSizeSettings';
+import { useCanvasZoom } from '../../../hooks/useCanvasZoom';
 import ColorModeButton from './B_ColorMode';
 
 type SVGDrawControlsProps = {

@@ -1,6 +1,6 @@
-import { SVGPart } from '../../types';
-import { HexOrientation } from './utils/hexDefinitions';
-import { calcTheta, hex_to_pixel } from './utils/hexMath';
+import { SVGPart } from '../../utils/types';
+import { HexOrientation } from './hexUtils/hexDefinitions';
+import { calcTheta, hex_to_pixel } from './hexUtils/hexMath';
 
 type hexagonProps = {
 	// gameGlobals: gameGlobalsType,
@@ -70,7 +70,7 @@ export default function Hexagon(props: hexagonProps) {
 		<g key={`${id}`} id={`group-${id}`} onClick={() => console.log(props.clickMessage)}>
 			{/* The group is needed to make the text and hexagon work together */}
 			<polygon
-				style={{}}
+				// style={{}}
 				className={`hex`}
 				fill={color}
 				id={`hex-${id}`}

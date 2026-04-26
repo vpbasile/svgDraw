@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import AppWrapper from "../../common/AppWrapper";
-import { PageSizeKey } from "../../common/pageSizeSettings";
+import AppWrapper from "../../components/AppWrapper";
+import { PageSizeKey } from "../../config/pageSizeSettings";
 import HexboardSVG from "./HexBoardSVG";
-import { gameGlobalsType, hexDef } from "./utils/hexDefinitions";
+import { gameGlobalsType, hexDef } from "./hexUtils/hexDefinitions";
 
 type HexboardWrapperProps = {
   title: string;

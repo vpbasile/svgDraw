@@ -1,5 +1,5 @@
 import { Box, FormControl, FormLabel, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Text } from "@chakra-ui/react";
-import SidebarSection from "../../../common/SidebarSection";
+import SidebarSection from "../../../components/SidebarSection";
 
 type BoardParametersProps = {
   hexRadius: number;

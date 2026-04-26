@@ -1,4 +1,4 @@
-import { rollover } from "../../../common/math";
+import { rollover } from "../../../utils/math";
 import { coordinateHex, coordinateXY, direction, HexOrientation, vector } from "./hexDefinitions";
 const sqrt3 = Math.sqrt(3)
 
