@@ -1,5 +1,5 @@
 import { Grid } from "@chakra-ui/react";
-import { FeatureRoute, indexRoute, route } from "../../common/routing";
+import { ModuleRoute, indexRoute, route } from "../../common/routing";
 import CandyLand from "./boards/candyLand";
 import Cataan from "./boards/cataan";
 import CreateBoard from "./boards/createBoard";
@@ -19,7 +19,7 @@ export const hexBoardList = [
   // Other boards can be added here...
 ];
 
-export const hexboardRoutes: FeatureRoute[] = [
+export const hexboardRoutes: ModuleRoute[] = [
   indexRoute(<HexBoardIndex />),
   ...hexBoardList.map(({ uid, element }) => route(uid, element)),
   route('*', <div>Board not found!</div>),

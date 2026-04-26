@@ -1,8 +1,8 @@
-import { hexBoardList, hexboardRoutes } from "../features/hexboard/routes";
-import { rectBoardRoutes } from "../features/rectboard/routes";
-// import { scaleRoutes } from "../features/scale/routes";
-import { treeRoutes } from "../features/tree/routes";
-import { FeatureRoute } from "./routing";
+import { hexBoardList, hexboardRoutes } from "../modules/hexboard/routes";
+import { rectBoardRoutes } from "../modules/rectboard/routes";
+// import { scaleRoutes } from "../modules/scale/routes";
+import { treeRoutes } from "../modules/tree/routes";
+import { ModuleRoute } from "./routing";
 
 export const BASE_PATH = "/svgdraw";
 
@@ -11,14 +11,14 @@ export interface FeatureNavChild {
   label: string;
 }
 
-export interface FeatureModule {
+export interface Module {
   segment: string;
   label: string;
-  routes: FeatureRoute[];
+  routes: ModuleRoute[];
   navChildren?: FeatureNavChild[];
 }
 
-export const featureModules: FeatureModule[] = [
+export const modules: Module[] = [
   { segment: "tree", label: "Tree", routes: treeRoutes },
   // { segment: "scale", label: "Scale", routes: scaleRoutes },
   {

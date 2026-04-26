@@ -27,7 +27,9 @@ export default function ListSelect(props: propsType) {
             <label htmlFor={matchID}>
                 {fieldDef.labelText}:
             </label>
-            <select name={matchID} defaultValue={selectedOption} onChange={(e) => {
+            <select name={matchID} 
+            aria-label={fieldDef.labelText}
+            defaultValue={selectedOption} onChange={(e) => {
                 console.log(`Selected ${matchID}: ${e.target.value}`)
                 console.log(`onchange`, onchange)
                 // onchange(e.target.value)

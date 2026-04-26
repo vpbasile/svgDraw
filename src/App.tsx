@@ -1,5 +1,5 @@
 import { RouteObject, useRoutes } from "react-router-dom";
-import { BASE_PATH, featureModules } from "./common/featureRegistry";
+import { BASE_PATH, modules } from "./common/moduleRegistry";
 import PlaceHolderBoard from './common/placeHolderSVG';
 
 function NotFound() {
@@ -7,7 +7,7 @@ function NotFound() {
 }
 
 function App() {
-  const featureRoutes: RouteObject[] = featureModules.map(({ segment, routes }) => ({
+  const moduleRoutes: RouteObject[] = modules.map(({ segment, routes }) => ({
     path: segment,
     children: routes.map(({ path, element }) =>
       path === '' ? { index: true, element } : { path, element }
@@ -19,7 +19,7 @@ function App() {
       path: `${BASE_PATH}`,
       children: [
         { index: true, element: <PlaceHolderBoard /> },
-        ...featureRoutes,
+        ...moduleRoutes,
         { path: '*', element: <NotFound /> },
       ],
     },

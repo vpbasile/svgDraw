@@ -8,7 +8,7 @@ import {
     MenuList,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { BASE_PATH, featureModules } from './featureRegistry';
+import { BASE_PATH, modules } from './moduleRegistry';
 
 export default function ModuleIndex() {
     return (
@@ -21,7 +21,7 @@ export default function ModuleIndex() {
                 size="sm"
             />
             <MenuList>
-                {featureModules.map(({ segment, label, navChildren }) => (
+                {modules.map(({ segment, label, navChildren }) => (
                     navChildren && navChildren.length > 0 ? (
                         navChildren.map(({ path, label: childLabel }) => (
                             <MenuItem as={RouterLink} to={`${BASE_PATH}/${segment}/${path}`} key={path}>

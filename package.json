@@ -10,7 +10,8 @@
     "deploy": "gh-pages -d dist",
     "build": "tsc && vite build && rimraf build/**/*.map",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "new-module": "node scripts/new-module.mjs"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
