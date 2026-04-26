@@ -5,7 +5,7 @@ import { palettes } from '../../../../common/palettes';
 import SidebarSection from '../../../../common/SidebarSection';
 import RosterDisplay from '../../forms/D_HexRoster';
 import BoardParameters from '../../forms/F_BoardParameters';
-import HexboardSVG from '../../HexBoardSVG';
+import HexboardWrapper from '../../HexboardWrapper';
 import { computeHexBoardBounds } from '../../utils/computeBounds';
 import { gameGlobalsType, hexDef } from '../../utils/hexDefinitions';
 import { hexOrientations } from '../../utils/hexMath';
@@ -138,5 +138,12 @@ export default function SavedBoard() {
 		<RosterDisplay hexRoster={hexRoster} />
 	</>
 
-	return <HexboardSVG gameGlobals={gameGlobals} viewBox={viewBox} hexRoster={hexRoster} controlPanel={buildControlPanel} defaultPageSize={MODULE_DEFAULT_PAGE_SIZE} />
+	return <HexboardWrapper
+		title="Saved Board"
+		defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
+		gameGlobals={gameGlobals}
+		viewBox={viewBox}
+		hexRoster={hexRoster}
+		controlPanel={buildControlPanel}
+	/>
 }

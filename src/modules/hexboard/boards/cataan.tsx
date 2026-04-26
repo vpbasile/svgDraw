@@ -3,7 +3,7 @@ import { useState } from "react";
 import { PageSizeKey } from "../../../common/pageSizeSettings";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
-import HexboardSVG from "../HexBoardSVG";
+import HexboardWrapper from "../HexboardWrapper";
 import { computeHexBoardBounds } from "../utils/computeBounds";
 import { gameGlobalsType, hexDef } from "../utils/hexDefinitions";
 import { hexOrientations } from "../utils/hexMath";
@@ -140,8 +140,12 @@ export default function Cataan() {
 	const bounds = computeHexBoardBounds(hexRoster, hexRadius, orientation, separationMultiplier, hexRadius);
 	const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
 
-	return <HexboardSVG gameGlobals={gameGlobals} viewBox={viewBox} hexRoster={hexRoster}
+	return <HexboardWrapper
+		title="Cataan"
 		defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
+		gameGlobals={gameGlobals}
+		viewBox={viewBox}
+		hexRoster={hexRoster}
 		controlPanel={buildControlPanel}
 	/>
 }

@@ -1,4 +1,3 @@
-import { Grid } from "@chakra-ui/react";
 import { ModuleRoute, indexRoute, route } from "../../common/routing";
 import CandyLand from "./boards/candyLand";
 import Cataan from "./boards/cataan";
@@ -15,7 +14,6 @@ export const hexBoardList = [
   { uid: 'generative', displayName: 'Generative Board', element: <GenerativeBoard /> },
   { uid: 'candy', displayName: 'Candy Land', element: <CandyLand /> },
   { uid: 'cataan', displayName: 'Cataan', element: <Cataan /> },
-  { uid: 'grid', displayName: 'Grid', element: <Grid /> },
   // Other boards can be added here...
 ];
 

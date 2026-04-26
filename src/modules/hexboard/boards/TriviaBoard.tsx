@@ -5,7 +5,7 @@ import { palettes } from "../../../common/palettes"; // Import the palettes
 import SidebarSection from "../../../common/SidebarSection";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
-import HexboardSVG from "../HexBoardSVG";
+import HexboardWrapper from "../HexboardWrapper";
 import { computeHexBoardBounds } from "../utils/computeBounds";
 import { coordinateHex, gameGlobalsType, hexDef } from "../utils/hexDefinitions";
 import { coord2hex } from "../utils/hexFunctions";
@@ -102,8 +102,12 @@ export default function TriviaBoard() {
   const bounds = computeHexBoardBounds(hexRoster, hexRadius, orientation, separationMultiplier, hexRadius);
   const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
 
-  return <HexboardSVG gameGlobals={gameGlobals} viewBox={viewBox} hexRoster={hexRoster}
+  return <HexboardWrapper
+    title="Trivia Board"
     defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
+    gameGlobals={gameGlobals}
+    viewBox={viewBox}
+    hexRoster={hexRoster}
     controlPanel={buildControlPanel}
   />
 }

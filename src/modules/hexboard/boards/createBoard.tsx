@@ -5,7 +5,7 @@ import { palettes } from "../../../common/palettes";
 import SidebarSection from "../../../common/SidebarSection";
 import RosterDisplay from "../forms/D_HexRoster";
 import BoardParameters from "../forms/F_BoardParameters";
-import HexboardSVG from "../HexBoardSVG";
+import HexboardWrapper from "../HexboardWrapper";
 import { computeHexBoardBounds } from "../utils/computeBounds";
 import { gameGlobalsType, hexDef } from "../utils/hexDefinitions";
 import { cube_ring, hexOrientations } from "../utils/hexMath";
@@ -164,8 +164,12 @@ export default function CreateBoard() {
 	const bounds = computeHexBoardBounds(hexRoster, hexRadius, defaultOrientation, separationMultiplier, hexRadius);
 	const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.width} ${bounds.height}`;
 
-	return <HexboardSVG gameGlobals={gameGlobals} viewBox={viewBox} hexRoster={hexRoster}
+	return <HexboardWrapper
+		title="Create Board"
 		defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
+		gameGlobals={gameGlobals}
+		viewBox={viewBox}
+		hexRoster={hexRoster}
 		controlPanel={buildControlPanel}
 	/>
 }
