@@ -8,7 +8,7 @@ import SidebarSection from "../../common/SidebarSection";
 import { coordinateT, myLineT } from "../../types";
 import Tree from "./treeGPT";
 
-const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '8.5x11';
 
 export default function TreeExample() {
     // Constants

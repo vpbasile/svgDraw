@@ -1,10 +1,11 @@
 import {
-  Box,
-  Flex,
+    Box,
+    Flex,
 } from "@chakra-ui/react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import ControlSidebar from "./ControlSidebar";
-import { PageSizeKey } from "./pageSizeSettings";
+import { PAGE_SIZES, PageSizeKey } from "./pageSizeSettings";
+import { useCanvasZoom } from "./useCanvasZoom";
 
 type AppWrapperProps<TState> = {
   title: string;
@@ -31,6 +32,22 @@ export default function AppWrapper<TState>({
   renderControls,
 }: AppWrapperProps<TState>) {
   const [state, setState] = useState<TState>(initialState);
+  const { zoomToArea } = useCanvasZoom();
+
+  // Auto-zoom to page when module loads or defaultPageSize changes
+  useEffect(() => {
+    if (!defaultPageSize || defaultPageSize === 'none') return;
+    
+    const size = PAGE_SIZES[defaultPageSize];
+    if (!size) return;
+
+    // Wait a tick for the SVG to be rendered
+    const timer = setTimeout(() => {
+      zoomToArea(-size.width / 2, -size.height / 2, size.width, size.height);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [defaultPageSize, zoomToArea]);
 
   return (
     <Flex height="100vh">

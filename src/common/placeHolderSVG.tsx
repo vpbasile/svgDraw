@@ -4,7 +4,7 @@ import AppWrapper from './AppWrapper';
 import { PageSizeKey } from './pageSizeSettings';
 import SidebarSection from './SidebarSection';
 
-const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = 'none';
 export default function PlaceHolderBoard() {
     // Each implementation should provide the SVG content plus any sidebar controls.
     // AppWrapper owns the shared layout and SVG draw controls.

@@ -15,7 +15,7 @@ export default function SavedBoard() {
 	const [hexRadius, SEThexRadius] = useState(200);
 	const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
 	const [orientation] = useState(hexOrientations["flat-top"])
-	const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '24x36';
+	const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
 
 	// Constants, States, and Functions unique to this board
 	let colorIndex = 0;
