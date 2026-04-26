@@ -2,6 +2,7 @@ import { hexBoardList, hexboardRoutes } from "../modules/hexboard/routes";
 import { rectBoardRoutes } from "../modules/rectboard/routes";
 // import { scaleRoutes } from "../modules/scale/routes";
 import { treeRoutes } from "../modules/tree/routes";
+import { bricksRoutes } from "../modules/bricks/routes";
 import { ModuleRoute } from "./routing";
 
 export const BASE_PATH = "/svgdraw";
@@ -31,4 +32,5 @@ export const modules: Module[] = [
     })),
   },
   { segment: "rect", label: "RectBoard", routes: rectBoardRoutes },
+  { segment: "bricks", label: "Bricks", routes: bricksRoutes },
 ];

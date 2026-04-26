@@ -1,4 +1,4 @@
-const DPI = 300;
+export const DPI = 300;
 
 function pxFromInches(inches: number): number {
   return inches * DPI;
