@@ -26,6 +26,10 @@ export default function Cataan() {
 		"hill": "brown"
 	}
 
+	/**
+	 * Coordinates and IDs for the hexagons arranged in a Cataan-style board layout.
+	 * Each space defines a position (q, r in cube coordinates) and a unique ID.
+	 */
 	const spaces = [
 		{ q: 0, r: -2, id: 1 },
 		{ q: 1, r: -2, id: 2 },
@@ -92,8 +96,10 @@ export default function Cataan() {
 		{ color: colors.field },
 	]
 
-	// <><><> Step 1: Create the hex roster
-	// Combine the spaces and the chosen roster
+	/**
+	 * Combines space coordinates with terrain colors to create the complete hex roster.
+	 * Maps each space to its corresponding terrain and generates a hexagon definition.
+	 */
 	const tempRoster: hexDef[] = []
 	spaces.forEach((space, index) => {
 		const thisTerrain = customRoster[index].color;
@@ -105,31 +111,31 @@ export default function Cataan() {
 			clickMessage: `Space ${space.id} - ${thisTerrain}`
 		})
 	})
-	console.log('Hex Count:', tempRoster.length)
 	const hexRoster = tempRoster
 
 	// <><><> Step 2: Create the control panel
 
-	const buildControlPanel = <Box id="control-panel-trivia">
-		{/* Canvas Parameters */}
-		<Box id="control-panel-trivia">
-			<BoardParameters
-				// Hexagonally-specific parameters
-				hexRadius={hexRadius}
-				separationMultiplier={separationMultiplier}
-				SEThexRadius={SEThexRadius}
-				SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
-					x: 0,
-					y: 0
-				}} />
-		</Box>
+	const buildControlPanel = <Box id="control-panel-cataan">
+		<BoardParameters
+			// Hexagonally-specific parameters
+			hexRadius={hexRadius}
+			separationMultiplier={separationMultiplier}
+			SEThexRadius={SEThexRadius}
+			SETseparationMultiplier={SETseparationMultiplier} hexgridOrigin={{
+				x: 0,
+				y: 0
+			}} />
 		<RosterDisplay hexRoster={hexRoster} />
 	</Box>
 
 	const orientation = hexOrientations['pointy-top'];
 
+	/**
+	 * Board rendering configuration that controls visual properties.
+	 * Defines how hexagons are oriented, sized, and spaced.
+	 */
 	const gameGlobals: gameGlobalsType = {
-		displayTitle: "Create Board",
+		displayTitle: "Cataan",
 		orientation,
 		hexRadius: hexRadius,
 		separationMultiplier: separationMultiplier,

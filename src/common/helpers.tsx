@@ -55,6 +55,7 @@ export function rotateLinesAroundPoint(lines: myLineT[], angle: number, point: c
 
 
 // Find the perpendiculr bisector of a line and return a line half the length of the original
+// TODO - This is really just a helper function for the tree module, should it be moved there?  Or should it be made more general and used in other places?
 export function findPerpendicularBisector(line: myLineT): myLineT {
     const { start, angle, length, z } = line
     const { x: x1, y: y1 } = start

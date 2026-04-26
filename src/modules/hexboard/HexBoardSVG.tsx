@@ -7,7 +7,7 @@ import Hexagon from "./Hexagon";
 import { gameGlobalsType, hexDef, HexOrientation } from "./utils/hexDefinitions";
 import { hexOrientations } from "./utils/hexMath";
 
-export type HexBoardSVGProps = {
+type HexBoardSVGProps = {
 	hexRoster: hexDef[];
 
 	hexRadius?: number;

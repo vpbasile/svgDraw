@@ -45,7 +45,7 @@ export default function BoardParameters(props: BoardParametersProps) {
 						</Slider>
 						<Text mt={1} fontSize="xs" color="gray.500">{separationMultiplier.toFixed(2)}</Text>
 					</FormControl>
-					{/* TODO Needs the ability to set orientation */}
+					{/* [ ] Needs the ability to set orientation */}
 					{/* <InputGroup>
 			<InputLeftAddon children="Orientation" />
 			<Select>

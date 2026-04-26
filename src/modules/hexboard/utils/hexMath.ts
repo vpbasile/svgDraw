@@ -1,5 +1,5 @@
+import { rollover } from "../../../common/math";
 import { coordinateHex, coordinateXY, direction, HexOrientation, vector } from "./hexDefinitions";
-import { rollover } from "./math";
 const sqrt3 = Math.sqrt(3)
 
 export const hexOrientations: Record<
@@ -68,7 +68,7 @@ export function hex_to_pixel(q: number, r: number, hexRadius: number, orientatio
 	return { "x": x * separationMultiplier + hexGridOrigin.x, "y": y * separationMultiplier + hexGridOrigin.y }
 }
 
-export type Point = { x: number; y: number };
+type Point = { x: number; y: number };
 
 export function axialToPixel(
 	q: number,

@@ -22,7 +22,6 @@ export default function TreeExample() {
     const defaultNumerator = 1;
     // States
     const [maxDepth, setMaxDepth] = useState<number>(defaultDepth);
-    // TODO Add minDepth state
     const [numberOfTrees, setNumberOfTrees] = useState<number>(defaultNumberOfTrees);
     const [numerator, SETnumerator] = useState<number>(defaultNumerator);
     const [selectedPalette, setSelectedPalette] = useState<string>('tree');
@@ -37,7 +36,7 @@ export default function TreeExample() {
     if (numberOfTrees > 1) {
         for (let i = 1; i < numberOfTrees; i++) {
             const sibling = rotateLinesAroundPoint(original, i * 2 * PI / numberOfTrees, seed);
-            // Add all menmbers of the sibling to the allTrees array
+            // Add all members of the sibling to the allTrees array
             sibling.forEach((line) => allTrees.push(line));
         }
     }
@@ -48,7 +47,6 @@ export default function TreeExample() {
     // Control Panel Components
 
     // Control for selecting min and max depth
-    // TODO - Change this to a range slider
     const controlDepth = <FormControl id="depth-control" label="depth">
         <FormLabel>Depth</FormLabel>
         {<NumberInput defaultValue={maxDepth} min={1} max={highestColor} onChange={(val) => setMaxDepth(parseInt(val))}>

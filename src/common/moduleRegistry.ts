@@ -6,12 +6,12 @@ import { ModuleRoute } from "./routing";
 
 export const BASE_PATH = "/svgdraw";
 
-export interface FeatureNavChild {
+interface FeatureNavChild {
   path: string;
   label: string;
 }
 
-export interface Module {
+interface Module {
   segment: string;
   label: string;
   routes: ModuleRoute[];

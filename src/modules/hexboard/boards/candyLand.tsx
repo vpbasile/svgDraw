@@ -2,8 +2,8 @@ import { Box, Button, Container, FormControl, FormLabel, Input, NumberDecrementS
 import AppWrapper from "../../../common/AppWrapper";
 import { PageSizeKey } from "../../../common/pageSizeSettings";
 import SidebarSection from "../../../common/SidebarSection";
-import { BoardParameters } from "../forms";
 import RosterDisplay from "../forms/D_HexRoster";
+import BoardParameters from "../forms/F_BoardParameters";
 import HexBoardSVG from "../HexBoardSVG";
 import { computeHexBoardBounds } from "../utils/computeBounds";
 import { hexDef } from "../utils/hexDefinitions";

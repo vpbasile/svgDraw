@@ -27,6 +27,11 @@ export default function CreateBoard() {
 	}, [selectedPalette]);
 
 	let colorIndex = 0;
+	/**
+	 * Cycles through the palette colors sequentially.
+	 * Returns the next color in the palette, wrapping around to the beginning when the end is reached.
+	 * @returns {string} A color value from the current palette
+	 */
 	function getNextcolor() {
 		const color = colors[colorIndex];
 		colorIndex = (colorIndex + 1) % colors.length;
@@ -39,7 +44,11 @@ export default function CreateBoard() {
 	const [colorTemp, SETcolorTemp] = useState(getNextcolor());
 
 	// <><><> Step 1: Create the hex roster
-	// Define a color for the genreated hexes - 50% gray with 50% opacity
+	/**
+	 * Generates a hexagon grid by creating concentric rings around a center hexagon.
+	 * The center is colored, subsequent rings are filled with a placeholder gray color.
+	 * Each hexagon includes its cube coordinates displayed as text.
+	 */
 	const blankColor = "rgba(128, 128, 128, 0.5)"
 	const centerHex: hexDef = { q: 0, r: 0, color: getNextcolor(), id: 0, clickMessage: "Center Hex" }
 	let tempRoster: hexDef[] = [centerHex]
@@ -60,7 +69,6 @@ export default function CreateBoard() {
 		tempRoster = tempRoster.concat(thisRing);
 	}
 	
-	console.log('Hex Count:', tempRoster.length)
 	const [hexRoster, SEThexRoster] = useState<hexDef[]>(tempRoster)
 
 	// Handle adding a hex to the roster
@@ -152,6 +160,10 @@ export default function CreateBoard() {
 		<RosterDisplay hexRoster={hexRoster} />
 	</Box>
 
+	/**
+	 * Board rendering configuration that controls visual properties.
+	 * Defines how hexagons are oriented, sized, and spaced.
+	 */
 	const gameGlobals: gameGlobalsType = {
 		displayTitle: "Create Board",
 		orientation: defaultOrientation,

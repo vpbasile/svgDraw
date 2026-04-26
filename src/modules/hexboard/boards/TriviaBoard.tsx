@@ -17,6 +17,11 @@ export default function TriviaBoard() {
   // Constants, States, and Functions unique to this board
   // <> This color stuff is reusable across all boards
   let colorIndex = 0;
+  /**
+   * Cycles through the palette colors sequentially.
+   * Returns the next color in the palette, wrapping around to the beginning when the end is reached.
+   * @returns {string} A color value from the current palette
+   */
   function getNextcolor() {
     const color = colors[colorIndex];
     colorIndex = (colorIndex + 1) % colors.length;
@@ -30,7 +35,10 @@ export default function TriviaBoard() {
   const [hexRadius, SEThexRadius] = useState(200);
   const [separationMultiplier, SETseparationMultiplier] = useState(1.1)
 
-  // <><><> The game globals needed for rendering
+  /**
+   * Game configuration object that defines how the hexagons are rendered.
+   * Controls visual properties like orientation, radius, spacing, and text size.
+   */
   const gameGlobals: gameGlobalsType = {
     // Hexagons
     displayTitle: "Trivia Board",
@@ -43,11 +51,15 @@ export default function TriviaBoard() {
 
   }
   // <><><> Step 1: Create the hex roster
+  /**
+   * Generates the hexagon roster by creating concentric rings around a center hexagon.
+   * The center is colored distinctly, subsequent rings are colored consecutively from the palette.
+   */
   // Create a center hexagon
   const centerHexagon: hexDef = { "id": 0, "q": 0, "r": 0, "clickMessage": "Center Hexagon", additionalSVG: <circle cy={0} cx={0} r={50} fill="red" /> }
   let hexRoster: hexDef[] = [centerHexagon]
 
-  // Create a rign and add it to the hex roster
+  // Create a ring and add it to the hex roster
   const mainRing = cube_ring({ "q": 0, "r": 0 }, 4);
   hexRoster = hexRoster.concat(mainRing.map((hex: coordinateHex) => coord2hex(hex, getNextcolor(), 0)));
 

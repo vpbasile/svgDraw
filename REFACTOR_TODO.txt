@@ -1,0 +1,80 @@
+CODE QUALITY REFACTORING TODO
+=============================
+
+PRIORITY 1 - CRITICAL FIXES
+===========================
+
+
+PRIORITY 2 - CODE SMELL FIXES
+=============================
+
+[ ] Fix mutable state pattern in TriviaBoard
+    File: TriviaBoard.tsx
+    - Replace mutable colorIndex closure with functional approach
+    - Use reduce accumulator or indexed approach instead
+    - Avoid side effects in getNextcolor()
+
+[ ] Simplify hex roster construction
+    Files: TriviaBoard.tsx, createBoard.tsx
+    - Replace concat() chains with spread operator
+    - Combine into single array literal where possible
+    - Example: const hexRoster = [centerHex, ...ring1, ...ring2]
+
+[ ] Remove unnecessary variable reassignments
+    File: example.tsx
+    - Line: "const allTrees = original;" is redundant unless needed for clarity
+    - Either use 'original' directly or add meaningful comment
+
+[ ] Extract magic numbers to constants
+    Files: All board files
+    - hexRadius: 200 → DEFAULT_HEX_RADIUS
+    - DEFAULT_HEX_RADIUS = 200
+    - Other values determined by each board's purpose
+
+PRIORITY 3 - POLISH & CLEANUP
+=============================
+
+[ ] Remove redundant files:
+    - types.tsx
+    - 
+
+[ ] Fix typos
+    - TriviaBoard.tsx: "Create a rign" → "Create a ring"
+    - example.tsx: "menmbers" → "members"
+
+[ ] Remove unused variables
+    File: example.tsx
+    - Evaluate if "const allTrees = original;" adds clarity
+    - If not, remove and reference 'original' directly
+
+[ ] Add proper TypeScript types where missing
+    Files: All board files
+    - Verify all color objects use string type annotation
+    - Add return type annotations to functions like getNextcolor()
+
+[ ] Verify map() keys
+    Files: All board files
+    - Ensure all mapped JSX elements have proper unique keys
+    - Check RosterDisplay, palette controls, etc.
+
+PERFORMANCE IMPROVEMENTS
+========================
+
+[ ] Memoize expensive computations
+    - Consider useMemo() for:
+      - hexRoster construction
+      - gameGlobals object creation
+      - Palette color arrays
+
+[ ] Use useCallback for event handlers
+    - controlPalette onChange handlers
+    - BoardParameters callbacks
+
+TESTING & VALIDATION
+====================
+
+
+DOCUMENTATION
+==============
+
+
