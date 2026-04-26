@@ -2,7 +2,7 @@ import { Box, FormControl, FormLabel, NumberDecrementStepper, NumberIncrementSte
 import { useState } from "react";
 import AppWrapper from "../../common/AppWrapper";
 import { drawLine, rotateLinesAroundPoint } from "../../common/helpers";
-import { PageSizeKey } from "../../common/pageSizeSettings";
+import { PAGE_SIZES, PageSizeKey } from "../../common/pageSizeSettings";
 import { palettes } from "../../common/palettes"; // Import the palettes
 import SidebarSection from "../../common/SidebarSection";
 import { coordinateT, myLineT } from "../../types";
@@ -12,8 +12,8 @@ const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '8.5x11';
 
 export default function TreeExample() {
     // Constants
-    const canvasSize: number = 1500
-    const seed: coordinateT = { x: canvasSize / 2, y: canvasSize / 2 }
+    const pageSize = PAGE_SIZES[MODULE_DEFAULT_PAGE_SIZE];
+    const seed: coordinateT = { x: 0, y: 0 }
     const PI = Math.PI;
 
     // Settings
@@ -130,12 +130,16 @@ export default function TreeExample() {
         {controlPalette}
     </SidebarSection>
 
-    // // Return the JSX
-    // return <AppWrapper title="Fractal Tree Example" controlPanel={controlPanel} canvasSize={canvasSize} lines={allTrees} />;
+    // Calculate viewBox based on page size, centered at (0, 0)
+    const viewBoxWidth = pageSize?.width ?? 500;
+    const viewBoxHeight = pageSize?.height ?? 500;
+    const viewBoxX = -viewBoxWidth / 2;
+    const viewBoxY = -viewBoxHeight / 2;
+
     return <AppWrapper title='Fractal Tree'
         defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
         renderSVG={() => (
-            <svg width="100%" height="100%" viewBox={`0 0 ${canvasSize} ${canvasSize}`} preserveAspectRatio="xMidYMid meet">
+            <svg width="100%" height="100%" viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet">
                 {allTrees.map((line) => drawLine(line))}
             </svg>
         )}

@@ -8,7 +8,7 @@ import { computeHexBoardBounds } from "../utils/computeBounds";
 import { gameGlobalsType, hexDef } from "../utils/hexDefinitions";
 import { hexOrientations } from "../utils/hexMath";
 
-const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '36x24';
+const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '11x8.5';
 
 export default function Cataan() {
 	// <> States that control canvas parameters
