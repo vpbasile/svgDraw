@@ -1,14 +1,13 @@
 import { Box, FormControl, FormLabel, Input, Stack, Text } from "@chakra-ui/react";
 import { useMemo, useState } from "react";
 import AppWrapper from "../../common/AppWrapper";
-import { PageSizeKey } from "../../common/pageSizeSettings";
+import { PAGE_SIZES, PageSizeKey } from "../../common/pageSizeSettings";
 import SidebarSection from "../../common/SidebarSection";
-import RectBoard from "./RectBoard";
 
 const MODULE_DEFAULT_PAGE_SIZE: PageSizeKey = '8.5x11';
 
-const LETTER_WIDTH = 850;
-const LETTER_HEIGHT = 1100;
+const LETTER_WIDTH = PAGE_SIZES[MODULE_DEFAULT_PAGE_SIZE]?.width ?? 850;
+const LETTER_HEIGHT = PAGE_SIZES[MODULE_DEFAULT_PAGE_SIZE]?.height ?? 1100;
 const PAGE_MARGIN = 40;
 
 function clampPositiveInt(value: number, fallback: number) {
@@ -100,7 +99,7 @@ export default function RectBoardDemo() {
       defaultPageSize={MODULE_DEFAULT_PAGE_SIZE}
       initialState={undefined}
       renderSVG={() => (
-        <Box width="min(80vw, 54vh)" maxHeight="88vh" border="1px solid" borderColor="gray.300">
+        <Box width="100%" height="100%" border="1px solid" borderColor="gray.300">
           <RectBoard
             rows={safeRows}
             cols={safeCols}

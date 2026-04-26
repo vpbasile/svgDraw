@@ -309,7 +309,7 @@ export default function BricksIndex() {
       defaultPageSize={DEFAULT_PAGE_SIZE}
       initialState={initialState}
       renderSVG={() => (
-        <Box width="min(80vw, 54vh)" maxHeight="88vh">
+        <Box width="100%" height="100%">
           <svg
             width="100%"
             height="100%"

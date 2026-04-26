@@ -68,8 +68,8 @@ export default function HexBoardSVG({
 	);
 
 	return (
-		<Flex height="100vh">
-			<Center id="canvas-box" flex={1}>{svgElement}</Center>
+		<Flex height="100vh" width="100%">
+			<Center id="canvas-box" flex={1} width="100%">{svgElement}</Center>
 			{controlPanel ? (
 				<ControlSidebar title={gameGlobals?.displayTitle ?? "HexBoardSVG"} defaultPageSize={defaultPageSize}>
 					{controlPanel}

@@ -1,6 +1,6 @@
 import {
-    Center,
-    Flex,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
 import { ReactNode, useState } from "react";
 import ControlSidebar from "./ControlSidebar";
@@ -35,9 +35,11 @@ export default function AppWrapper<TState>({
   return (
     <Flex height="100vh">
       {/* SVG AREA */}
-      <Center id="canvas-box" flex={1}>
-        {renderSVG(state)}
-      </Center>
+      <Box id="canvas-box" flex={1} minW={0} minH={0} overflow="hidden">
+        <Box width="100%" height="100%">
+          {renderSVG(state)}
+        </Box>
+      </Box>
 
       {/* CONTROL PANEL */}
       <ControlSidebar title={title} defaultPageSize={defaultPageSize}>
